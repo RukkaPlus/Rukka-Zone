@@ -1,0 +1,498 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/flask.png') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-flask.css') }}">
+{% endblock %}
+
+{% block title %}Flask{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Flask</h1>
+  <p><b>Flask</b> es un micro-framework orientado al <b>desarrollo Web (Backend)</b> bastante famoso. Es sencillo y rapido de usar; desarrollado para ser extensible y de rapido desarrollo, entrega un entorno bastante minimalista y sencillo <br> Tiene una gran cantidad de extensiones y permite desarrollar <b>aplicaciones y sitios Web escalables y completas</b> de manera rapida y eficiente</p>
+</div>
+<img src="{{ url_for('static', filename='img/flask.png') }}" alt="flask">
+{% endblock %}
+
+{% block index %}
+<li><a href="#install">Instalacion</a></li>
+<li><a href="#hello-world">Hello, world!</a></li>
+<li><a href="#routing">Routing</a></li>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#url-unique">URLs unicas / Redirecciones</a></li>
+<li><a href="#url-building">Construccion de URLs</a></li>
+<li><a href="#http">Metodos HTTP</a></li>
+<li><a href="#http-0">Recordatorio de GET y POST</a></li>
+<li><a href="#static">Archivos estaticos</a></li>
+<li><a href="#templates">Renderizado de plantillas</a></li>
+<li><a href="#escape">Escapado HTML</a></li>
+<li><a href="#request">Request</a></li>
+<li><a href="#file-up">Subida de archivos</a></li>
+<li><a href="#cookies">Cookies</a></li>
+<li><a href="#sessions">Sessions</a></li>
+<li><a href="#sessions-0">Como generar buenas claves secretas</a></li>
+<li><a href="#redirects">Redirects and Errors</a></li>
+<li><a href="#responses">Acerca de las respuestas</a></li>
+<li><a href="#api">APIs con JSON</a></li>
+<li><a href="#feedback">Feedback</a></li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#middleware">Middleware del WSGI</a></li>
+<li><a href="#extensions">Extensiones</a></li>
+<li><a href="#deploy">Deploy</a></li>
+{% endblock %}
+
+{% block main %}
+<article>
+  <section>
+    <h2 id="install">Instalacion</h2>
+    <p>Para instalar <b>Flask</b> se recomienda hacerlo dentro de un <b>Virtual Environment</b></p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <pre><code class="language-shell">&gt; py -m virtualenv env
+&gt; env\Scripts\activate.bat
+&gt; py -m pip install Flask</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <pre><code class="language-sh">$ python3 -m virtualenv env
+$ source env/bin/activate
+$ python3 -m pip install Flask</code></pre>
+      </section>
+    </div>
+  </section>
+  <section>
+    <h2 id="hello-world">Hello, world!</h2>
+    <p>Con la intencion de realizar una breve introduccion, vamos a desarrollar un pequenio <code>Hello, world!</code>. Seguido a ello, iremos tocando punto por punto lo que vamos haciendo</p>
+    <pre><code class="language-python"># | app.py |
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+  return "&lt;h1&gt;Hello, world!&lt;/h1&gt;"
+
+if __name__ == "__main__":
+  app.run()</code></pre>
+    <p>Bueno. Que chorizo hicimos?</p>
+    <ol>
+      <li>Primero, con <code>from flask import Flask</code> importamos del modulo <code>flask</code> la clase <code>Flask</code>. Esta clase es importantisima, ya que va a ser nuestra aplicacion <b>WSGI</b> (Web Server Gateway Interface)</li>
+      <li>Despues, con <code>app = Flask(__name__)</code> creamos una instancia de <code>Flask</code>, que como dijimos, esta representa nuestra aplicacion <b>WSGI</b>. Es conveniente pasarle como parametro <code>__name__</code>, que tiene como (valor el nombre del programa)</li>
+      <li>Luego, usamos el decorador <code>@app.route(path)</code>, donde <code>path</code> representa la <b>URL</b> que <b>Flask</b> va a observar. En este caso le pasamos <code>"/"</code> (entonces representaria <code>http://www.ejemplo.com/</code>)</li>
+      <li>Cuando dicha <b>URL</b> puesta en el decorador sea visitada, se ejecutara la funcion decorada <code>hello_world</code>, que retorna un String con el siguiente valor <code>"&lt;h1&gt;Hello, world!&lt;/h1&gt;"</code>, que es un texto en formato <b>HTML</b></li>
+    </ol>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Opcionalmente, dentro de <code>app.run()</code> podemos ingresar como parametro <code>debug=True</code>. Esto habilitara <b>herramientas de depuracion</b> que pueden sernos muy utiles durante el desarrollo. Pero <b>asegurate de no usar esto en produccion</b>, porque tambien hace del servidor uno mucho mas vulnerable</p>
+    </div>
+    <p>Una vez ejecutemos el programa o script, en nuestra terminal o linea de comandos, nos dara como <b>output</b> la direccion donde se encuentra alojado nuestro <b>servidor Web</b> (que generalmente podremos acceder a el mediante el enlace <a href="http://localhost:5000/">localhost:5000/</a>). Claro que si este puerto esta ocupado por otro servidor, arrojara un error que indique dicho conflicto</p>
+  </section>
+  <section>
+    <h2 id="routing">Routing</h2>
+    <p>Ahora vamos a ver como organizar el enrutamiento del <b>servidor Web</b>, para que de esta forma, podamos administrar de manera organizada la gestion de <b>URL</b>s disponibles en nuestro servidor. <br> Recordemos el decorador <code>@app.route</code>, que sirve para exactamente eso, organizar el enrutamiento del servidor</p>
+    <pre><code class="language-python">@app.route("/")
+def index():
+  return "&lt;h1&gt;You are in the \"index\" page&lt;/h1&gt;"
+
+@app.route("/coffee")
+def index():
+  return "&lt;h1&gt;You are in the \"coffee\" page&lt;/h1&gt;"</code></pre>
+    <section>
+      <h3 id="variables">Variables</h3>
+      <p><b>Flask</b> permite trabajar con variables en direcciones <b>URL</b>s. Esto con la intencion de permitir la implementacion de <b>URLs dinamicas</b></p>
+      <pre><code class="language-python">@app.route("/user/&lt;username&gt;")
+def show_user_prof(username):
+  return f"&lt;h1&gt;User {username} profile&lt;/h1&gt;"
+
+@app.route("/post/&lt;int:post_id&gt;")
+def show_user_prof(post_id):
+  return f"&lt;h1&gt;This is the post {post_id}&lt;/h1&gt;"
+
+@app.route("/path/&lt;path:subpath&gt;")
+def show_user_prof(subpath):
+  return f"&lt;h1&gt;This is the path {subpath}&lt;/h1&gt;"</code></pre>
+      <p>Como podemos ver, si en la direccion <b>URL</b> enrutada incluimos <code>"/prueba/&lt;variable&gt;"</code>, el usuario podria acceder a, por ejemplo, <code>www.ejemplo.com/prueba/hola_mundo</code>, y dentro de la funcion decorada para este enrutamiento se pasara como parametro el valor <code>"hola_mundo"</code>. De esta manera, podemos cargar variables directamente desde una direccion <b>URL</b> y utilizarla dentro de la funcion decorada para dicho enrutamiento! <br> Ademas, nosotros podemos definir el tipo de dato que puede ser ingresado en este enrutamiento. Por ejemplo, con <code>"/post/&lt;int:post_id&gt;"</code>, solo podremos ingresar datos de dicho tipo (<code>int</code> - numeros enteros) <br> Los tipos de datos soportados (actualmente) por <b>Flask</b> son los siguientes</p>
+      <ul>
+        <li><code>string</code> : (por defecto) acepta cualquier texto sin <code>/</code></li>
+        <li><code>int</code> : acepta numeros enteros positivos</li>
+        <li><code>float</code> : acepta numeros decimales positivos</li>
+        <li><code>path</code> : parecido a <code>string</code> pero acepta <code>/</code></li>
+        <li><code>uuid</code> : acepta <code>string</code> UUID</li>
+      </ul>
+    </section>
+    <section>
+      <h3 id="url-unique">URLs unicas / Redirecciones</h3>
+      <p>Las siguientes dos reglas difieren en el uso de <code>/</code> cuando de <b>URL</b>s se habla</p>
+      <pre><code class="language-python">@app.route("/projects/")
+def projects():
+  return "La pagina de proyectos"
+
+@app.route("/about")
+def about():
+  return "La pagina de informacion"</code></pre>
+      <p>La diferencia principal entre ambas maneras de definir rutas, es que una ruta termina con <code>/</code> (lo que hace referencia a un directorio), y la otra no termina con un <code>/</code> (lo que hace referencia a un archivo). Si vamos a <code>www.ejemplo.com/projects</code> nos redireccionara automaticamente a <code>www.ejemplo.com/projects/</code> (notese el <code>/</code> al final). Y si vamos a <code>www.ejemplo.com/about</code>, tendremos una respuesta correcta del servidor, sin embargo, si vamos a <code>www.ejemplo.com/about/</code> (notese el <code>/</code> al final) obtendremos una respuesta 404 del servidor (404 : Not found). Esto permite mantener <b>URL</b>s unicas para dichos recursos</p>
+    </section>
+    <section>
+      <h3 id="url-building">Construccion de URLs</h3>
+      <p>Para generar una <b>URL</b> de una funcion, usamos la funcion <code>url_for</code>. Esta funcion acepta el nombre de la funcion como primer parametro, seguido de cualquier numero o argumento requerido para dicha <b>URL</b> <br> Pero para que emplear esta funcion en lugar de escribir una direccion manualmente?</p>
+      <ul>
+        <li>Usar <code>url_for</code> es mucho mas descriptivo</li>
+        <li>Es mas sencillo de modificar <b>URL</b>s usando este metodo</li>
+        <li>Las <b>URL</b>s construidas son siempre absolutas</li>
+        <li>Las <b>URL</b>s construidas manejan el escapado de ciertos caracteres transparentemente</li>
+      </ul>
+      <pre><code class="language-python">from flask import url_for
+
+@app.route("/")
+def index():
+  return "&lt;h1&gt;Index&lt;/h1&gt;"
+
+@app.route("/login")
+def login():
+  return "&lt;h1&gt;Login&lt;/h1&gt;"
+
+@app.route("/user/&lt;username&gt;")
+def profile(username):
+  return f"&lt;h1&gt;{username}'s profile&lt;/h1&gt;"
+
+with app.test_request_context():
+  print(url_for("index")) # -> "/"
+  print(url_for("login")) # -> "/login"
+  print(url_for("login", next="/")) # -> "/login?next=/"
+  print(url_for("profile", username="John Doe")) # -> "/user/John%20Doe"</code></pre>
+    </section>
+    <section>
+      <h3 id="http">Metodos HTTP</h3>
+      <p>Las <b>aplicaciones Web</b> tienen diferentes <b>metodos HTTP</b> cuando accedemos a <b>URL</b>s. Es importante familiarizarse con ellos cuando se trabaja con <b>Flask</b>. <br> Por defecto, una <b>URL</b> enrutada solo responde a solicitudes <b>GET</b>. Pero podemos definir los metodos con los que una ruta puede trabajar definiendo el argumento <code>methods</code> en el decorador <code>@app.route</code></p>
+      <pre><code class="language-python">from flask import request
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+  if request.method == "POST":
+    return do_the_login()
+  else:
+    return show_the_login_form()</code></pre>
+      <section>
+        <h4 id="http-0">Recordatorio de <code>GET</code> y <code>POST</code></h4>
+        <p>Estos dos metodos son los mas iconicos y utilizados:</p>
+        <ul>
+          <li><code>GET</code> : Este metodo se utiliza con la intencion de obtener una respuesta del servidor. Ademas, podemos enviar datos a un servidor explicitamente desde una direccion <b>URL</b>. Esto guarda datos en la cache <br> Este metodo es ideal para realizar una peticion explicita a un servidor. Por ejemplo, pedir explicitamente una <b>pagina Web</b> ingresando una <b>URL</b> (<code>http://www.ejemplo.com/</code>). Y si se enviaran datos, este generalmente aparecera en la barra de busqueda (<code>http://www.ejemplo.com/message?index=012345</code>)</li>
+          <li><code>POST</code> : Ademas de pedir informacion a un servidor, puede enviarle datos sin almacenar datos en la cache. Ademas, a diferencia del metodo <code>GET</code>, esta peticion no es explicita <br> Este metodo es ideal para solicitar informacion sensible, como credenciales (por ejemplo, una pagina de login), ya que esta no se almacena en la cache y eso la hace segura de usar (para evitar ataques tanto al cliente como al servidor). Y por lo general, los datos enviados (y a veces, tambien los recibidos) son representados en formato <b>JSON</b></li>
+        </ul>
+      </section>
+    </section>
+    <section>
+      <h3 id="static">Archivos estaticos</h3>
+      <p>Las <b>aplicaciones Web</b> dinamicas necesitan archivos estaticos. Que usualmente es de donde vienen archivos <b>CSS</b> y <b>JavaScript</b>. <br> Idealmente, <b>Flask</b> ya viene configurado para servirlos por ti; simplemente crea un directorio llamado <code>static</code> en la raiz de tu servidor y tendremos acceso a la funcion <code>static</code> desde <b>Flask</b>. <br> Esto no agregara acceso a un <b>Index of</b> ni nada por el estilo. Pero si permitira almacenar todos los archivos estaticos como archivos <b>CSS</b>, <b>JavaScript</b>, <b>imagenes</b>, <b>videos</b> entre otros, y facilitar su acceso</p>
+      <pre><code class="language-python">url_for("static", "pdf/archivo-statico.pdf") # -> "/static/pdf/archivo-statico.pdf"</code></pre>
+      {% raw %}
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}&gt;
+    &lt;script src="{{ url_for("static", filename="js/script.js") }}&gt;&lt;/script&gt;
+    &lt;!-- "/static/css/style.css" --&gt;
+    &lt;!-- "/static/js/script.js" --&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Watch this dog!&lt;/h1&gt;
+    &lt;img src="{{ url_for("static", filename="img/dog.jpg") }}" alt="pretty-dog"&gt;
+    &lt;!-- "/static/img/dog.jpg" --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+    <section>
+      <h3 id="templates">Renderizado de plantillas</h3>
+      <p>Al igual que podemos retornar Strings en formato <b>HTML</b>, podemos utilizar el <b>renderizador de plantillas</b> incorporado de <b>Flask</b>, <b>Jinja2</b> <br> Este <b>renderizador de plantillas</b> recibira como argumento la direccion de un archivo que debe ser renderizado y todos los argumentos necesarios para efectuar dicho renderizado. <br> Esto facilita muchisimo el trabajo de responder con archivos <b>HTML dinamicos</b> <br> Para usar este <b>renderizador de plantillas</b> (<b>Jinja2</b>), primero debemos crear un directorio donde almacenar las plantillas llamado <code>templates</code>. Luego, podemos ejecutar la funcion <code>render_template</code> (del modulo <code>flask</code>) e ingresar como primer parametro la direccion del archivo (sin incluir "templates/") que sera renderizado, y como segundo parametro los argumentos que recibira para el renderizado</p>
+      <pre><code class="language-python"># | main.py |
+from flask import render_template
+
+@app.route("/user/&lt;username&gt;")
+def profile(username):
+  return render_template("hello.html", argumentos = {
+    # Puede ser de cualquier tipo de dato, pero generalmente
+    # se utilizan 'dict' para reducir codigo y espacio
+    "username" : username,
+    "description" : search_desc_for_user(username),
+    "image-list" : search_img_list_for_user(username),
+  })</code></pre>
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;!-- | layout.html | --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}&gt;
+    &lt;script src="{{ url_for("static", filename="js/script.js") }}&gt;&lt;/script&gt;
+    {# "/static/css/style.css" #}
+    {# "/static/js/script.js" #}
+    &lt;title&gt;{% block title %}{% endblock %}&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;main&gt;
+      {% block main %}{% endblock %}
+    &lt;/main&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <pre><code class="language-html">&#123;% extends "./layout.html" %&#125;
+{# | hello.html | #}
+
+{% if argumentos %}
+  {% block title %}Profile {{ argumentos["username"] }}{% endblock %}
+{% else %}
+  {% block title %}Default page{% endblock %}
+{% endif %}
+
+{% block main %}
+{% if argumentos %}
+  &lt;h1&gt;Welcome again {{ argumentos["username"] }}!&lt;/h1&gt;
+  &lt;p&gt;&lt;b&gt;Your description is:&lt;/b&gt; {{ argumentos["description"] }}!&lt;/p&gt;
+  &lt;h2&gt;Your image list is...&lt;/h2&gt;
+  {% for imagen in argumentos["image-list"] %}
+    &lt;img src="{{ imagen }}" alt="image"&gt;
+  {% endfor %}
+{% else %}
+  &lt;h1&gt;Welcome to a default page!&lt;/h1&gt;
+{% endif %}
+{% endblock %}</code></pre>
+      {% endraw %}
+      <p>Para entender mas acerca de este renderizador de plantillas, vease la <a href="https://palletsprojects.com/p/jinja/">documentacion oficial de Jinja2</a> <br> Dentro de las plantillas tenemos acceso a los objetos <code>config</code>, <code>request</code>, <code>session</code> y <code>g</code> al igual que en las funciones <code>url_for</code> y <code>get_flashed_messages</code></p>
+    </section>
+  </section>
+  <section>
+    <h2 id="escape">Escapado HTML</h2>
+    <p>Cuando respondemos con un documento <b>HTML</b> (la respuesta por defecto de <b>Flask</b>), cualquier valor generado por un usuario podria ser renderizado, incluso si este es un valor peligroso. Por lo que don <b>Flask</b> ya tiene una solucion para evitar ataques por injeccion de scripts, y este es <i>escapando</i> un valor proveido por un usuario en caso de incluir, por ejemplo, etiquetas <b>HTML</b></p>
+    <pre><code class="language-python">from markupsafe import escape
+@app.route("/&lt;foo&gt;")
+def foo_page(foo):
+  return f"Hello, {escape(foo)}!"</code></pre>
+    <p>Si, por ejemplo, el usuario introduce un <code>"&lt;script&gt;alert("BAD!")&lt;/script&gt;"</code> en <code>foo</code>, este sera escapado a <code>"&amp;lt;script&amp;gt;alert("BAD!")&amp;lt;/script&amp;gt;"</code> antes de ser renderizado o introducido en la pagina</p>
+  </section>
+  <section>
+    <h2 id="request">Request</h2>
+    <p>Para las <b>aplicaciones Web</b> es crucial saber responder a ciertas <b>peticiones clientes</b> sea por el <b>metodo HTTP</b> que fuere (<code>"GET"</code>, <code>"POST"</code>, etc) <br> En <b>Flask</b> esta informacion es obtenida mediante el objeto global <code>request</code> <br> A continuacion, algunos ejemplos de uso del objeto <code>request</code></p>
+    <pre><code class="language-python">from flask import request
+
+@app.route("/home")
+def home(): # Metodo por defecto es "GET"
+  return "&lt;h1&gt;This is the home page&lt;/h1&gt;" # Responde con un HTML
+  # Ejemplo de peticion: url = "http://www.ejemplo.com/"
+
+@app.route("/video")
+def go_to_video(): # Metodo por defecto es "GET"
+  search = request.args.get("id")
+  result = search_video(search)
+  return result;   # Responderia con un HTML
+  # Ejemplo de peticion: url = "http://www.ejemplo.com/video?id=012345/"
+
+@app.route("/login", methods=["POST", "GET"])
+def login(): # Metodos son "POST" y "GET"
+  if request.method == "POST":
+    # Este caso aplica si se envia un formulario mediante
+    # el metodo "POST"
+    if valid_login(request.form["username"], request.form["password"]):
+      return log_the_user_in(request.form["username"])   # Responderia con un HTML
+  else:
+    return "&lt;h1&gt;Error. Invalid request&lt;/h1&gt;" # Responderia con un HTML
+  # Ejemplo de peticion: url = "http://www.ejemplo.com/login/",
+  # form = { username : "John", password : "123"}
+
+@app.route("/other-service", methods=["POST", "GET"])
+def misc(): # Metodo por defecto son "POST" y "GET"
+  # Este caso aplica si se envia un JSON
+  if request.method == "POST" || request.method == "GET":
+    return {
+      "foo" : f"We are listened to {request.args.get('foo')}"
+    }
+  else:
+    return "Error. Invalid request"
+  # Ejemplo de peticion: url = "http://www.ejemplo.com/other-service/",
+  # { 'method': 'POST', 'headers': { 'Content-Type': 'application/json' },
+  # 'body': { 'foo' : 'Hello, world!' }</code></pre>
+    <section>
+      <h3 id="file-up">Subida de archivos</h3>
+      <p><b>Flask</b> permite el sencillo manejo de archivos subidos al servidor. Solo es importante recordar el definir el atributo <code>enctype="multipart/form-data"</code> en el <b>formuario HTML</b>. De lo contrario podria ocurrir un infortunio en el proceso <br> Los archivos son temporalmente alojados en la memoria o en un directorio temporal. Podemos acceder a ellos obteniendo el atributo correspondiente del <code>request</code>. Cada archivo subido es guardado en un dato <code>dict</code>. Este se comportaria como un <b>objeto archivo</b> standard de <b>Python</b>, pero pueden ser guardados en el almacenamiento local con el metodo <code>save</code></p>
+      <pre><code class="language-python">from flask import request
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+  if request.method == 'POST':
+    f = request.files['the_file']
+    f.save('/var/www/uploads/uploaded_file.txt')</code></pre>
+      <p>Si queremos saber como el archivo fue llamado seguin el cliente, podemos acceder al atributo <code>filename</code>. Sin embargo, es de tener en cuenta que este nombre puede tnere un valor inseguro, por lo que es recomendable usar la funcion <code>secure_filename</code> del modulo <code>werkzeug.utils</code></p>
+      <pre><code class="language-python">from werkzeug.utils import secure_filename
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+  if request.method == 'POST':
+    file = request.files['the_file']
+    file.save(f"/var/www/uploads/{secure_filename(file.filename)}")</code></pre>
+    </section>
+    <section>
+      <h3 id="cookies">Cookies</h3>
+      <p>Los cookies son datos guardados en archivos chiquitos dentro del computador cliente. Sirven para que el servidor pueda recordar cierta informacion del cliente <br> Para acceder a los cookies del cliente, podemos acceder al atributo <code>cookies</code> del objeto <code>request</code>. Este atributo es un <code>dict</code> que contiene todos los cookies que el cliente transmite</p>
+      <pre><code class="language-python">from flask import request, make_response
+
+@app.route('/')
+def index():
+    # [ Leyendo cookies ]
+    username = request.cookies.get('username')
+    # Es recomendable usar 'cookies.get(key)' en lugar de
+    # 'cookies[key]' para no obtener un 'KeyError' si el cookie
+    # no es encontrado
+
+    # [ Escribiendo cookies ]
+    resp = make_response(render_template(...))
+    resp.set_cookie('username', 'the username')
+    return resp</code></pre>
+    </section>
+    <section>
+      <h3 id="sessions">Sessions</h3>
+      <p>En adicion al objeto <code>request</code>, hay un segundo objeto llamado <code>session</code> que permite guardar informacion especifica a un usuario desde un <code>request</code> a otro <br> Esto es implementado sobre los cookies para su facil acceso. Lo que significa que los usuarios pueden ver contenidos de una cookie pero no modificarla, a no ser que sepa la <b>clave secreta de acceso</b></p>
+      <pre><code class="language-python">from flask import session
+
+# Define una contrasenia secreta. Trata de que sea muy segura
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+@app.route('/')
+def index():
+  if 'username' in session:
+    return f'Logged in as {session["username"]}'
+  return 'You are not logged in'
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  if request.method == 'POST':
+    session['username'] = request.form['username']
+    return redirect(url_for('index'))
+  return '''&lt;form method="post"&gt;
+  &lt;p&gt;&lt;input type=text name=username&gt;
+  &lt;p&gt;&lt;input type=submit value=Login&gt;
+&lt;/form&gt;'''
+
+@app.route('/logout')
+def logout():
+  # Elimina el nombre de usuario de la sesion si es que alli esta
+  session.pop('username', None)
+  return redirect(url_for('index'))</code></pre>
+      <section>
+        <h4 id="sessions-0">Como generar buenas claves secretas</h4>
+        <p>Una clave secreta debe ser lo mas aleatoria posible. El sistema operativo tiene varias maneras de generar datos aleatorios basados en un generador de criptografia aleatorio. Usando el siguiente comando, puede generar una clave secreta para <code>Flask.secret_key</code></p>
+        <div class="w3-container tabmanager">
+          <div class="w3-bar">
+            <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+            <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+          </div>
+          <section class="w3-border w3-panel msdos-tabpanel">
+            <pre><code class="language-shell">&gt; py -c 'import secrets; print(secrets.token_hex())'</code></pre>
+          </section>
+          <section class="w3-border w3-panel unix-tabpanel">
+            <pre><code class="language-sh">$ python -c 'import secrets; print(secrets.token_hex())'</code></pre>
+          </section>
+        </div>
+        <div class="w3-panel note">
+          <p><b>Note</b>: Flask tomara los valores que pongas dentro del objeto <code>sessions</code> y lo va a serializar dentro de una cookie. Si encuentras que algunos valores no persisten alreadedor de las solicitudes (<code>request</code>), los cookies estan activadas y no recibe un mensaje de error claro, verifique el tamanio de la cookie en las respuestas de la <b>pagina web</b> en comparacion con el admitido por los <b>browsers</b></p>
+        </div>
+        <p>Ademas de las sesiones predeterminadas basadas del <b>Frontend</b>, tambien podemos manejar sesiones del lado del <b>backend</b> con algunas extensiones de <b>Flask</b></p>
+      </section>
+    </section>
+  </section>
+  <section>
+    <h2 id="redirects">Redirects and Errors</h2>
+    <p>Para redirigir al cliente a otro punto, podemos usar la funcion <code>redirect</code>; para abortar una peticion con un codigo de error, podemos usar la funcion <code>abort</code></p>
+    <pre><code class="language-python">from flask import abort, redirect, url_for
+
+@app.route("/")
+def index():
+  # Redireccionando a otra URL
+  return redirect(url_for("homepage"))
+
+@app.route("/home/")
+def homepage():
+  # Abortando una peticion con un codigo
+  abort(401) # 401 : access denied
+  never_be_executed()</code></pre>
+    <p>Podemos personalizar una pagina de error con el decorador <code>@app.errorhandler</code></p>
+    <pre><code class="language-python">from flask import render_template
+
+@app.errorhandler(404)
+def page_not_found(err):
+  return render_template("page_not_found.html"), 404</code></pre>
+    <p>Notese ese <code>404</code> despues de la funcion <code>render_template</code>. Esto es importante para indicar a <b>Flask</b> cual es el codigo de estado de la pagina (por defecto es <code>200</code>, que indica a <b>Flask</b> que la peticion fue recibida adecuadamente</p>
+  </section>
+  <section>
+    <h2 id="responses">Acerca de las respuestas</h2>
+    <p>El valor retornado de una funcion de vista (como lo es <code>render_template</code>) es automaticamente convertido a un objeto de respuesta. Si el valor de retorno es un <code>str</code>, este valor es convertido a un objeto de respuesta desde el <code>body</code>, un codigo de estado <code>200</code> (OK) y un <i>text/html</i> mimetype. Si el valor de retorno es un <code>dict</code>, la funcion <code>jsonify</code> es llamada para producir una respuesta en formato <b>JSON</b>. <br> La logica de <b>Flask</b> aplica al convertir valores en objetos de respuesta es mas o menos la siguiente:</p>
+    <ol>
+      <li>Si un objeto de respuesta es del tipo correcto, es retornada directamente desde la vista (por ejemplo, un <code>return jsonify({foo: 'bar'})</code>)</li>
+      <li>Si es un <code>str</code>, un objeto de respuesta es creado con esos datos y sus parametros por defecto</li>
+      <li>Si es un <code>dict</code>, el objeto de respuesta es pasado por la funcion <code>jsonify</code></li>
+      <li>Si es un <code>tuple</code>, los items de la tupla pueden proveer cierta informacion (por ejemplo: <code>(response, status)</code>, <code>(response, headers)</code> o <code>(response, status, header)</code>. Donde <code>status</code> usualmente es un <code>int</code>; <code>headers</code> puede venir en <code>list</code> o <code>dict</code>)</li>
+      <li>Si nada de esto es respetado o funciona, <b>Flask</b> asumira que el valor de retorno es una <b>aplicacion WSGI</b> valida y la convertira a un objeto de respuesta</li>
+    </ol>
+    <p>Podemos obtener este objeto de respuesta directamente mediante la funcion <code>make_response</code>, o basicamente lo siguiente...</p>
+    <pre><code class="language-python">from flask import render_template, make_response
+
+""" [ Esto es lo usual ]
+@app.errorhandler(404)
+def not_found(err):
+  return render_template("error.html"), 404
+"""
+
+# Esto seria usando la funcion 'make_response'
+@app.errorhandler(404)
+def not_found(err):
+  resp = make_response(render_template("error.html"), 404)
+  resp.headers["X_Something"] = "A value"
+  return resp</code></pre>
+    <section>
+      <h3 id="api">APIs con JSON</h3>
+      <p>Un formato de respuesta comun al escribir <b>API</b>s es usando <b>JSON</b>. Don <b>Flask</b> facilita de a grapas este trabajo. Si retornamos un <code>dict</code>, como se dijo antes, <b>Flask</b> lo convertira (mediante la funcion <code>jsonify</code>) en una respuesta <b>JSON</b></p>
+      <pre><code class="language-python">@app.route("/me")
+def me_api():
+  user = get_current_user()
+  return {
+    "username" : user.username,
+    "theme" : user.theme,
+    "image" : url_for("static", filename=user.image),
+  }</code></pre>
+      <p>Dependiendo del disenio de tu <b>API</b>, podrias crear respuestas <code>JSON</code> para otros tipos de datos ademas de <code>dict</code>. En ese caso, podemos usar manualmente la funcion <code>jsonify</code>, que serializa cualquier dato soportado con <b>JSON</b>. O claro, podemos ver otras extensiones de <b>Flask</b> de terceros</p>
+      <pre><code class="language-python">from flask import jsonify
+
+@app.route("/users")
+def users_api():
+  users = get_all_users()
+  return jsonify([user.to_json() for user in users])</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2 id="feedback">Feedback</h2>
+    <p>Buenas <b>aplicaciones Web</b> (al igual que casi cualquier tipo de aplicaciones) generalmente tienen acceso a todo acerca del <b>feedback</b>. <b>Flask</b> provee un <b>sistema de flashing</b>, que facilita mucho el trabajo de desarrollar un <b>feedback</b> al usuario. El <b>sistema de flashing</b> basicamente hace lo posible para leer un mensaje al final de una peticion y accede a el mediante la siguiente (y solo la siguiente) peticion. Esto es usualmente combinado con un <b>layout_template</b> para exponer dicho mensaje <br> Para hacer <b>flash</b> a un mensaje, podemos usar la funcion <code>flash</code>; para obtener los mensajes <b>flasheados</b>, podemos usar la funcion <code>get_flashed_messages</code> que se encuentra disponible dentro de las plantillas. Favor, vease el <a href="https://flask.palletsprojects.com/en/2.1.x/patterns/flashing/">ejemplo completo de <b>Message Flashing</b></a></p>
+  </section>
+  <section>
+    <h2 id="logging">Logging</h2>
+    <p>A veces es importante verficar y leer ciertos mensajes (y mas cuando de depuracion hablamos) en el servidor. Estos mensajes son llamados <b>logs</b>, y permiten verificar que en un flujo de datos determinado, algunos mensajes sean enviados a la consola principal del servidor <br> <b>Flask</b> integra el objeto <code>logger</code> para realizar este tipo de trabajos</p>
+    <pre><code class="language-python">app.logger.debug("Un log para debugging")
+app.logger.warning("Un log de advertencia")
+app.logger.error("Un log de error")</code></pre>
+  </section>
+  <section>
+    <h2 id="middleware">Middleware del WSGI</h2>
+    <p>Para agregar un middleware al <b>WSGI</b> de la <b>aplicacion Web</b>, podemos ajustar el atributo <code>wsgi_app</code> de la aplicacion. Por ejemplo, podemos aplicar el middleware <code>ProxyFix</code> de <b>Werkzeug</b> para ejecutar detras de <b>Nginx</b></p>
+    <pre><code class="language-python">from werkzeug.middleware.proxy_fix import ProxyFix
+
+app.wsgi_app = ProxyFix(app.wsgi_app)</code></pre>
+    <p>Envolver <code>app.wsgi_app</code> en lugar de <code>app</code> significa que <code>app</code> contiene la aplicacion de <b>Flask</b>, no el middleware. Por lo que podremos seguir usando <code>app</code> naturalmente</p>
+  </section>
+  <section>
+    <h2 id="extensions">Extensiones</h2>
+    <p>Probablemente una de las mejores cosas de <b>Flask</b>. Podemos extenderlo tanto como deseemos creando o descargando extensiones de la comunidad <br> Las extensiones son paquetes que facilitan la resolucion de tareas comunes. Por ejemplo, <code>Flask-SQLAlchemy</code>, que provee soporte a <b>SQLAlchemy</b> y lo integra de manera sencilla a <b>Flask</b> <br> Podemos ver mas acerca de extensiones de <b>Flask</b> <a href="https://flask.palletsprojects.com/en/2.1.x/extensions/">aqui</a></p>
+  </section>
+  <section>
+    <h2 id="deploy">Deploy</h2>
+    <p>He aqui una <a href="https://flask.palletsprojects.com/en/2.1.x/deploying/">guia oficial de <b>Flask</b> para realizar el <b>deploy</b> de nuestras <b>aplicaciones Web</b></a></p>
+  </section>
+</article>
+{% endblock %}

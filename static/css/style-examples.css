@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+}
+table, td {
+  border: solid 1px #333;
+}
+table > thead > tr > th {
+  border: solid 1px #333;
+}
+table > tbody > tr > td {
+  background-color: hsl(0, 0%, 8%);
+}
+table > tbody > tr > td > code {
+  border: none !important;
+}

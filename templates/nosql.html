@@ -1,0 +1,69 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/database.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-nosql.css') }}">
+<script src="{{ url_for('static', filename='js/script-nosql.js') }}"></script>
+{% endblock %}
+
+{% block title %}Bases de datos NoSQL{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Base de datos NoSQL</h1>
+  <p>Una <b>base de datos</b> es un contenedor de informacion, donde podemos guardar y almacenar datos referentes a un tema en especifico. Las bases de datos pueden dividirse entre <b>Relacionales</b> y <b>No relacionales</b>. En este caso, las <b>bases de datos no relacionales</b>, a diferencia de las <b>relacionales</b>, buscan mayor velocidad que organizacion, puesto a que en estos es admitible la repeticion de datos (esto es compensado por las altas velocidades de operacion que ofrecen). En estos sistemas de bases de datos, por lo general, no se utiliza la tecnologia <b>SQL</b>, y en su lugar, ofrecen una <i>API</i> propia que permite el acceso al <b>CRUD</b>. <br> Algunos ejemplos famosos de este tipo de sistemas gestores bases de datos son <b>MongoDB</b>, <b>Redis</b>, <b>Cassandra</b>, <b>CouchDB</b>, etc</p>
+</div>
+<img src="{{ url_for('static', filename='img/database.svg') }}" alt="sql">
+{% endblock %}
+
+{% block index %}
+<li><a href="#intro">Sistemas gestores de bases de datos</a></li>
+<ul class="w3-ul mongodb-index">
+  <li><a href="#database-0">MongoDB</a></li>
+</ul>
+<ul class="w3-ul redis-index">
+  <li><a href="#database-1">Redis</a></li>
+</ul>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="intro">Sistemas gestores de bases de datos</h2>
+  <p>Un <b>Sistema gestor de bases de datos</b> es un conjunto de herramientas que ofrecen una <b>interfaz de trabajo con bases de datos</b>. Una base de datos, por otro lado, es un conjunto de datos serializados que funcionan en formato de <b>tablas</b> con <b>campos</b> y <b>registros</b>. Dependiendo de si sea <b>SQL</b> o <b>NoSQL</b> puede ofrecer la capacidad de <b>relacionar tablas entre si o no</b> <br> Esta seria una representacion grafica de una base de datos no relacional</p>
+  <div class="w3-row ">
+    <ul class="w3-third w3-ul">
+      <li class="w3-black">Usuarios</li>
+      <li>Maria</li>
+      <li>John</li>
+      <li>Max</li>
+      <li>Dario</li>
+      <li>Charles</li>
+      <li>Ethan</li>
+    </ul>
+    <ul class="w3-third w3-ul">
+      <li class="w3-black">Curso A</li>
+      <li>Maria</li>
+      <li>Max</li>
+      <li>Ethan</li>
+    </ul>
+    <ul class="w3-third w3-ul">
+      <li class="w3-black">Curso B</li>
+      <li>John</li>
+      <li>Dario</li>
+      <li>Charles</li>
+    </ul>
+  </div>
+</section>
+<section>
+  <div class="w3-container tabmanager-special">
+    <div class="w3-bar">
+      <button class="w3-bar-item w3-button mongodb-tab">MongoDB</button>
+      <button class="w3-bar-item w3-button redis-tab">Redis</button>
+    </div>
+    <section class="w3-border w3-panel mongodb-tabpanel">
+    </section>
+    <section class="w3-border w3-panel redis-tabpanel">
+    </section>
+  </div>
+</section>
+{% endblock %}

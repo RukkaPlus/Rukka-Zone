@@ -1,0 +1,707 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/internet.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-browser.css') }}">
+<script src="{{ url_for('static', filename='js/web/script-browser.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/axios.min.js') }}"></script>
+{% endblock %}
+
+{% block title %}Browser{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Browser</h1>
+  <p>Esta pagina (entrada) es dedicada al <b>uso de JavaScript en el Frontend</b>. El Frontend es el trabajo dirigido al <b>lado del cliente</b>. Principalmente se trata del comportamiento de la <b>pagina</b>, <b>sitio</b> o <b>aplicacion Web</b></p>
+</div>
+<img src="{{ url_for('static', filename='img/internet.svg') }}" alt="browser">
+{% endblock %}
+
+{% block index %}
+<li><a href="#dom">Scripts en el <b>DOM</b></a></li>
+<li><a href="#dom-0">Obteniendo elementos</a></li>
+<li><a href="#dom-1">Cambiando contenido de elementos</a></li>
+<li><a href="#dom-2">Cambiando atributos de elementos</a></li>
+<li><a href="#dom-3">Cambiando estilos de elementos</a></li>
+<li><a href="#dom-4">Ocultando y mostrando elementos</a></li>
+<li><a href="#dom-5">Manejadores de eventos</a></li>
+<li><a href="#dom-5-0">Algunos manejadores de eventos</a></li>
+<li><a href="#dom-5-1">El metodo <code>addEventListener()</code></a></li>
+<li><a href="#dom-6">Formularios</a></li>
+<li><a href="#dom-7">Algunos conceptos utiles para la validacion de formularios</a></li>
+<li><a href="#dom-7-0">Constraint Validation HTML Input Attributes</a></li>
+<li><a href="#dom-7-1">Constraint Validation CSS Pseudo Selectors</a></li>
+<li><a href="#dom-8">Glosario</a></li>
+<li><a href="#bom">Scripts en el <b>BOM</b></a></li>
+<li><a href="#bom-0">Dimensiones del viewport</a></li>
+<li><a href="#bom-1">Pantalla del navegador</a></li>
+<li><a href="#bom-2">Localizacion de paginas</a></li>
+<li><a href="#bom-3">Historial del navegador</a></li>
+<li><a href="#bom-4">Informacion del navegador</a></li>
+<li><a href="#bom-5">Almacenamiento del navegador</a></li>
+<li><a href="#bom-5-0">Propiedades y metodos</a></li>
+<li><a href="#bom-6">Popups</a></li>
+<li><a href="#bom-7">Geolocalizacion</a></li>
+<li><a href="#bom-7-0">Propiedades y metodos</a></li>
+<li><a href="#bom-8">Formularios</a></li>
+<li><a href="#bom-9">Eventos de tiempo</a></li>
+<li><a href="#bom-10">Cookies</a></li>
+<li><a href="#bom-11">Otros metodos</a></li>
+<li><a href="#ajax">AJAX</a></li>
+<li><a href="#ajax-0">Usando Axios</a></li>
+<li><a href="#ajax-1">Glosario</a></li>
+<li><a href="#canvas">El elemento <code>canvas</code></a></li>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="dom">Scripts en el DOM</h2>
+  <p>El <b>DOM</b> es el objeto representativo de la pagina Web. En <b>JavaScript</b> podemos acceder a el mediante el objeto <code>document</code></p>
+  <section>
+    <h3 id="dom-0">Obteniendo elementos</h3>
+    <p>Para alterar un elemento del <b>DOM</b> es necesario obtenerlo. Podemos obtenerlo de diferentes maneras...</p>
+    <ul>
+      <li>Mediante <b>id</b> : Usando el metodo <code>getElementById()</code>. Es la mas empleada, y no puede haber mas de un elemento con la misma <b>id</b></li>
+      <li>Mediante su <b>nombre de elemento</b> : Usando el metodo <code>getElementsByTagName()</code>. Por ejemplo: <code>document.getElementsByTagName('div');</code>
+      <li>Mediante su <b>clase</b> : Usando el metodo <code>getElementsByClassName()</code>. Por ejemplo: <code>document.getElementsByClassName('principal-items');</code></li>
+      <li>Mediante el <b>atributo <code>name</code></b> : Usando el metodo <code>getElementsByName()</code>. Por ejemplo: <code>document.getElementsByName('entrada-email');</code></li>
+    </ul>
+    <p>Es posible acceder a elementos con otros metodos, pero estos son los mas utilizados <br> Las tres ultimas propiedades listadas retornan un objeto de tipo <code>HTMLCollection</code>, que actua como un <code>Array</code> (aunque no lo es) y posee varios elementos dentro</p>
+  </section>
+  <section>
+    <h3 id="dom-1">Cambiando contenido de elementos</h3>
+    <p>Primero debemos obtener el elemento. Este elemento tiene un atributo llamado <code>innerHTML</code>, que tiene el contenido del elemento y podemos alterarlo directamente</p>
+    <pre><code class="language-js">let element = document.getElementById("element");
+element.innerHTML = 'Fui alterado por JavaScript';</code></pre>
+    <button class="w3-button" onclick="altElement0();">Ejecutar</button>
+    <div class="example-cont">
+      <p id="element-0">JavaScript deberia alterarme</p>
+    </div>
+  </section>
+  <section>
+    <h3 id="dom-2">Cambiando atributos de elementos</h3>
+    <p>Este ejemplo fue tomado de <a href="https://www.w3schools.com/Js/js_intro.asp">w3schools</a> <br> En el siguiente ejemplo se va a cambiar el valor del atributo <code>src</code>, que en otras palabras, cambiara la imagen</p>
+    <pre><code class="language-js">let element = document.getElementById("element");
+function turnOn() {
+  element.src = 'src/pic_bulbon.gif';
+}
+function turnOff() {
+  element.src = 'src/pic_bulboff.gif';
+}</code></pre>
+    <div class="example-cont-big">
+      <button class="w3-button" onclick="altElement1A();">Encender</button>
+      <img src="{{ url_for('static', filename='other/example-js-0.gif') }}" alt="Bulb" id="element-1">
+      <button class="w3-button" onclick="altElement1B();">Apagar</button>
+    </div>
+  </section>
+  <section>
+    <h3 id="dom-3">Cambiando estilos de elementos</h3>
+    <p>En el siguiente ejemplo se cambiara el <code>font-size</code> a <code>35px</code> del siguiente elemento</p>
+    <pre><code class="language-js">let element = document.getElementById("element");
+element.style.fontSize = '35px';</code></pre>
+    <button class="w3-button" onclick="altElement2();">Ejecutar</button>
+    <div class="example-cont">
+      <p id="element-2">JavaScript deberia alterarme</p>
+    </div>
+  </section>
+  <section>
+    <h3 id="dom-4">Ocultando y mostrando elementos</h3>
+    <p>Es posible alterar el <b>display</b> de los items usando <b>JavaScript</b></p>
+    <pre><code class="language-js">let element = document.getElementById("element");
+function makeInvisible() {
+  element.style.visibility = 'hidden';
+}
+function makeVisible() {
+  element.style.visibility = 'visible';
+}</code></pre>
+    <div class="example-cont-big">
+      <button class="w3-button" onclick="altElement3A();">Ocultar</button>
+      <p id="element-3">JavaScript deberia alterarme</p>
+      <button class="w3-button" onclick="altElement3B();">Mostrar</button>
+    </div>
+  </section>
+  <section>
+    <h3 id="dom-5">Manejadores de eventos</h3>
+    <p>Para ejecutar codigo <b>JavaScript</b> en HTML generalmente se utilizan los <b>manejadores de eventos</b>, que permiten colocar codigo <b>JavaScript</b> dentro de elementos de HTML</p>
+    <pre><code class="language-html">&lt!-- Colocando un evento dentro de un elemento HTML -->
+&ltelement event="// Aqui va codigo de JavaScript"&gt&lt/element&gt</code></pre>
+    <section>
+      <h4 id="dom-5-0">Algunos manejadores de eventos</h4>
+      <ul>
+        <li><code>onchange</code> : Cuando un elemento es cambiado</li>
+        <li><code>onclick</code> : Cuando un elemento es clickeado</li>
+        <li><code>onmouseover</code> : Cuando el mouse queda encima de un elemento</li>
+        <li><code>onmouseout</code> : Cuando el mouse queda fuera del un elemento</li>
+        <li><code>onkeydown</code> : Cuando una tecla es pulsada</li>
+        <li><code>onload</code> : Cuando el navegador termina de cargar la pagina</li>
+      </ul>
+      <pre><code class="language-html">&lt!-- El mas utilizado en esta pagina -->
+&ltbutton onclick="myFunction()"&gtClick me!&lt/button&gt</code></pre>
+    </section>
+    <section>
+      <h4 id="dom-5-1">El metodo <code>addEventListener()</code></h4>
+      <p>Es un metodo que puede ser aplicado a los elementos, y su syntax es <code>addEventListener(event, function)</code>. El primer parametro permite especificar el manejador de evento en formato de <b>String</b> (que pueden ser todos los anteriores pero sin el prefijo "<code>on</code>"</p>
+      <pre><code class="language-js">// El mismo ejemplo anterior
+let element = document.getElementsById("element");
+element.addEventListener("click", myFunction);</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="dom-6">Formularios</h3>
+    <p>Podemos manejar formularios directamente desde <b>JavaScript</b> usando <code>document.forms</code>. El siguiente ejemplo los simplifica</p>
+    <pre><code class="language-html">&ltform name="example-form" onsubmit="return validate()" method="post"&gt
+  Ingresa algun valor : &ltinput type="text" name="example-input"&gt
+  &ltinput type="submit" value="Aceptar"&gt
+&lt/form&gt</code></pre>
+    <pre><code class="language-js">function validate() {
+  let elementValue = document.forms["example-form"]["example-input"].value;
+  if (elementValue == "") {
+    alert('Necesitas llenar el campo');
+    return false;
+  } else if (elementValue == "Lucca" || elementValue == "Rukka") {
+    alert('Pero por su mecha. Que hace un dios aca?');
+  }
+}</code></pre>
+    <div class="example-container">
+      <form name="example-form-0" onsubmit="return form0();" method="post">
+        Ingresa algun valor : <input type="text" name="example-input">
+        <input type="submit" value="Aceptar">
+      </form>
+    </div>
+  </section>
+  <section>
+    <h3 id="dom-7">Algunos conceptos utiles para la validacion de formularios</h3>
+    <section>
+      <h4 id="dom-7-0">Constraint Validation HTML Input Attributes</h4>
+      <ul>
+        <li><code>disabled</code> : Specifies that the input element should be disabled</li>
+        <li><code>max</code> : Specifies the maximum value of an input element</li>
+        <li><code>min</code> : Specifies the minimum value of an input element</li>
+        <li><code>pattern</code> : Specifies the value pattern of an input element</li>
+        <li><code>required</code> : Specifies that the input field requires an element</li>
+        <li><code>type</code> : Specifies the type of an input element</li>
+      </ul>
+    </section>
+    <section>
+      <h4 id="dom-7-1">Constraint Validation CSS Pseudo Selectors</h4>
+      <ul>
+        <li><code>:disabled</code> : Selects input elements with the "disabled" attribute specified</li>
+        <li><code>:invalid</code> : Selects input elements with invalid values</li>
+        <li><code>:optional</code> : Selects input elements with no "required" attribute specified</li>
+        <li><code>:required</code> : Selects input elements with the "required" attribute specified</li>
+        <li><code>:valid</code> : Selects input elements with valid values</li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <div class="glossary">
+      <h3 id="dom-8">Glosario</h3>
+      <p>Esto fue extraido de <a href="https://www.w3schools.com/Js/js_htmldom_document.asp" target="blank">w3schools</a></p>
+      <section>
+        <h4>Finding HTML Elements</h4>
+        <ul>
+          <li><code>document.getElementById(id)</code> : Find an element by element id </li>
+          <li><code>document.getElementsByTagName(name)</code> : Find elements by tag name </li>
+          <li><code>document.getElementsByClassName(name)</code> : Find elements by class name </li>
+        </ul>
+      </section>
+      <section>
+        <h4>Changing HTML Elements</h4>
+        <ul>
+          <li><code>element.innerHTML =  "new html content"</code> : Change the inner HTML of an element</li>
+          <li><code>element.attribute = "new value"</code> : Change the attribute value of an HTML element</li>
+          <li><code>element.style.property = "new style"</code> : Change the style of an HTML element</li>
+          <li><code>element.setAttribute(attribute, value)</code> : Change the attribute value of an HTML element</li>
+        </ul>
+      </section>
+      <section>
+        <h4>Adding and Deleting Elements</h4>
+        <ul>
+          <li><code>document.createElement(element)</code> : Create an HTML element</li>
+          <li><code>document.removeChild(element)</code> : Remove an HTML element</li>
+          <li><code>document.appendChild(element)</code> : Add an HTML element</li>
+          <li><code>document.replaceChild(new, old)</code> : Replace an HTML element</li>
+          <li><code>document.write(text)</code> : Write into the HTML output stream</li>
+        </ul>
+      </section>
+      <section>
+        <h4>Adding Events Handlers</h4>
+        <ul>
+          <li><code>document.getElementById(id).onclick = function(){code}</code> : Adding event handler code to an onclick event</li>
+        </ul>
+      </section>
+      <section>
+        <h4>Finding HTML Objects</h4>
+        <p>The first HTML <b>DOM</b> Level 1 (1998), defined 11 HTML objects, object collections, and properties. These are still valid in HTML5. <br>
+        Later, in HTML <b>DOM</b> Level 3, more objects, collections, and properties were added.</p>
+        <ul>
+          <li><code>document.anchors</code> : Returns all &lta&gt elements that have a name attribute</li>
+          <li><code>document.applets</code> : Deprecated</li>
+          <li><code>document.baseURI</code> : Returns the absolute base URI of the document</li>
+          <li><code>document.body</code> : Returns the &ltbody&gt element</li>
+          <li><code>document.cookie</code> : Returns the document's cookie</li>
+          <li><code>document.doctype</code> : Returns the document's doctype</li>
+          <li><code>document.documentElement</code> : Returns the &lthtml&gt element</li>
+          <li><code>document.documentMode</code> : Returns the mode used by the browser</li>
+          <li><code>document.documentURI</code> : Returns the URI of the document</li>
+          <li><code>document.domain</code> : Returns the domain name of the document server</li>
+          <li><code>document.domConfig</code> : Obsolete.</li>
+          <li><code>document.embeds</code> : Returns all &ltembed&gt elements</li>
+          <li><code>document.forms</code> : Returns all &ltform&gt elements</li>
+          <li><code>document.head</code> : Returns the &lthead&gt element</li>
+          <li><code>document.images</code> : Returns all &ltimg&gt elements</li>
+          <li><code>document.implementation</code> : Returns the <b>DOM</b> implementation</li>
+          <li><code>document.inputEncoding</code> : Returns the document's encoding (character set)</li>
+          <li><code>document.lastModified</code> : Returns the date and time the document was updated</li>
+          <li><code>document.links</code> : Returns all &ltarea&gt and &lta&gt elements that have a href attribute </li>
+          <li><code>document.readyState</code> : Returns the (loading) status of the document</li>
+          <li><code>document.referrer</code> : Returns the URI of the referrer (the linking document)</li>
+          <li><code>document.scripts</code> : Returns all &ltscript&gt elements</li>
+          <li><code>document.strictErrorChecking</code> : Returns if error checking is enforced</li>
+          <li><code>document.title</code> : Returns the &lttitle&gt element</li>
+          <li><code>document.URL</code> : Returns the complete URL of the document</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</section>
+<section>
+  <h2 id="bom">Scripts en el BOM</h2>
+  <p>El <b>BOM</b> es el objeto representativo del navegador. En <b>JavaScript</b> podemos acceder a el mediante el objeto <code>window</code></p>
+  <section>
+    <h3 id="bom-0">Dimensiones del viewport</h3>
+    <p>Es posible obtener estos datos mediante dos atributos que nos ofrece el <b>BOM</b></p>
+    <ul>
+      <li><code>window.innerHeight</code> : La altura del <b>viewport</b> (en pixeles)</li>
+      <li><code>window.innerWidth</code> : El ancho del <b>viewport</b> (en pixeles)</li>
+    </ul>
+    <pre><code class="language-js">let elementH = document.getElementById("element-0");
+let elementW = document.getElementById("element-1");
+elementH.innerHTML = window.innerHeight;
+elementW.innerHTML = window.innerWidth;</code></pre>
+    <button class="w3-button" onclick="altElement4();">Ejecutar</button>
+    <div class="example-cont">
+      <p>La altura del <b>viewport</b> es de : <b id="element-4A">...</b></p>
+      <p>La longitud del <b>viewport</b> es de : <b id="element-4B">...</b></p>
+    </div>
+  </section>
+  <section>
+    <h3 id="bom-1">Pantalla del navegador</h3>
+    <p>El objeto <code>window.screen</code> tiene metodos y atributos que nos permite trabajar con la pantalla. Cabe aclarar que <code>screen</code> puede ser escrito sin el prefijo <code>window</code></p>
+    <ul>
+      <li><code>screen.width</code> : Retorna el ancho de la pantalla cliente</li>
+      <li><code>screen.height</code> : Retorna el alto de la pantalla cliente</li>
+      <li><code>screen.availWidth</code> : Retorna el ancho disponible de la pantalla cliente</li>
+      <li><code>screen.availHeight</code> : Retorna el alto disponible de la pantalla cliente</li>
+      <li><code>screen.colorDepth</code> : Retorna el numero de bits utilizados para mostrar colores (hardware de resolucion de colores)</li>
+      <li><code>screen.pixelDepth</code> : Retorna el numero de bits utilizados para mostrar pixeles (hardware de resolucion de colores)</li>
+    </ul>
+    <pre><code class="language-js">let elementW = document.getElementById("element-0");
+let elementH = document.getElementById("element-1");
+let elementAW = document.getElementById("element-2");
+let elementAH = document.getElementById("element-3");
+let elementC = document.getElementById("element-4");
+let elementP = document.getElementById("element-5");
+elementW.innerHTML = screen.width;
+elementH.innerHTML = screen.height;
+elementAW.innerHTML = screen.availWidth;
+elementAH.innerHTML = screen.availHeight;
+elementC.innerHTML = screen.colorDepth;
+elementP.innerHTML = screen.pixelDepth;</code></pre>
+    <button class="w3-button" onclick="altElement5();">Ejecutar</button>
+    <div class="example-cont">
+      <p>La longitud de la pantalla es de : <b id="element-5A">...</b></p>
+      <p>La altura de la pantalla es de : <b id="element-5B">...</b></p>
+      <p>La longitud disponible de la pantalla es de : <b id="element-5C">...</b></p>
+      <p>La altura disponible de la pantalla es de : <b id="element-5D">...</b></p>
+      <p>Los bits de color son de : <b id="element-5E">...</b></p>
+      <p>Los bits de pixel son de : <b id="element-5F">...</b></p>
+    </div>
+  </section>
+  <section>
+    <h3 id="bom-2">Localizacion de paginas</h3>
+    <p>El objeto <code>window.location</code> puede obtener el enlace de la pagina actual entre otras acciones</p>
+    <ul>
+      <li><code>window.location.href</code> : Retorna el href (URL) de la pagina actual</li>
+      <li><code>window.location.hostname</code> : Retorna el hostname de la pagina actual</li>
+      <li><code>window.location.pathname</code> : Retorna la direccion y el nombre del archivo con la pagina actual</li>
+      <li><code>window.location.protocol</code> : Retorna el protocolo de la pagina actual (http:// - https://)</li>
+      <li><code>window.location.assign()</code> : Carga un nuevo documento</li>
+    </ul>
+    <pre><code class="language-js">let elementURL = document.getElementById("element-0");
+let elementHN = document.getElementById("element-1");
+let elementPN = document.getElementById("element-2");
+let elementProtocol = document.getElementById("element-3");
+elementURL.innerHTML = window.location.href;
+elementHN.innerHTML = window.location.hostname;
+elementPN.innerHTML = window.location.pathname;
+elementProtocol.innerHTML = window.location.protocol;</code></pre>
+    <button class="w3-button" onclick="altElement6();">Ejecutar</button>
+    <div class="example-cont">
+      <p>La URL de la pagina es : <b id="element-6A">...</b></p>
+      <p>El hostname de la pagina es : <b id="element-6B">...</b></p>
+      <p>El pathname de la pagina es : <b id="element-6C">...</b></p>
+      <p>El protocolo de la pagina es : <b id="element-6D">...</b></p>
+    </div>
+    <pre><code class="language-js">window.location.assign("https://www.example.com/");</code></pre>
+    <button class="w3-button" onclick="newPage();">Ejecutar</button>
+  </section>
+  <section>
+    <h3 id="bom-3">Historial del navegador</h3>
+    <p>El objeto <code>window.history</code> contiene informacion del historial del navegador cliente. Tambien puede ser escrito sin el prefijo <code>window</code> <br> Solo tiene dos metodos, y son <code>history.back()</code> y <code>history.forward()</code> (que retroceden a la pagina anterior o avanzan a una pagina posterior respectivamente)</p>
+  </section>
+  <section>
+    <h3 id="bom-4">Informacion del navegador</h3>
+    <p>El objeto <code>window.navigator</code> contiente informacion del navegador cliente. Tambien puede ser escrito sin el prefijo <code>window</code></p>
+    <ul>
+      <li><code>navigator.cookieEnabled</code> : Retorna <code>true</code> si los cookies estan activados</li>
+      <li><code>navigator.userAgent</code> : Retorna el <b>userAgent header</b> enviado por el navegador al servidor (incluyendo informacion del cliente)</li>
+      <li><code>navigator.language</code> : Retorna el idioma del sistema cliente</li>
+      <li><code>navigator.onLine</code> : Retorna <code>true</code> si el sistema cliente esta en linea</li>
+    </ul>
+    <pre><code class="language-js">let elementC = document.getElementById("element-0");
+let elementUA = document.getElementById("element-1");
+let elementUL = document.getElementById("element-2");
+let elementOL = document.getElementById("element-3");
+elementC.innerHTML = navigator.cookieEnabled;
+elementUA.innerHTML = navigator.userAgent;
+elementUL.innerHTML = navigator.language;
+elementOL.innerHTML = navigator.onLine;</code></pre>
+    <button class="w3-button" onclick="altElement7();">Ejecutar</button>
+    <div class="example-cont">
+      <p>Los cookies estan habilitados? : <b id="element-7A">...</b></p>
+      <p>Cual es el header del userAgent? : <b id="element-7B">...</b></p>
+      <p>Cual es el idioma del usuario? : <b id="element-7C">...</b></p>
+      <p>El usuario esta en linea? : <b id="element-7D">...</b></p>
+    </div>
+  </section>
+  <section>
+    <h3 id="bom-5">Almacenamiento del navegador</h3>
+    <p>Los objetos <code>localStorage</code> y <code>sessionStorage</code> permiten almacenar datos dentro del navegador</p>
+    <pre><code class="language-js">// Guardando datos
+localStorage.setItem("name", "John");
+
+// Recibiendo datos
+let name = localStorage.getItem("name");</code></pre>
+    <p>Los datos pueden permanecer incluso por anios dentro del navegador. Sin embargo, si deseamos almacenar datos dentro del navegador solamente durante una sesion, usamos el objeto <code>sessionStorage</code></p>
+    <pre><code class="language-js">// Guardando datos
+sessionStorage.setItem("name", "John");
+
+// Recibiendo datos
+let name = sessionStorage.getItem("name");</code></pre>
+    <p>Una vez el navegador sea cerrado, lo almacenado en <code>localStorage</code> permanecera, mientras que lo almacenado en <code>sessionStorage</code> sera eliminado</p>
+    <section>
+      <h4 id="bom-5-0">Propiedades y metodos</h4>
+      <ul>
+        <li><code>key(n)</code> : Returns the name of the nth key in the storage</li>
+        <li><code>length</code> : Returns the number of data items stored in the Storage object</li>
+        <li><code>getItem(keyname)</code> : Returns the value of the specified key name</li>
+        <li><code>setItem(keyname, value)</code> : Adds that key to the storage, or update that key's value if it already exists</li>
+        <li><code>removeItem(keyname)</code> : Removes that key from the storage</li>
+        <li><code>clear()</code> : Empty all key out of the storage</li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <h3 id="bom-6">Popups</h3>
+    <p>Existen diferentes metodos y objetos que permiten los popups en el navegador</p>
+    <ul>
+      <li><code>alert('Texto')</code> : Salta un popup emergente con un texto</li>
+      <li><code>confirm('Texto')</code> : Salta un popup emergente con un texto y peticion de confirmacion. Retorna <code>true</code> si es aceptado</li>
+      <li><code>prompt('Texto', 'Entrada default (opcional)')</code> : Salta un popup emergente con un texto y una entrada de texto</li>
+    </ul>
+    <pre><code class="language-js">alert('Hello, world!');</code></pre>
+    <button class="w3-button" onclick="popup0();">Ejecutar</button>
+    <pre><code class="language-js">let result = confirm('Are you here?');
+if (result)
+  alert('Hello, world!');</code></pre>
+    <button class="w3-button" onclick="popup1();">Ejecutar</button>
+    <pre><code class="language-js">let result = prompt('What is your name?', 'world');
+if (result != null && result != "")
+  alert('Hello, ' + result + '!');
+else
+  alert('Hello, world!');</code></pre>
+    <button class="w3-button" onclick="popup2();">Ejecutar</button>
+  </section>
+  <section>
+    <h3 id="bom-7">Geolocalizacion</h3>
+    <p>Permite hallar la geoalizacion del usuario <br> Esto compromete una parte importante de la privacidad, por lo que primero se le preguntara el si acepta que esa informacion sea tomada <br> El objeto <code>navigator.geolocation</code> permite manejar este tipo de informaciones</p>
+    <pre><code class="language-js">if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(showPosition);
+} else {
+  alert("Geolocation is not supported by this browser");
+}
+function showPosition(position) {
+  alert("Latitud: " + position.coords.latitude +
+    "\nLongitud: " + position.coords.longitude);
+}</code></pre>
+    <button class="w3-button" onclick="geolocationExample();">Ejecutar</button>
+    <section>
+      <h4 id="bom-7-0">Propiedades y metodos</h3>
+      <ul>
+        <li><code>coords.latitude</code> : The latitude as a decimal number (always returned)</li>
+        <li><code>coords.longitude</code> : The longitude as a decimal number (always returned)</li>
+        <li><code>coords.accuracy</code> : The accuracy of position (always returned)</li>
+        <li><code>coords.altitude</code> : The altitude in meters above the mean sea level (returned if available)</li>
+        <li><code>coords.altitudeAccuracy</code> : The altitude accuracy of position (returned if available)</li>
+        <li><code>coords.heading</code> : The heading as degrees clockwise from North (returned if available)</li>
+        <li><code>coords.speed</code> : The speed in meters per second (returned if available)</li>
+        <li><code>timestamp</code> : The date/time of the response (returned if available)</li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <h3 id="bom-8">Formularios</h3>
+    <p>Es la API de los formularios. Lo que facilita el control de validacion de formularios</p>
+    <pre><code class="language-html">&ltform name="example-form-1"&gt
+  Ingresa un numero : &ltinput name="example-input" type="number" min="100" max="300" required&gt
+  &ltbutton onclick="form()"&gtAceptar&lt/button&gt
+&lt/form&gt</code></pre>
+    <pre><code class="language-js">// Ejemplo de 'checkValidity()'
+function form() {
+  const input = document.getElementById("element");
+  if (!inpObj.checkValidity()) {
+    alert(inpObj.validationMessage);
+  } else {
+    alert("Input OK");
+  }
+}</code></pre>
+    <div class="example-container">
+      <form name="example-form-1">
+        Ingresa un numero : <input name="example-input" type="number" min="100" max="300" required>
+        <button class="w3-button" onclick="form1()">Aceptar</button>
+      </form>
+    </div>
+  </section>
+  <section>
+    <h3 id="bom-9">Eventos de tiempo</h3>
+    <p>El navegador posee dos metodos importantes para el manejo de eventos por tiempo</p>
+    <ul>
+      <li><code>setTimeout(function, milliseconds)</code> : Ejecuta la funcion despues de que termine el tiempo establecido</li>
+      <li><code>setInterval(function, milliseconds)</code> : Ejecuta la funcion despues de que termine el tiempo establecido. Pero a diferencia de <code>setTimeout</code>, repite la funcion continuamente</li>
+    </ul>
+    Estos metodos pueden ser detenidos con los siguientes respectivamente
+    <ul>
+      <li><code>clearTimeout(varWith_setTimeout)</code> : Detiene la ejecucion del <code>setTimeout</code> recibido</li>
+      <li><code>clearInterval(varWith_setInterval)</code> : Detiene la ejecucion del <code>setInterval</code> recibido</li>
+    </ul>
+    <pre><code class="language-js">let element = document.getElementById("element");
+element.innerHTML = "Espera 3 segundos...";
+setTimeout(() => element.innerHTML = "Hello, world!", 3000);</code></pre>
+    <button class="w3-button" onclick="altElement8();">Ejecutar</button>
+    <div class="example-cont">
+      <p id="element-8">JavaScript deberia alterarme</p>
+    </div>
+    <pre><code class="language-js">let element = document.getElementById("element"),
+    pos = 0,
+    interval,
+    intervalFunction = () => {
+  if (pos == 225) {
+    clearInterval(interval);
+  } else {
+    pos++;
+    element.style.transform = `translate(${pos}px)`;
+  }
+}
+interval = setInterval(intervalFunction, 10);</code></pre>
+    <pre><code class="language-js">// O puede simplemente ser...
+let element = document.getElementById("element");
+let pos = 0;
+setInterval(() => {
+  if (pos == 225)
+    clearInterval(this);
+  else {
+    pos++;
+    element.style.transform = `translate(${pos}px)`;
+  }
+}, 10);</code></pre>
+    <button class="w3-button" onclick="altElement9();">Ejecutar</button>
+    <div class="example-cont" style="width: 300px;">
+      <div id="element-9" style="width: 75px; height: 75px; background: red; border-radius: 5px;"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="bom-10">Cookies</h3>
+    <p>Los cookies son datos guardados en archivos pequenios dentro del computador. Sirven para que el servidor pueda recordar la informacion del computador cliente <br> Es posible manejarlo en <b>JavaScript</b> mediante el objeto <code>document.cookie</code>. A continuacion, unos ejemplos de uso</p>
+    <pre><code class="language-js">// Guardado standard
+document.cookie = "username=John Doe";
+
+// Guardado standard con una fecha de expiracion
+document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC"; 
+
+// Guardado standard con una fecha de expiracion y en un directorio especifico
+document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=src/";</code></pre>
+    <section>
+      <h4>Ejemplo de recoleccion de cookies</h4>
+      <pre><code class="language-js">function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie() {
+  let user = getCookie("username");
+  if (user != "") {
+    alert("Welcome again " + user);
+  } else {
+    user = prompt("Please enter your name:", "");
+    if (user != "" && user != null) {
+      setCookie("username", user, 365);
+    }
+  }
+}</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="bom-11">Otros metodos</h3>
+    <p>Estos son otros metodos que nos ofrece el <b>BOM</b></p>
+    <ul>
+      <li><code>window.open()</code> : Abre una nueva ventana</li>
+      <li><code>window.close()</code> : Cierra la ventana actual</li>
+      <li><code>window.moveTo()</code> : Mueve la ventana actual</li>
+      <li><code>window.resizeTo()</code> : Cambia el tamanio de la ventana actual</li>
+    </ul>
+  </section>
+</section>
+<section>
+  
+</section>
+<section>
+  <h2 id="ajax">AJAX</h2>
+  <p><b>A</b>synchronous <b>J</b>avaScript <b>A</b>nd <b>X</b>ML (<b>AJAX</b>) permite que las paginas web se actualicen de forma asincronica mediante el intercambio de datos con un servidor web detrás de escena. Esto significa que es posible actualizar partes de una pagina web (o en general, obtener datos de servidores), sin tener que recargar toda la pagina. Anteriormente se empleaba el objeto <code>XMLHttpRequest</code> para realizar solicitudes, sin embargo, ahora es mayormente usado la API de <code>fetch</code> o las librerias como <b>jQuery</b>, <b>Axios</b>, etc</p>
+  <pre><code class="language-js">let element = document.getElementById("element");
+// Direccion de la API/Elemento
+const url = 'src/example.json';
+
+fetch(url) /* Como primer parametro ponemos la url, el
+            * siguiente parametro puede ser una configuracion
+            * en formato de objeto.
+            */
+  .then(res => res.json()) // Response (respuesta dada)
+  .then(data => {          // Data (datos del Response)
+    element.innerHTML = `&ltp&gt${data.name}&lt/p&gt
+      &ltp&gtProgramming languages: {data.language}&lt/p&gt
+      &ltimg src="src/${data["image-0"]}"&gt
+      &ltimg src="src/${data["image-1"]}"&gt`;
+  }).catch(err => console.error(err)); // Manejo de posibles errores</code></pre>
+  <button class="w3-button" onclick="altElement10();">Ejecutar</button>
+  <div class="example-cont">
+    <div id="element-10">Dale click al boton para actualizar este contenedor</div>
+  </div>
+  <div class="w3-panel note">
+    <p><b>Nota</b>: Esto solo funciona con protocolos de HTTP, por lo que no funciona para con archivos locales. Sin embargo, puedes montar un servidor en <b>localhost</b></p>
+  </div>
+  <ul>
+    <li><code>url</code> : El enlace a al elemento objetivo</li>
+    <li><code>fetch(url, config)</code> : Es la funcion a utilizar para el consumo de una URL. Opcionalmente podemos ingresar <b>una configuracion personalizada</b>, para indicar que metodo se desea utilizar, que tipo de dato debe ser retornado, o si se van a mandar datos, que headers y que body va a ser enviado al servidor. <b>Por ejemplo:</b>
+    <pre><code class="language-js">fetch(myURL, {
+  "method": "POST",
+  "headers": {"Content-Type": "application/json"},
+  "body": "{\"name\":\"Rukka\",\"age\":16}"
+});</code></pre></li>
+    <li>Al ser una funcion basada en <b>Promises</b>, conserva metodos como <code>then(someFunction)</code> y <code>catch(someFunction)</code></li>
+  </ul>
+  <section>
+    <h3 id="ajax-0">Usando Axios</h3>
+    <p>Es una libreria que permite realizar peticiones al servidor (al igual que la API <code>fetch</code>), pero incluyendo algunas facilidades ademas de ser ligera</p>
+    <pre><code class="language-js">let element = document.getElementById("element");
+// Direccion de la API/Elemento
+const url = 'src/example.json';
+
+axios.get(url, {responseType: "application/json"})
+/* Como primer parametro ponemos la url, el
+ * siguiente parametro le pasamos las configuraciones
+ * en formato de objeto.
+ */
+  .then(data => {          // Data (datos del Response)
+    element.innerHTML = `&ltp&gt${data.name}&lt/p&gt
+      &ltp&gt$Programming languages: {data.language}&lt/p&gt
+      &ltimg src="src/${data["image-0"]}"&gt
+      &ltimg src="src/${data["image-1"]}"&gt`;
+  }).catch(err => console.error(err)); // Manejo de posibles errores</code></pre>
+    <button class="w3-button" onclick="altElement11()">Ejecutar</button>
+    <div class="example-cont">
+      <div id="element-11">Dale click al boton para actualizar este contenedor</div>
+    </div>
+  </section>
+  <section>
+    <div class="glossary">
+      <h3 id="ajax-1">Glosario</h3>
+      <ul>
+        <li><code>method</code> : the request type GET or POST</li>
+        <li><code>url</code> : the file location</li>
+        <li><code>async</code> : true (asynchronous) or false (synchronous)</li>
+        <li><code>user</code> : optional user name</li>
+        <li><code>psw</code> : optional password</li>
+        <li><code>readyState</code> : Holds the status of the XMLHttpRequest</li>
+        <ul>
+          <li><code>0</code> : request not initialized</li>
+          <li><code>1</code> : server connection established</li>
+          <li><code>2</code> : request received</li>
+          <li><code>3</code> : processing request</li>
+          <li><code>4</code> : request finished and response is ready</li>
+        </ul>
+        <li><code>status</code> : Holds the status-number of a request</li>
+        <ul>
+          <li><code>200</code> : "OK"</li>
+          <li><code>403</code> : "Forbidden"</li>
+          <li><code>404</code> : "Not Found"</li>
+        </ul>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <h2 id="canvas">El elemento <code>canvas</code></h2>
+  <p>Permite desplegar graficos, dibujos, animaciones, etc. Donde puede ser empleado el uso de la <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="blank">API de scripting en Canvas</a> o <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API" target="blank">WebGL</a> <br> El elemento <code>canvas</code> permite dejar un texto alternativo en caso de que un navegador no sea capaz de interpretarlo correctamente</p>
+  <pre><code class="language-html">&ltcanvas&gt
+Aqui deberia de haber el dibujo de una flor
+&lt/canvas&gt</code></pre>
+  <section>
+    <h3 id="canvas-0">Graficos estadisticos</h3>
+    <p>Con <code>canvas</code> podemos desplegar todo tipo de diujos, incluyendo graficos estadisticos</p>
+    <pre><code class="language-js">const xArray = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+const yArray = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+// Ejemplo de puntos
+function plot_scatter() {
+  const canvas = document.getElementById('element');
+  const ctx = canvas.getContext('2d');
+  canvas.height = canvas.width;
+  ctx.transform(1, 0, 0, -1, 0, canvas.height);
+
+  ctx.fillStyle = "blue";
+  for (let i = 0; i < xArray.length-1; i++) {
+    let x = xArray[i] * 200 / 150;
+    let y = yArray[i] * 200 / 15;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 2, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}</code></pre>
+    <button class="w3-button" onclick="altElement12();">Ejecutar</button>
+    <div class="example-cont">
+      <canvas id="element-12" width="150px" height="150px" style="border: solid black 3px;">
+        Ha ocurrido un error al cargar el elemento
+      </canvas>
+    </div>
+    <p>Sin embargo, es obvio, a no ser que deseemos algo muy especifico, lo mejor es usar librerias orientadas a la programacion de graficos estadisticos (como por ejemplo <b>chartjs</b>, <b>D3js</b>, etc)</p>
+  </section>
+</section>
+{% endblock %}

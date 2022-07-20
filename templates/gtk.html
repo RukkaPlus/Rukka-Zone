@@ -1,0 +1,183 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/gui.svg') }}">
+{% endblock %}
+
+{% block title %}GTK+{% endblock %}
+
+{% block header %}
+<div>
+  <h1>GTK+</h1>
+  <p><b>GTK+</b> se trata de una libreria <b>GUI</b> multiplataforma. Esta escrito en <b>C</b>, pero se han desarrollado varios bindigns para extender su uso a otros lenguajes como <b>Ruby</b>, <b>JavaScript</b> y, claro que si, <b>Python</b> <br> Aunque es una libreria multiplataforma, su uso es recomendado para sistemas basados en <b>Unix</b> (principalmente, <b>Linux</b>). Pues, <b>GTK+</b> esta optimizado para dichos sistemas operativos</p>
+</div>
+<img src="{{ url_for('static', filename='img/gui.svg') }}" alt="tkinter">
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2>Instalacion</h2>
+</section>
+<section>
+  <h2>Hello, world!</h2>
+  <p>Un ejemplo conveniente para entender la funcionalidad y capacidad que ofrece <b>GTK+</b></p>
+  <pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+# Iniciamos una ventana
+win = Gtk.Window()
+# Definimos el titulo de la ventana
+win.set_title("Hello, world!")
+
+# Definimos un boton, definimos su funcion y lo agregamos
+button = Gtk.Button(label="Hello, world!")
+button.connect("clicked", lambda: print("Hello, world!"))
+win.add(button)
+
+# Conectamos un evento al boton de cerrar
+win.connect("destroy", Gtk.main_quit)
+# Mostramos la ventana y sus widgets
+win.show_all()
+
+# Ejecutamos el "mainloop"
+Gtk.main()</code></pre>
+  <ol>
+    <li>Primero importamos la libreria <code>gi</code>, que sirve como puente entre <b>GTK+</b> y <b>Python</b></li>
+    <li>Luego especificamos la version del <b>GObject</b> que vamos a usar con <code>gi,require_version('Gtk', '3.0')</code>. Con esto listo, podemos importar todo el <b>GObject</b> con <code>from gi.repository import Gtk</code></li>
+    <li>Con eso hecho, podemos definir la ventana que nos va a servir como raiz de los widgets. <code>win = Gtk.Window()</code></li>
+    <li>Ya podemos definir otras propiedades de la ventana, por ejemplo, el titulo (con <code>win.set_title("Hello, world!")</code>), los widgets (en este caso solo es un boton, <code>button = Gtk.Button(label="Hello, world!")</code>. Tambien le definimos el evento con <code>button.connect("clicked", lambda: print("Hello, world!"))</code>. Por ultimo lo agregamos a la ventana <code>win.add(button)</code> ), y definimos algunos otros eventos (como por ejemplo, <code>win.connect("destroy", Gtk.main_quit)</code>, que define que al tocar el boton de cerrar, la ventana ejecute <code>Gtk.main_quit</code> y cierre toda la aplicacion), etc</li>
+    <li>Por penultimo, indicamos a la ventana que muestre todo su contenido con <code>win.show_all()</code> (tambien tenemos la opcion de ejecutar el metodo <code>show()</code> individualmente a cada widget que queramos mostrar, incluyendo a la ventana <code>win</code>)</li>
+    <li>Finalmente, iniciamos el <i>main loop</i> para que renderice la ventana / aplicacion con <code>Gtk.main()</code></li>
+  </ol>
+</section>
+<section>
+  <h2>Icono</h2>
+  <p>Para importar un icono a la ventana, podemos usar el metodo <code>set_icon_from_file(direccion_de_imagen)</code></p>
+  <pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class MiVentana(Gtk.Window):
+  def __init__(self):
+    super(MyWindow, self).__init__()
+    self.connect("destroy", Gtk.main_quit)
+
+    # Importamos como icono, el archivo "web.png"
+    self.set_icon_from_file("web.png")
+
+win = MiVentana()
+win.show()
+Gtk.main()</code></pre>
+</section>
+<section>
+  <h2>Etiquetas</h2>
+  <p>Las etiquetas pueden representar textos o imagenes que pueden ser desplegadas en un marco o ventana en general</p>
+  <pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class MiVentana(Gtk.Window):
+  def __init__(self):
+    super(MyWindow, self).__init__()
+    self.connect("destroy", Gtk.main_quit)
+
+    # Definiendo y agregando la etiqueta
+    label = Gtk.Label("Hello, world!")
+    self.add(label)
+
+win = MiVentana()
+win.show_all()
+Gtk.main()</code></pre>
+</section>
+<section>
+  <h2>Imagen</h2>
+  <p>Podemos agregar una imagen con un objeto de la clase <code>Gtk.Image</code>. Si queremos, podemos importar la imagen usando su metodo <code>set_from_file(direccion_de_imagen)</code></p>
+  <pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class MiVentana(Gtk.Window):
+  def __init__(self):
+    super(MyWindow, self).__init__()
+    self.connect("destroy", Gtk.main_quit)
+
+    # Definiendo y agregando una imagen
+    image = Gtk.Image()
+    image.set_from_file("web.png")
+    self.add(image)
+
+win = MiVentana()
+win.show_all()
+Gtk.main()</code></pre>
+</section>
+<section>
+  <h2>Boton</h2>
+  <p>Se trata de un <i>widget</i> que representa un boton visual al que podemos agregarle eventos</p>
+  <pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class MiVentana(Gtk.Window):
+  def __init__(self):
+    super(MyWindow, self).__init__()
+    self.connect("destroy", Gtk.main_quit)
+
+    # Definiendo y agregando una imagen
+    button = Gtk.Button(label="Hazme click!")
+    button.connect("clicked", self.boton_hazme_click)
+    self.add(button)
+
+  def boton_hazme_click(self, widget):
+    print("Hola mundo!")
+
+win = MiVentana()
+win.show_all()
+Gtk.main()</code></pre>
+</section>
+<section>
+  <h2>Layout Fixed</h2>
+  <p>Este contenedor es utilizado solo en ocasiones muy especificas. Pues, permite definir la posicion exacta (en pixeles) de los <i>widgets</i> de una ventana</p>
+  <pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class MiVentana(Gtk.Window):
+  def __init__(self):
+    super(MyWindow, self).__init__()
+    self.connect("destroy", Gtk.main_quit)
+
+    # Ejemplo de uso del contenedor "Gtk.Fixed"
+    imagen0 = Gtk.Image()
+    imagen1 = Gtk.Image()
+    imagen2 = Gtk.Image()
+    image0.set_from_file("example0.png")
+    image1.set_from_file("example1.png")
+    image2.set_from_file("example2.png")
+
+    fixed = Gtk.Fixed()
+    fixed.put(image0, 10, 10)
+    fixed.put(image1, 40, 160)
+    fixed.put(image2, 170, 50)
+    self.add(fixed)
+
+win = MiVentana()
+win.show_all()
+Gtk.main()</code></pre>
+</section>
+{% endblock %}
+<pre><code class="language-python">import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class MiVentana(Gtk.Window):
+  def __init__(self):
+    super(MyWindow, self).__init__()
+    self.connect("destroy", Gtk.main_quit)
+
+win = MiVentana()
+win.show()
+Gtk.main()</code></pre>

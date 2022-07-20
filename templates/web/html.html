@@ -1,0 +1,160 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/html.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-html.css') }}">
+{% endblock %}
+
+{% block title %}HTML{% endblock %}
+
+{% block header %}
+<div>
+  <h1>HTML</h1>
+  <p><b>H</b>yper<b>T</b>ext <b>M</b>arkup <b>L</b>anguage (<b>HTML</b>) es el lenguaje Web para definir la estructura de una <b>pagina Web</b> <br> Su syntax es muy sencilla de entender, ya que este lenguaje solo sirve para estructurar <b>paginas Web</b></p>
+  <pre><code class="language-html">&lt;!-- Comentarios. Estos son ignorados por el navegador --&gt;
+&lt;elemento atributo="valor"&gt;Texto&lt;/elemento&gt;
+&lt;elemento atributo="valor"&gt;</code></pre>
+</div>
+<img src="{{ url_for('static', filename='img/html.svg') }}" alt="python">
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2>Etiqueta <code>html</code></h2>
+  <p>La etiqueta mas fundamental de un archivo <b>HTML</b> es la etiqueta de mismo nombre <code>html</code>. Dentro de esta etiqueta se coloca todo el codigo <b>HTML</b> que compone a la pagina</p>
+  <pre><code class="language-html">&lt;!DOCTYPE html&gt; &lt;!-- Etiqueta que indica el uso de HTML:5 --&gt;
+&lt;html&gt;  &lt;!-- Inicio de la etiqueta --&gt;
+&lt;/html&gt; &lt;!-- Final de la etiqueta --&gt;</code></pre>
+</section>
+<section>
+  <h2>Etiqueta <code>head</code></h2>
+  <p>La etiqueta de cabeza <code>head</code> es importante para definir los datos mas abstractos de un documento. Por ejemplo, el titulo de la pagina, el icono, las integraciones, los metadatos (descripciones, keywords, etc)</p>
+  <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt; &lt;!-- Inicio de la etiqueta --&gt;
+  &lt;title&gt;Documento&lt;/title&gt; &lt;!-- Titulo de la pagina --&gt;
+  &lt;link rel="icon" href="img/icon.png"&gt; &lt;!-- Icono de la pagina --&gt;
+  &lt;!-- [ Metadatos ] --&gt;
+  &lt;meta charset="UTF-8"&gt; &lt;!-- Codificacion --&gt;
+  &lt;meta name="author" content="RukkaPlus"&gt; &lt;!-- Autor --&gt;
+  &lt;meta name="description" content="Esta es una pagina de prueba"&gt; &lt;!-- Descripcion --&gt;
+  &lt;meta name="keywords" content="pruebas, tests, prueba, test, sandbox"&gt; &lt;!-- Tags --&gt;
+  &lt;!-- &lt;meta name="robots" content="noindex"&gt; Hace a la pagina no indexable --&gt;
+
+  &lt;link rel="stylesheet" href="css/style.css"&gt; &lt;!-- Importando CSS --&gt;
+  &lt;script src="js/script.js"&gt;&lt;/script&gt;   &lt;!-- Importando JavaScript --&gt;
+&lt;/head&gt; &lt;!-- Final de la etiqueta --&gt;
+&lt;/html&gt;</code></pre>
+</section>
+<section>
+  <h2>Etiqueta <code>body</code></h2>
+  <p>La etiqueta de cuerpo <code>body</code> es importante porque compone la parte visible y la estructura mas solida de una <b>pagina Web</b>. La etiqueta <code>body</code> junto con su contenido sera renderizada en el navegador del cliente</p>
+  <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt; &lt;!-- Inicio de la etiqueta --&gt;
+  &lt;h1&gt;Hello, world!&lt;/h1&gt;
+&lt;/body&gt; &lt;!-- Final de la etiqueta --&gt;
+&lt;/html&gt;</code></pre>
+</section>
+<section>
+  <h2>Etiquetas mas importantes</h2>
+  <p>En <b>HTML</b> tenemos ciertas etiquetas importantes y relevantes. Las mas comunes se encuentran ejemplificadas en el siguiente codigo</p>
+  <pre><code class="language-html">&lt;noscript&gt; &lt;!-- Etiqueta 'noscript' --&gt;
+  &lt;!-- Este elemento y su contenido solo sera mostrado si el navegador no habilita JavaScript --&gt;
+  &lt;div id="noscript-div"&gt;
+    &lt;span&gt;JavaScript esta deshabilitado!&lt;/span&gt; Puede que la pagina funcione de manera indeseada
+  &lt;/div&gt;
+&lt;/noscript&gt;
+&lt;h1&gt;Esto es un titulo 1&lt;/h1&gt; &lt;!-- Titulo 1 --&gt;
+&lt;h2&gt;Esto es un titulo 2&lt;/h2&gt; &lt;!-- Titulo 2 --&gt;
+&lt;h3&gt;Esto es un titulo 3&lt;/h3&gt; &lt;!-- Titulo 3 --&gt;
+&lt;h4&gt;Esto es un titulo 4&lt;/h4&gt; &lt;!-- Titulo 4 --&gt;
+&lt;h5&gt;Esto es un titulo 5&lt;/h5&gt; &lt;!-- Titulo 5 --&gt;
+&lt;h6&gt;Esto es un titulo 6&lt;/h6&gt; &lt;!-- Titulo 6 --&gt;
+&lt;p&gt;Esto es un parrafo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dignissimos maxime iure assumenda consequuntur ducimus nostrum aperiam, recusandae perferendis magni in quibusdam laboriosam itaque provident sit laudantium id incidunt facilis.&lt;/p&gt; &lt;!-- Parrafo --&gt;
+
+&lt;b&gt;Esto es un texto bold&lt;/b&gt; &lt;!-- Texto en negrita --&gt;
+&lt;br&gt; &lt;!-- Esto es un salto de linea --&gt;
+&lt;i&gt;Esto es un texto italic&lt;/i&gt; &lt;!-- Texto en cursiva --&gt;
+&lt;br&gt;
+&lt;small&gt;Esto es un texto small&lt;/small&gt; &lt;!-- Texto pequenio --&gt;
+&lt;br&gt;
+&lt;a href="https://duckduckgo.com/"&gt;Esto es un link externo&lt;/a&gt; &lt;!-- Enlace externo --&gt;
+&lt;br&gt;
+&lt;a href="/index.html"&gt;Esto es un link interno&lt;/a&gt; &lt;!-- Enlace local --&gt;
+&lt;br&gt;
+&lt;a href="https://duckduckgo.com/" target="blank"&gt;Esto es un link externo (new tab)&lt;/a&gt; &lt;!-- Enlace externo a nueva pestania --&gt;
+&lt;br&gt;
+&lt;a href="/index.html" target="blank"&gt;Esto es un link interno (new tab)&lt;/a&gt; &lt;!-- Enlace local a nueva pestania --&gt;
+&lt;ul&gt; &lt;!-- Listas desordendas --&gt;
+  &lt;li&gt;Elemento 1&lt;/li&gt;
+  &lt;li&gt;Elemento 2&lt;/li&gt;
+  &lt;li&gt;Elemento 3&lt;/li&gt;
+  &lt;li&gt;Elemento 4&lt;/li&gt;
+  &lt;li&gt;Elemento 5&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt; &lt;!-- Listas ordenadas --&gt;
+  &lt;li&gt;Elemento 1&lt;/li&gt;
+  &lt;li&gt;Elemento 2&lt;/li&gt;
+  &lt;li&gt;Elemento 3&lt;/li&gt;
+  &lt;li&gt;Elemento 4&lt;/li&gt;
+  &lt;li&gt;Elemento 5&lt;/li&gt;
+&lt;/ol&gt;
+&lt;img src="/assets/images/example_html.jpg" alt="Texto alternativo" width="400px"&gt; &lt;!-- Archivos de imagen --&gt;
+&lt;br&gt;
+&lt;video src="/assets/videos/example_html.mp4" controls title="Video de ejemplo"&gt;&lt;/video&gt; &lt;!-- Archivos de video --&gt;
+&lt;br&gt;
+&lt;audio src="/assets/videos/example_html.mp4" controls&gt;&lt;/audio&gt; &lt;!-- Archivos de audio --&gt;
+&lt;b&gt;Entrada de texto&lt;/b&gt;&lt;input type="text"&gt; &lt;br&gt; &lt;!-- Entrada de texto --&gt; 
+&lt;b&gt;Entrada de texto obligatoria&lt;/b&gt;&lt;input type="text" required&gt; &lt;br&gt; &lt;!-- Entrada de texto (obligatoria) --&gt; 
+&lt;b&gt;Entrada de contrasenia&lt;/b&gt;&lt;input type="password"&gt; &lt;br&gt; &lt;!-- Entrada de contrasenia --&gt;
+&lt;b&gt;Entrada de numero&lt;/b&gt;&lt;input type="number"&gt; &lt;br&gt; &lt;!-- Entrada de number --&gt;
+&lt;b&gt;Entrada de correo&lt;/b&gt;&lt;input type="email"&gt; &lt;br&gt; &lt;!-- Entrada de correo --&gt;
+&lt;b&gt;Entrada de color&lt;/b&gt;&lt;input type="color"&gt; &lt;br&gt; &lt;!-- Entrada de color --&gt;
+&lt;b&gt;Entrada de rango numeral&lt;/b&gt;&lt;input type="range" min="0" max="10"&gt; &lt;br&gt; &lt;!-- Entrada de rango (0 .. 10) --&gt;
+&lt;b&gt;Entrada de fecha&lt;/b&gt;&lt;input type="date"&gt; &lt;br&gt; &lt;!-- Entrada de fecha --&gt;
+&lt;b&gt;Entrada de hora&lt;/b&gt;&lt;input type="time"&gt; &lt;br&gt; &lt;!-- Entrada de hora --&gt;
+&lt;b&gt;Entrada como boton&lt;/b&gt;&lt;input type="button" value="Boton"&gt; &lt;br&gt; &lt;!-- Boton --&gt;
+&lt;b&gt;Entrada como confirmacion&lt;/b&gt;&lt;input type="submit"&gt; &lt;br&gt; &lt;!-- Confirmacion --&gt;
+&lt;b&gt;TextArea&lt;/b&gt; &lt;br&gt; &lt;textarea name="" id="" cols="30" rows="10"&gt;&lt;/textarea&gt; &lt;!-- Textarea --&gt;
+&lt;form action=""&gt; &lt;!-- Etiqueta de formulario --&gt;
+&lt;/form&gt;
+&lt;header&gt; &lt;!-- Etiqueta de cabecera --&gt;
+    Texto dentro de un "header"
+&lt;/header&gt;
+&lt;article&gt; &lt;!-- Etiqueta de articulo --&gt;
+    Texto dentro de un "article"
+&lt;/article&gt;
+&lt;section&gt; &lt;!-- Etiqueta de seccion (generalmente usado dentro de "article") --&gt;
+    Texto dentro de un "section"
+&lt;/section&gt;
+&lt;nav&gt; &lt;!-- Etiqueta de navegacion --&gt;
+    Texto dentro de un "nav"
+&lt;/nav&gt;
+&lt;aside&gt; &lt;!-- Etiqueta de costado --&gt;
+    Texto dentro de un "aside"
+&lt;/aside&gt;
+&lt;div&gt; &lt;!-- Etiqueta de division (universal) --&gt;
+    Texto dentro de un "div"
+&lt;/div&gt;
+&lt;footer&gt; &lt;!-- Etiqueta de pie --&gt;
+    Texto dentro de un "footer"
+&lt;/footer&gt;</code></pre>
+</section>
+<section class="w3-panel w3-orange">
+  <h2>CSS y Javascript</h2>
+  <p><b>CSS</b> es un lenguaje Web que permite manejar la estetica de una pagina Web. Para trabajar con <b>CSS</b> se utiliza la etiqueta <code>style</code> o <code>link</code></p>
+  <pre><code class="language-html">&ltlink rel="stylesheet" href="direccion/del/archivo.css"&gt</code></pre>
+  <pre><code class="language-html">&ltstyle&gt
+  /* Code here... */
+&lt/style&gt</code></pre>
+  <p><b>JavaScript</b> es un lenguaje Web multiparadigma y de tipado debil que permite manejar el comportamiento de una pagina Web. Para trabajar con <b>JavaScript</b> se utiliza la etiqueta <code>script</code></p>
+  <pre><code class="language-html">&ltscript src="direccion/del/archivo.js"&gt&lt/script&gt</code></pre>
+  <pre><code class="language-html">&ltscript&gt
+  // Code here...
+&lt/script&gt</code></pre>
+</section>
+{% endblock %}

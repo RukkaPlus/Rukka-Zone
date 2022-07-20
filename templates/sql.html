@@ -1,0 +1,564 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/database.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-sql.css') }}">
+<script src="{{ url_for('static', filename='js/script-sql.js') }}"></script>
+{% endblock %}
+
+{% block title %}Bases de datos SQL{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Base de datos SQL</h1>
+  <p>Una <b>base de datos</b> es un contenedor de informacion, donde podemos guardar y almacenar datos referentes a un tema en especifico. Las bases de datos pueden dividirse entre <b>Relacionales</b> y <b>No relacionales</b>. Destacando que las <b>bases de datos relacionales</b>, se comunican mediante la tecnologia <b>SQL</b>. Esta tecnologia es un <i>standard</i>, por lo que en el manejo de datos (sea cual sea el sistema manejador de bases de datos) el uso de <b>SQL</b> algo comun de encontrar <br> Existen muchos sistemas manejadores de bases de datos, como por ejemplo <b>SQLite</b>, <b>PostgreSQL</b>, <b>MySQL</b>, <b>MariaDB</b>, entre otros muchos. Para mas informacion referente a esta tecnologia, consulte la siguiente <a href="https://www.w3schools.com/sql/">documentacion referente a SQL</a></p>
+</div>
+<img src="{{ url_for('static', filename='img/database.svg') }}" alt="sql">
+{% endblock %}
+
+{% block index %}
+<li><a href="#intro">Sistemas gestores de bases de datos</a></li>
+<ul class="w3-ul sqlite-index">
+  <li><a href="#database-0">SQLite</a></li>
+  <li><a href="#conn-0">Conexion</a></li>
+  <li><a href="#cursor-0">Cursor</a></li>
+  <li><a href="#table-0">Crear una tabla</a></li>
+  <li><a href="#table-0-0">Tipos de datos</a></li>
+  <li><a href="#interact-0">Interaccion</a></li>
+  <li><a href="#dynamic-0">Multiples registros | registros dinamicos</a></li>
+  <li><a href="#val-0">Validacion o reversion</a></li>
+  <li><a href="#primary-0">Campos primarios</a></li>
+  <li><a href="#required-0">Campos requeridos</a></li>
+  <li><a href="#autoinc-0">Campos autoincrementales</a></li>
+  <li><a href="#unique-0">Campos unicos</a></li>
+</ul>
+<ul class="w3-ul postgres-index">
+  <li><a href="#database-1">PostgreSQL</a></li>
+  <li><a href="#environment-1">Preparando el entorno</a></li>
+  <li><a href="#environment-1-0">Crear una base de datos</a></li>
+  <li><a href="#environment-1-1">Acceder a una base de datos</a></li>
+  <li><a href="#environment-1-2">Borrar una base de datos</a></li>
+  <li><a href="#adapter-1">Adaptador</a></li>
+  <li><a href="#conn-1">Conexion</a></li>
+  <li><a href="#cursor-1">Cursor</a></li>
+  <li><a href="#table-1">Crear una tabla</a></li>
+  <li><a href="#table-1-0">Tipos de datos</a></li>
+  <li><a href="#interact-1">Interaccion</a></li>
+  <li><a href="#dynamic-1">Multiples registros | registros dinamicos</a></li>
+  <li><a href="#val-1">Validacion o reversion</a></li>
+  <li><a href="#primary-1">Campos primarios</a></li>
+  <li><a href="#required-1">Campos requeridos</a></li>
+  <li><a href="#autoinc-1">Campos autoincrementales</a></li>
+  <li><a href="#unique-1">Campos unicos</a></li>
+</ul>
+<ul class="w3-ul mariadb-index">
+  <li><a href="#database-2">MariaDB</a></li>
+</ul>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="intro">Sistemas gestores de bases de datos</h2>
+  <p>Un <b>Sistema gestor de bases de datos</b> es un conjunto de herramientas que ofrecen una <b>interfaz de trabajo con bases de datos</b>. Una base de datos, por otro lado, es un conjunto de datos serializados que funcionan en formato de <b>tablas</b> con <b>campos</b> y <b>registros</b>. Dependiendo de si sea <b>SQL</b> o <b>NoSQL</b> puede ofrecer la capacidad de <b>relacionar tablas entre si o no</b> <br> Esta seria una representacion grafica de una base de datos relacional</p>
+  <table class="w3-table-all">
+    <thead>
+      <tr>
+        <th>username</th>
+        <th>email</th>
+        <th>password</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Maria</td>
+        <td>maria@gmail.com</td>
+        <td>6bd13cba7077df88e1a855e3951b671ef401f2592133dfe9a706094ae0b56282</td>
+      </tr>
+      <tr>
+        <td>John</td>
+        <td>john@doe.com</td>
+        <td>f82441cd37981b32c8987daeffa8fa691d34ebd724e768712798cbad76e56fd0</td>
+      </tr>
+      <tr>
+        <td>Max</td>
+        <td>max@yahoo.com</td>
+        <td>d29d193b2c39d728736641bb311a5496cff57731130b7867bde85b2fb30dda5e</td>
+      </tr>
+      <tr>
+        <td>Dario</td>
+        <td>dario@gmail.com</td>
+        <td>20ca75da0c6d7a07c4358ee89b50bc4193240a1375554e27f7a7f6b94985f7e0</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<section>
+  <div class="w3-container tabmanager-special">
+    <div class="w3-bar">
+      <button class="w3-bar-item w3-button sqlite-tab">SQLite</button>
+      <button class="w3-bar-item w3-button postgres-tab">PostgreSQL</button>
+      <button class="w3-bar-item w3-button mariadb-tab">MariaDB</button>
+    </div>
+    <section class="w3-border w3-panel sqlite-tabpanel">
+      <section>
+        <h2 id="database-0">SQLite</h2>
+        <p><b>SQLite</b> es un <b>sistema gestor de bases de datos SQL</b> (originalmente escrito en <b>C</b>) muy ligero, rapido y de sencillo uso que viene integrado con <b>Python</b> <br> Ademas de ser tremendamente potente, es muy facil de escalar y rapido de usar. De ahi viene su merecida fama al ser integrado en proyectos de <b>Google</b>, <b>Microsoft</b>, <b>Apple</b>, por mencionar algunas empresas importantes <br> Ademas, a diferencia de otros sistemas gestores de bases de datos, este no requiere de instalacion en el sistema para su uso, esto porque es una simple libreria y no un adaptador</p>
+      </section>
+      <section>
+        <h2 id="conn-0">Conexion</h2>
+        <p>Para empezar a utilizar <b>SQLite</b> primero debemos crear un objeto <code>Connection</code>, que representa la conexion con la base de datos. En este ejemplo se almacenaran los datos en un archivo <code>example.db</code></p>
+        <pre><code class="language-python">import sqlite3
+con = sqlite3.connect("example.db")</code></pre>
+        <div class="w3-panel note">
+          <p><b>Nota</b>: Tambien se puede usar el nombre especial <code>:memory:</code> para crear una base de datos en la memoria RAM</p>
+        </div>
+        <p>Una vez hecho esto, podemos crear un objeto <code>Cursor</code> para interactuar con esta base de datos</p>
+      </section>
+      <section>
+        <h2 id="cursor-0">Cursor</h2>
+        <p>Un objeto <code>Cursor</code> representa un cursor mediante el cual podemos <b>insertar</b>, <b>modificar</b> o <b>borrar</b> datos. Este objeto <code>Cursor</code> tiene el metodo <code>execute</code>, que permite ejecutar comandos <b>SQL</b></p>
+        <pre><code class="language-python">cur = con.cursor()</code></pre>
+        <p>Ahora estamos listos para trabajar con la base de datos</p>
+      </section>
+      <section>
+        <h2 id="table-0">Crear una tabla</h2>
+        <p>Para crear una tabla, debemos ejecutar un comando con el siguiente syntax <code>CREATE table nombre_de_la_tabla (valores TIPO_DE_DATO, ...)</code>, donde <code>nombre_de_la_tabla</code> indicara, precisamente, el nombre de la tabla que crearemos; y <code>(valores TIPO_DE_DATO, ...)</code> que representa los campos que la tabla creara (<code>valores</code>, el nombre o la clave; <code>TIPO_DE_DATO</code> el tipo de dato que tendra dicho campo)</p>
+        <pre><code class="language-python"># [ Crear una tabla ]
+command = "CREATE table users (username TEXT, email TEXT, password TEXT)"
+cur.execute(command)</code></pre>
+        <p>Aqui, tenemos un ejemplo que graficamente se representaria de la siguiente forma</p>
+        <table class="w3-table-all">
+          <thead>
+            <tr>
+              <th>username</th>
+              <th>email</th>
+              <th>password</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Cabe aclarar que si ya hemos creado una tabla y volvemos a ejecutar el mismo comando de crear una tabla, nos devolvera una excepcion de tipo <code>sqlite3.OperationalError</code>, porque no podemos crear una tabla si esta ya se encuentra creada. Recordemos que puede ser manejado con las <b>estructuras de manejo de excepciones</b>. O de lo contrario, podemos ejecutar el siguiente comando</p>
+        <pre><code class="language-python"># [ Crear una tabla (si esta no existe) ]
+commmand = "CREATE table IF NOT EXISTS users (username TEXT, email TEXT, password TEXT)"
+cur.execute(command)</code></pre>
+        <p>Este comando creara una base de datos en caso de que esta no exista</p>
+        <section>
+          <h3 id="table-0-0">Tipos de datos</h3>
+          <table class="w3-table-all">
+            <thead>
+              <tr>
+                <th>SQLite</th>
+                <th>Python</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>NULL</code></td>
+                <td><code>None</code></td>
+              </tr>
+              <tr>
+                <td><code>INTEGER</code></td>
+                <td><code>int</code></td>
+              </tr>
+              <tr>
+                <td><code>REAL</code></td>
+                <td><code>float</code></td>
+              </tr>
+              <tr>
+                <td><code>TEXT</code></td>
+                <td><code>str</code></td>
+              </tr>
+              <tr>
+                <td><code>BLOB</code></td>
+                <td><code>bytes</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+      <section>
+        <h2 id="interact-0">Interaccion</h2>
+        <p>Ahora que tenemos una base de datos creada con una tabla <code>users</code>, podemos empezar a <b>insertar</b>, <b>extraer</b> o <b>borrar</b> registros dentro de esta tabla mediante nuestro <b>cursor</b> usando el lenguaje <b>SQL</b></p>
+        <pre><code class="language-python"># [ Insertar un registro ]
+command = "INSERT INTO users VALUES ('RukkaPlus', 'rukkaplus@gmail.com', '0123456789')"
+cur.execute(command)
+
+# [ Obtener un registro ]
+# Para obtener todos los registros
+command = ("SELECT * FROM usuarios") # Ahora el cursor apunta a todos
+cur.execute(command)                 # los registros de la tabla
+data = cur.fetchall() # Esto retornara una 'list' con todos los registros
+                      # seleccionados por el cursor
+# Para obtener solo un registro
+command = "SELECT * FROM usuarios " +    # Ahora el cursor apunta a
+          "WHERE username = 'RukkaPlus'" # solo a un registro en la tabla
+cur.execute(command)
+data = cur.fetchone() # Esto retornara un 'dict' con la fila seleccionada
+                      # por el cursor
+
+# [ Actualizar un registro ]
+command = "UPDATE users " +                     # Ahora algunos datos de un
+          "SET username = 'RukkaMinus' " +      # registro determinado fueron
+          "WHERE email = 'rukkaplus@gmail.com'" # modificados
+cur.execute(command)
+
+# [ Eliminar un registro ]
+command = "DELETE FROM users WHERE username = RukkaMinus" # Ahora un registro
+cur.execute(command)                                      # fue borrado</code></pre>
+        <section>
+          <h3 id="dynamic-0">Multiples registros | registros dinamicos</h3>
+          <p>Por lo general, necesitaremos insertar valores obtenidos de variables. Pero <b>NUNCA</b> debemos formatear directamente un <code>str</code> con estos valores, porque esto vuelve al programa vulnerable de <b>ataques de inyeccion SQL</b>. Para formatear adecuadamente un comando, usamos el simbolo <code>?</code> dentro del <code>str</code> en la posicion donde un valor debe ser posicionado, y seguido a ello, pasamos el valor como parametro adicional dentro de la funcion <code>execute</code></p>
+          <pre><code class="language-python">name = "RukkaPlus"
+
+# NO HAGAS ESTO!!!
+command = "SELECT * FROM users WHERE username = '{}'".format(name)
+
+# En su lugar has esto
+command = "SELECT * FROM users WHERE username = ?"
+cur.execute(command, name)</code></pre>
+          <p>Tambien podemos ejecutar multiples comandos similares con variacion de parametros usando las tipicas <code>list</code></p>
+          <pre><code class="language-python">users = [
+          ("Maria", "maria@gmail.com", "6bd13cba7077df88e1a855e3951b671ef401f2592133dfe9a706094ae0b56282"),
+          ("John", "john@doe.com", "f82441cd37981b32c8987daeffa8fa691d34ebd724e768712798cbad76e56fd0"),
+          ("Max", "max@yahoo.com", "d29d193b2c39d728736641bb311a5496cff57731130b7867bde85b2fb30dda5e"),
+          ("Dario", "dario@daredario.com", "20ca75da0c6d7a07c4358ee89b50bc4193240a1375554e27f7a7f6b94985f7e0"),
+        ]
+
+command = "INSERT INTO users VALUES (?, ?, ?)"
+cur.executemany(command, users)</code></pre>
+        </section>
+      </section>
+      <section>
+        <h2 id="val-0">Validacion o reversion</h2>
+        <p>Una vez hayamos teminado de trabajar con la base de datos, es importante <b>guardar los cambios</b> en caso de que sea requerido, y <b>cerrar la conexion</b> con la base de datos. O cerrar directamente la conexion con la base de datos sin guardar los cambios realizados</p>
+        <pre><code class="language-python"># [ Guardar los cambios ]
+con.commit()
+
+# [ Cerrar la conexion ]
+con.close()</code></pre>
+        <p>De esta forma, los datos persistiran dentro de la base de datos. Podemos comprobarlo <i>inspeccionando</i> con el <a href="https://sqlitebrowser.org/">administrador grafico de bases de datos anteriormente mencionado</a></p>
+      </section>
+      <section>
+        <h2 id="primary-0">Campos primarios</h2>
+        <p>Podemos crear tablas con <b>campos primarios</b>. Los campos primarios son campos que <b>no pueden ser repetidos</b>. Si agregamos dos o mas registros con el mismo valor en el campo primario nos dara un error</p>
+        <pre><code class="language-sql">CREATE table users (
+  id VARCHAR(9) PRIMARY KEY,
+  name TEXT,
+  email TEXT
+);</code></pre>
+      </section>
+      <section>
+        <h2 id="required-0">Campos requeridos</h2>
+        <p>Los <b>campos requeridos</b> son aquellos campos que no pueden ser pasados por alto y deben tener un valor obligadamente</p>
+        <pre><code class="language-sql">CREATE table users (
+  name TEXT,
+  email TEXT NOT NULL,
+  password TEXT NOT NULL
+);</code></pre>
+      </section>
+      <section>
+        <h2 id="autoinc-0">Campos autoincrementales</h2>
+        <p>Los <b>campos autoincrementales</b> son campos que incrementan de valor automaticamente. La inclusion de su valor al registrar nuevos datos puede ser ignorado</p>
+        <pre><code class="language-sql">CREATE table products (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  price FLOAT
+);</code></pre>
+      </section>
+      <section>
+        <h2 id="unique-0">Campos unicos</h2>
+        <p>Al igual que con los <b>campos primarios</b>, los <b>campos unicos</b> no pueden tener valores repetidos en la misma tabla. Sin embargo, a diferencia de los campos primarios, podemos tener mas de un campo unico en la misma tabla, mientras que solo podemos tener un campo primario por tabla</p>
+        <pre><code class="language-sql">CREATE table users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT UNIQUE,
+  email TEXT UNIQUE,
+  password TEXT
+);</code></pre>
+      </section>
+    </section>
+    <section class="w3-border w3-panel postgres-tabpanel">
+      <section>
+        <h2 id="database-1">PostgreSQL</h2>
+        <p><b>PostgreSQL</b>, nacido en <b>University of California, Berkeley</b> y conocido por todo el mundo, es un <b>sistema gestor de bases de datos SQL</b> seguro, poderoso y bastante maduro. Esta orientado al servidor y posee adaptadores para distintos lenguajes de programacion, incluidos, por supuesto, <b>adaptadores para Python</b></p>
+      </section>
+      <section>
+        <h2 id="environment-1">Preparando el entorno</h2>
+        <p>Lo primero por hacer para trabajar con <b>PostgreSQL</b> es preparar el entorno, <b>el servidor</b>. Para ello, primero necesitamos tener instalado el <b>sistema administrador de bases de datos PostgreSQL</b>, que para hacerlo, podemos seguir la siguiente <a href="https://www.postgresql.org/docs/14/admin.html">guia de la documentacion oficial</a>. Otra opcion, si tiene conocimientos sobre el uso de <b>Docker</b>, es instalando su imagen oficial que puede encontar <a href="https://hub.docker.com/_/postgres">en este enlace de aqui</a> <br> Una vez instalado correctamente el servidor, podemos proceder al siguiente paso, que es <b>crear la base de datos</b></p>
+        <div class="w3-panel note">
+          <p><b>Nota</b>: Por razones de convencion, este articulo estara dirigido principalmente a usuarios de <b>Linux</b>. Esto porque es mucho mas comun utilizar este tipo de herramientas en entornos <b>Linux</b>. Sin embargo, algunas de estas instrucciones podrian funcionar en entornos <b>Windows</b>, aunque siempre puede ser recomendable echar un vistazo a la <a href="https://www.postgresql.org/docs/">documentacion oficial de <b>PostgreSQL</b></a></p>
+        </div>
+        <section>
+          <h3 id="environment-1-0">Crear una base de datos</h3>
+          <p>Una vez instalado el <b>sistema de PostgreSQL</b>, tendremos acceso a algunas herramientas desde nuestra terminal o linea de comandos, como lo son <code>createdb</code> que utilizaremos para crear nuestra base de datos. Pero antes de ello, debemos <b>crear un usuario administrador del sistema</b>. Para nuestra suerte, en <b>Linux</b>, durante la instalacion del <b>sistema de PostgreSQL</b> este usuario es creado por defecto con el nombre de <code>postgres</code>, por lo que lo unico que debemos hacer es <b>definir una contrasenia a este usuario administrador</b>. Vea el siguiente comando</p>
+          <pre><code class="language-sh">$ sudo passwd postgres</code></pre>
+          <p>Una vez ejecutemos este comando en nuestra terminal, tendremos un <b>prompt</b> interrogandonos la contrasenia que debamos definir a este usuario (<code>postgres</code>) <br> Lo siguiente que debemos hacer, es <b>acceder como este usuario</b>, que en este caso lo lograremos con el siguiente comando</p>
+          <pre><code class="language-sh">$ su - postgres</code></pre>
+          <p>Esto dara un <b>prompt</b> pidiendo que ingresemos <b>nuestra contrasenia</b> (no la del usuario <code>postgres</code>). Una vez lo hagamos, esta terminal sera destinada a trabajar de servidor <br> Ahora estamos listos para crear nuestra base de datos, para ello, usaremos la utilidad <code>createdb</code> anteriormente mencionada de la siguiente forma</p>
+          <pre><code class="language-sh">$ createdb example</code></pre>
+          <p>Lo que ahora hicimos, fue crear una base de datos llamada <code>example</code></p>
+        </section>
+        <section>
+          <h3 id="environment-1-1">Acceder a una base de datos</h3>
+          <p>Otra utilidad que viene en junto a la instalacion del <b>sistema de PostgreSQL</b> es la utilidad <code>psql</code>. Con esta utilidad podemos administrar nuestras bases de datos</p>
+          <pre><code class="language-sh">$ psql example</code></pre>
+          <p>Con este comando, accedemos a nuestra base de datos anteriormente creada (<code>example</code>). Con eso abriremos una interfaz de consola que nos permitira ingresar comandos <b>SQL</b> o comandos del <b>sistema de PostgreSQL</b> <br> Si queremos salir en algun momento, podemos hacerlo ingresando <code>\q</code> en el prompt (que es un comando de <b>PostgreSQL</b> para salir de la interfaz administradora de bases de datos <br> Opcionalmente, podemos agregar ciertos <b>flags</b>, como los siguientes:</p>
+          <ul>
+            <li><code>-c, --command=COMMAND</code> : Comando que ejecutara en la base de datos. Luego se cerrara</li>
+            <li><code>-f, --file=FILEPATH</code> : Programa que ejecutara en la base de datos. Luego se cerrara</li>
+            <li><code>-h, --host=HOST</code> : <b>HOST</b> donde el servidor sera levantado (por defecto <code>localhost</code>)</li>
+            <li><code>-p, --port=PORT</code> : Puerto del <b>HOST</b> donde sera levantado (por defecto <code>5432</code></li>
+            <li><code>-U, --username=USER</code> : Usuario administrador con el que abrira una base de datos</li>
+          </ul>
+        </section>
+        <section>
+          <h3 id="environment-1-2">Borrar una base de datos</h3>
+          <p>Si de casualidad nos vemos en la necesidad de borrar una base de datos, podemos hacerlo con la utilidad <code>dropdb</code> que viene junto a la instalacion del <b>sistema de PostgreSQL</b></p>
+          <pre><code class="language-sh">$ dropdb example</code></pre>
+        </section>
+      </section>
+      <section>
+        <h2 id="adapter-1">Adaptador</h2>
+        <p>Ahora bien, para trabajar con <b>PostgreSQL</b> desde un lenguaje de programacion, es necesario tener un <b>adaptador</b>. Este nos permitira conectarnos al <b>sistema de Postgres</b> para interactuar con la base de datos <br> Como en este momento nos toca hablar de <b>Python</b>, pues, su adaptador mas famoso es el de <code>psycopg2</code>. En este caso, ademas de instalarlo, vamos a aislarlo en una <b>Virtual Environment</b></p>
+        <div class="w3-container tabmanager">
+          <div class="w3-bar">
+            <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+            <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+          </div>
+          <section class="w3-border w3-panel msdos-tabpanel">
+            <pre><code class="language-shell">&gt; py -m virtualenv env
+&gt; env\Scripts\activate.bat
+&gt; py -m pip install psycopg2</code></pre>
+          </section>
+          <section class="w3-border w3-panel unix-tabpanel">
+            <pre><code class="language-sh">$ python3 -m virtualenv env
+$ source env/bin/activate
+$ python3 -m pip install psycopg2</code></pre>
+          </section>
+        </div>
+        <div class="w3-panel note">
+          <p><b>Nota</b>: Tambien podrian considerar instalar <code>psycopg2-binary</code> que integra un entorno un poco mas minimalista. Aunque no se recomienda su uso en produccion</p>
+        </div>
+      </section>
+      <section>
+        <h2 id="conn-1">Conexion</h2>
+        <p>Una vez instalado el modulo requerido, deberiamos poder empezar a usar <b>Postgres</b> en nuestro entorno de trabajo sin preocupaciones. <br> Primero debemos crear un objeto <code>Connection</code>, que representa la conexion con la base de datos. Pero para hacerlo, aqui es donde se decidira si todos los pasos anteriores fueron realizados correctamente</p>
+        <pre><code class="language-python">import psycopg2
+
+DB_NAME     = "example"   # Nombre de la base de datos
+DB_USER     = "postgres"  # Nombre del usuario administrador
+DB_PASSWORD = "postgres"  # Contrasenia del usuario administrador
+DB_HOST     = "localhost" # Host del sistema de Postgres
+DB_PORT     = "5432"      # Puerto del Host del sistema de Postgres
+
+con = psycopg2.connect(
+                        dbname=DB_NAME,
+                        user=DB_USER, 
+                        password=DB_PASSWORD,
+                        host=DB_HOST,
+                        port=DB_PORT,
+                      )</code></pre>
+        <p>Una vez hecho esto, antes de ejecutar el codigo escrito, debemos asegurarnos de lo siguiente. Debemos tener una terminal o linea de comandos abierta con la base de datos abierta (<code>psql example</code>) con todos los datos requeridos correctamente definidos (puerto (por defecto <code>5432</code>), host (por defecto <code>localhost</code>), etc)</p>
+      </section>
+      <section>
+        <h2 id="cursor-1">Cursor</h2>
+        <p>Un objeto <code>Cursor</code> representa un cursor mediante el cual podemos <b>insertar</b>, <b>modificar</b> o <b>borrar</b> datos (interactuar con la base de datos). Este objeto <code>Cursor</code> tiene el metodo <code>execute</code>, que permite ejecutar comandos <b>SQL</b></p>
+        <pre><code class="language-python">cur = con.cursor()</code></pre>
+        <p>Ahora estamos listos para trabajar con la base de datos</p>
+      </section>
+      <section>
+        <h2 id="table-1">Crear una tabla</h2>
+        <p>Para crear una tabla, debemos ejecutar un comando con el siguiente syntax <code>CREATE table nombre_de_la_tabla (valores TIPO_DE_DATO, ...)</code>, donde <code>nombre_de_la_tabla</code> indicara, precisamente, el nombre de la tabla que crearemos; y <code>(valores TIPO_DE_DATO, ...)</code> que representa los campos que la tabla creara (<code>valores</code>, el nombre o la clave; <code>TIPO_DE_DATO</code> el tipo de dato que tendra dicho campo)</p>
+        <pre><code class="language-python"># [ Crear una tabla ]
+commmand = "CREATE table class="w3-table-all" users (username TEXT, email TEXT, password TEXT)"
+cur.execute(command)</code></pre>
+        <p>Aqui, tenemos un ejemplo que graficamente se representaria de la siguiente forma</p>
+        <table class="w3-table-all">
+          <thead>
+            <tr>
+              <th>username</th>
+              <th>email</th>
+              <th>password</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Cabe aclarar que si ya hemos creado una tabla y volvemos a ejecutar el mismo comando de crear una tabla, nos devolvera una excepcion de tipo <code>psycopg2.errors.Duplicatetable class="w3-table-all"</code>, porque no podemos crear una tabla si esta ya se encuentra creada. Recordemos que puede ser manejado con las <b>estructuras de manejo de excepciones</b>. O de lo contrario, podemos ejecutar el siguiente comando</p>
+        <pre><code class="language-python"># [ Crear una tabla (si esta no existe) ]
+command = "CREATE table IF NOT EXISTS users (username TEXT, email TEXT, password TEXT)"
+cur.execute(command)</code></pre>
+        <p>Este comando creara una base de datos en caso de que esta no exista</p>
+        <section>
+          <h3 id="table-1-0">Tipos de datos</h3>
+          <table class="w3-table-all">
+            <thead>
+              <tr>
+                <th>PostgreSQL</th>
+                <th>Python</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>BOOLEAN</code></td>
+                <td><code>bool</code></td>
+              </tr>
+              <tr>
+                <td><code>INTEGER</code></td>
+                <td><code>int</code></td>
+              </tr>
+              <tr>
+                <td><code>REAL</code></td>
+                <td><code>float</code></td>
+              </tr>
+              <tr>
+                <td><code>CHAR</code></td>
+                <td><code>str</code></td>
+              </tr>
+              <tr>
+                <td><code>TEXT</code></td>
+                <td><code>str</code></td>
+              </tr>
+              <tr>
+                <td><code>UUID</code></td>
+                <td><code>str</code></td>
+              </tr>
+              <tr>
+                <td><code>ARRAY</code></td>
+                <td><code>list</code></td>
+              </tr>
+              <tr>
+                <td><code>JSON</code></td>
+                <td><code>dict</code></td>
+              </tr>
+              <tr>
+                <td><code>SERIAL</code></td>
+                <td><code>int (numeros autoincrementales)</code></td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Y hay muchos otros tipos de datos mas. Vease la <a href="https://www.postgresql.org/docs/current/datatype.html">documentacion oficial que hace referencia a ello</a></p>
+        </section>
+      </section>
+      <section>
+        <h2 id="interact-1">Interaccion</h2>
+        <p>Ahora que tenemos una base de datos creada con una tabla <code>users</code>, podemos empezar a <b>insertar</b>, <b>extraer</b> o <b>borrar</b> registros dentro de esta tabla mediante nuestro <b>cursor</b> usando el lenguaje <b>SQL</b></p>
+        <pre><code class="language-python"># [ Insertar un registro ]
+command = "INSERT INTO users VALUES ('RukkaPlus', 'rukkaplus@gmail.com', '0123456789')"
+cur.execute(command)
+
+# [ Obtener un registro ]
+# Para obtener todos los registros
+command = ("SELECT * FROM usuarios") # Ahora el cursor apunta a todos
+cur.execute(command)                 # los registros de la tabla
+data = cur.fetchall() # Esto retornara una 'list' con todos los registros
+                      # seleccionados por el cursor
+# Para obtener solo un registro
+command = "SELECT * FROM usuarios " +    # Ahora el cursor apunta a
+          "WHERE username = 'RukkaPlus'" # solo a un registro en la tabla
+cur.execute(command)
+data = cur.fetchone() # Esto retornara un 'dict' con la fila seleccionada
+                      # por el cursor
+
+# [ Actualizar un registro ]
+command = "UPDATE users " +                     # Ahora algunos datos de un
+          "SET username = 'RukkaMinus' " +      # registro determinado fueron
+          "WHERE email = 'rukkaplus@gmail.com'" # modificados
+cur.execute(command)
+
+# [ Eliminar un registro ]
+command = "DELETE FROM users WHERE username = RukkaMinus" # Ahora un registro
+cur.execute(command)                                      # fue borrado</code></pre>
+        <section>
+          <h3 id="dynamic-1">Multiples registros | registros dinamicos</h3>
+          <p>Por lo general, necesitaremos insertar valores obtenidos de variables. Pero <b>NUNCA</b> debemos formatear directamente un <code>str</code> con estos valores, porque esto vuelve al programa vulnerable de <b>ataques de inyeccion SQL</b>. Para formatear adecuadamente un comando, usamos el simbolo <code>?</code> dentro del <code>str</code> en la posicion donde un valor debe ser posicionado, y seguido a ello, pasamos el valor como parametro adicional dentro de la funcion <code>execute</code></p>
+          <pre><code class="language-python">name = "RukkaPlus"
+
+# NO HAGAS ESTO!!!
+command = "SELECT * FROM users WHERE username = '{}'".format(name)
+
+# En su lugar has esto
+command = "SELECT * FROM users WHERE username = %s"
+cur.execute(command, (name,))
+# NOTA: la varible 'name' es pasada dentro de una 'tuple'. Esa
+# ',' del final es necesaria para indicar que se trata de una
+# 'tuple' con solo un miembro</code></pre>
+          <p>Tambien podemos ejecutar multiples comandos similares con variacion de parametros usando las tipicas <code>list</code></p>
+          <pre><code class="language-python">users = [
+          ("Maria", "maria@gmail.com", "6bd13cba7077df88e1a855e3951b671ef401f2592133dfe9a706094ae0b56282"),
+          ("John", "john@doe.com", "f82441cd37981b32c8987daeffa8fa691d34ebd724e768712798cbad76e56fd0"),
+          ("Max", "max@yahoo.com", "d29d193b2c39d728736641bb311a5496cff57731130b7867bde85b2fb30dda5e"),
+          ("Dario", "dario@daredario.com", "20ca75da0c6d7a07c4358ee89b50bc4193240a1375554e27f7a7f6b94985f7e0"),
+        ]
+
+command = "INSERT INTO users VALUES (%s, %s, %s)"
+cur.executemany(command, users)</code></pre>
+        </section>
+      </section>
+      <section>
+        <h2 id="val-1">Validacion o reversion</h2>
+        <p>Una vez hayamos teminado de trabajar con la base de datos, es importante <b>guardar los cambios</b> en caso de que sea requerido, y <b>cerrar la conexion</b> con la base de datos. O cerrar directamente la conexion con la base de datos sin guardar los cambios realizados</p>
+        <pre><code class="language-python"># [ Guardar los cambios ]
+con.commit()
+
+# [ Cerrar la conexion ]
+con.close()</code></pre>
+        <p>De esta forma, los datos persistiran dentro de la base de datos. Podemos comprobarlo <i>inspeccionando</i> con la utilidad <code>psql</code> anterioremente mencionada. Usando el comando de seleccionar todos los elementos de una tabla (<code>SELECT * FROM users</code>)</p>
+      </section>
+      <section>
+        <h2 id="primary-1">Campos primarios</h2>
+        <p>Podemos crear tablas con <b>campos primarios</b>. Los campos primarios son campos que <b>no pueden ser repetidos</b>. Si agregamos dos o mas registros con el mismo valor en el campo primario nos dara un error</p>
+        <pre><code class="language-sql">CREATE table users (
+  id VARCHAR(9) PRIMARY KEY,
+  name TEXT,
+  email TEXT
+);</code></pre>
+      </section>
+      <section>
+        <h2 id="required-1">Campos requeridos</h2>
+        <p>Los <b>campos requeridos</b> son aquellos campos que no pueden ser pasados por alto y deben tener un valor obligadamente</p>
+        <pre><code class="language-sql">CREATE table users (
+  name TEXT,
+  email TEXT NOT NULL,
+  password TEXT NOT NULL
+);</code></pre>
+      </section>
+      <section>
+        <h2 id="autoinc-1">Campos autoincrementales</h2>
+        <p>Los <b>campos autoincrementales</b> son campos que incrementan de valor automaticamente. La inclusion de su valor al registrar nuevos datos puede ser ignorado</p>
+        <pre><code class="language-sql">CREATE table products (
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  price FLOAT
+);</code></pre>
+      </section>
+      <section>
+        <h2 id="unique-1">Campos unicos</h2>
+        <p>Al igual que con los <b>campos primarios</b>, los <b>campos unicos</b> no pueden tener valores repetidos en la misma tabla. Sin embargo, a diferencia de los campos primarios, podemos tener mas de un campo unico en la misma tabla, mientras que solo podemos tener un campo primario por tabla</p>
+        <pre><code class="language-sql">CREATE table users (
+  id SERIAL PRIMARY KEY,
+  name TEXT UNIQUE,
+  email TEXT UNIQUE,
+  password TEXT
+);</code></pre>
+      </section>
+    </section>
+    <section class="w3-border w3-panel mariadb-tabpanel">
+      <section>
+        <h2 id="database-2">MariaDB</h2>
+        <p><b>MariaDB</b> es un <b>sistema gestor de bases de datos SQL</b> completo, estable y bastante maduro. Supone ser un sucesor de <b>MySQL</b>, en el que ya no es necesario pagar para utilizarlo (a diferencia del predecesor anteriormente mencionado). Esta orientado al servidor, por lo que hay que instalarlo en el computador mismo</p>
+      </section>
+    </section>
+  </div>
+</section>
+{% endblock %}

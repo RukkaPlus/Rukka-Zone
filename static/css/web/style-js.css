@@ -1,0 +1,14 @@
+:root {
+  --principal-color: #ffeb3b;
+  --principal-text-color: #000;
+}
+button {
+  width: 100%;
+}
+.output-cont {
+  display: none;
+  padding: 16px 1em;
+  border-radius: 0.15em;
+  color: #FFF;
+  background: #272822;
+}

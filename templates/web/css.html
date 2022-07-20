@@ -1,0 +1,905 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/css.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-css.css') }}">
+{% endblock %}
+
+{% block title %}CSS{% endblock %}
+
+{% block header %}
+<div>
+  <h1>CSS</h1>
+  <p><b>C</b>ascading <b>S</b>tyle <b>S</b>heets (<b>CSS</b>) es un lenguaje Web que permite manejar la estetica de una <b>pagina Web</b>. Este lenguaje toma los elementos de una pagina construida en <b>HTML</b> mediante <b>selectores</b> y permite cambiar sus propiedades estilisticas (como por ejemplo el color de texto, los margenes, los bordes del elemento, etc)</p>
+</div>
+<img src="{{ url_for('static', filename='img/css.svg') }}" alt="python">
+{% endblock %}
+
+{% block index %}
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#syntax-0">Tipos de selectores</a></li>
+<li><a href="#syntax-1">Jerarquia de especificidad</a></li>
+<li><a href="#basics">Propiedades basicas</a></li>
+<li><a href="#basics-0">Tipos de elementos</a></li>
+<li><a href="#basics-1">Composicion de elementos</a></li>
+<li><a href="#basics-2">Propiedades de texto</a></li>
+<li><a href="#basics-3">La propiedad <code>outline</code></a></li>
+<li><a href="#basics-4">La propiedad <code>position</code></a></li>
+<li><a href="#basics-5">La propiedad <code>overflow</code></a></li>
+<li><a href="#basics-6">La propiedad <code>float</code></a></li>
+<li><a href="#basics-7">Pseudo-clases</a></li>
+<li><a href="#basics-8">Pseudo-elementos</a></li>
+<li><a href="#basics-9">Las propiedades <code>object-fit</code> y <code>object-position</code></li>
+<li><a href="#basics-10">La propiedad <code>cursor</code></a></li>
+<li><a href="#basics-11">Variables</a></li>
+<li><a href="#basics-12">La propiedad <code>transform</code></a></li>
+<li><a href="#basics-13">La propiedad <code>background</code></a></li>
+<li><a href="#basics-14">La propiedad <code>filter</code></a></li>
+<li><a href="#basics-14-0">Pequenio ejemplo que quedo bien copado</a></li>
+<li><a href="#basics-15">Otras propiedades</a></li>
+<li><a href="#flexbox">Flexbox</a></li>
+<li><a href="#flexbox-0">Cambiar direccion del <code>main-axis</code></a></li>
+<li><a href="#flexbox-1">La propiedad <code>flex-wrap</code></a></li>
+<li><a href="#flexbox-2">La propiedad <code>flex-grow</code></a></li>
+<li><a href="#flexbox-3">Las propiedades <code>flex-basis</code> y <code>flex-shrink</code></a></li>
+<li><a href="#flexbox-4">La propiedad <code>order</code></a></li>
+<li><a href="#grid">Grid</a></li>
+<li><a href="#grid-0">Composicion de un Grid</a></li>
+<li><a href="#grid-1">La propiedad <code>gap</code></a></li>
+<li><a href="#grid-2">Las propiedades <code>grid-column</code> y <code>grid-row</code></a></li>
+<li><a href="#grid-3">La funcion <code>repeat()</code></a></li>
+<li><a href="#grid-4">Grid implicito y Grid explicito</a></li>
+<li><a href="#grid-4-0">Programando el Grid implicito</a></li>
+<li><a href="#grid-5">Grid dinamico</a></li>
+<li><a href="#grid-6">Las propiedades <code>align-items</code> y <code>justify-items</code></a></li>
+<li><a href="#grid-7">Las propiedades <code>align-content</code> y <code>justify-content</code></a></li>
+<li><a href="#grid-8">Otras alineaciones</a></li>
+<li><a href="#grid-9">La propiedad <code>order</code></a></li>
+<li><a href="#grid-10">Grid Area</a></li>
+<li><a href="#grid-11">Nombrar Grid-lines</a></li>
+<li><a href="#grid-12">Ejemplo de uso de Grid</a></li>
+<li><a href="#transition">Transiciones</a></li>
+<li><a href="#animation">Animaciones</a></li>
+<li><a href="#responsive-design">Responsive design</a></li>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="syntax">Syntax</h2>
+  <section>
+    <h3 id="syntax-0">Tipos de selectores</h3>
+    <p>Para manejar la estetica de un elemento es necesario seleccionarlo mediante un selector</p>
+    <ul>
+      <li>Todos los elementos : <code>*</code></li>
+      <li>Etiquetas : <code>etiqueta</code></li>
+      <li>Atributos : <code>[atributo] / [atributo="valor"]</code></li>
+      <li>Clases : <code>.clase</code></li>
+      <li>ID : <code>#id</code></li>
+      <li>Desendecia : <code>selector_padre selector_desendiente</code></li>
+      <li>Pseudo-clase : <code>selector:pseudo-clase</code></li>
+      <li>Pseudo-elemento : <code>selector::pseudo-elemento</code></li>
+    </ul>  
+  </section>
+  <section>
+    <h3 id="syntax-1">Jerarquia de especificidad</h3>
+    <p>Se trata del nivel jerarquico que cada seleccion puede poseer. Cuanto mayor sea un nivel jerarquico, mayor sera la importancia de un cambio en la estetica</p>
+    <ol>
+      <li>!important</li>
+      <li>estilos en linea</li>
+      <li>clases / pseudo-clases / atributos</li>
+      <li>elementos</li>
+      <li>pseudo-elementos</li>
+    </ol>
+    <pre><code class="language-css">aside { /* Seleccionando a los elementos "aside" */
+  ...
+}
+#unique a { /* Seleccionando a los elementos "a" del elemento con id "unique" */
+  ...
+}
+.nounique { /* Seleccionando a los elementos de clase "nounique" */
+  ... !important /* Su cambio sera definitivo */
+}</code></pre>
+  </section>
+</section>
+
+<section>
+  <h2 id="basics">Propiedades basicas</h2>
+  <p>Las propiedades mas importantes para poder entender la importancia y los usos que pueden ser aplicados con <b>CSS</b></p>
+  <section>
+    <h3 id="basics-0">Tipos de elementos</h3>
+    <p>Cada tipo de elemento tiene comportamientos que pueden variar entre si. Podemos definir el tipo de elemento mediante la propiedad <code>display</code></p>
+    <ul>
+      <li><code>block</code> : Los bloques pueden ocupar el espacio de su contenido o lo que sus propiedades definan. Estos ocupan una linea entera (ejemplos: h1, h2, h3, h4, h5, h6, p, div, ul, ol, etc)</li>
+      <li><code>inline</code> : Los elementos en linea ocupan el espacio de su contenido. Estos no se separan por lineas enteras (ejemplos: b, i, a, button, etc)</li>
+      <li><code>inline-block</code> : Ocupan como un elemento en linea pero adquiere propiedades de los elementos bloque (por ejemplo, es posible modificarle el ancho y el alto)</li>
+      <li><a href="#flexbox"><code>flex</code></a> : Son cajas flexibles. Tiene particularidades parecida a la de los bloques, pero son muy utiles como cajas flexibles</li>
+      <li><a href="#grid"><code>grid</code></a> : Son cajas con gtillas. Tiene particularidades parecida a la de los bloques, pero permiten estructurar elementos en sus grillas</li>
+      <li><code>table</code> : Define el comportamiento como una tabla</li>
+      <li><code>inline-table</code> : Define el comportamiento como una tabla en linea</li>
+      <li><code>list-item</code> : Define el comportamiento como un elemento de lista</li>
+      <li><code>table-cell</code> ...</li>
+      <li><code>table-row</code> ...</li>
+      <li><code>table-column</code> ...</li>
+      <li><code>inline-grid</code> ...</li>
+      <li><code>inline-flex</code> ...</li>
+    </ul>
+  </section>
+  <section>
+    <h3 id="basics-1">Composicion de elementos</h3>
+    <p>Los elementos se componen de lo siguiente</p>
+    <ul>
+      <li>content : Contenido de la caja</li>
+      <li>padding : Espacio dentro de la caja</li>
+      <li>border : Borde de la caja</li>
+      <li>margin : Espacio fuera de la caja</li>
+    </ul>
+    <div class="example-cont">
+      <div id="basics__element-0A">
+        Margin
+        <div id="basics__element-0B">
+          border
+          <div id="basics__element-0C">
+            Padding
+            <div id="basics__element-0D">
+              Content
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-2">Propiedades de texto</h3>
+    <p>Son propiedades que afectan a los textos dentro de etiquetas</p>
+    <ul>
+      <li><code>font-size</code> : Tamanio de la fuente</li>
+      <li><code>font-family</code> : Familia de la fuente</li>
+      <li><code>line-height</code> : Altura de la linea</li>
+      <li><code>font-weight</code> : Ancho de la fuente</li>
+    </ul>
+    <pre><code class="language-css">#element-0 {
+  color: red;
+  font-family: 'DejaVu Serif';
+  font-weight: 900;
+}
+#element-1 {
+  font-size: xx-large;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: blue;
+}
+#element-2 {
+  font-weight: 450;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  text-decoration-line: underline;
+}</code></pre>
+    <div class="example-cont">
+      <p id="basics__element-1A">Texto de ejemplo</p>
+      <p id="basics__element-1B">Texto de ejemplo</p>
+      <p id="basics__element-1C">Texto de ejemplo</p>
+    </div>
+    <p>Podemos descargar fuentes de internet e implementarlas en paginas Web. Mas informacion en <a target="blank" href="https://fonts.google.com/">Google Fonts</a></p>
+  </section>
+  <section>
+    <h3 id="basics-3">La propiedad <code>outline</code></h3>
+    <p>Es una propiedad <b>shorthand</b> que define un borde que no afecta ni a la caja ni al <b>DOM</b></p>
+    <pre><code class="language-css">#element-0 { outline: solid blue 10px; }
+#element-1 { outline: solid red 10px; }</code></pre>
+    <div class="example-cont">
+      <div id="basics__element-2A"></div>
+      <div id="basics__element-2B"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-4">La propiedad <code>position</code></h3>
+    <p>Es una propiedad que define la posicion de un elemento</p>
+    <ul>
+      <li><code>static</code> : Posicion por defecto de los elementos</li>
+      <li><code>relative</code> : Posicion que ocupa espacio en el <b>DOM</b> (parecida a <code>static</code>) pero permite personalizar mas la posicion (agrega las propiedades: top, left, right, buttom y z-index). Tambien mantiene su espacio y punto de referencia original</li>
+      <li><code>absolute</code> : Posicion que no ocupa espacio en el <b>DOM</b> ni respeta los espacios de otros elementos (por defecto se reposiciona por debajo del elemento anterior). Agrega las propiedades: top, left, right, buttom y z-index). Las propiedades de posicion (top, left, etc) se ajustan al viewport o al contenedor y no a su punto de referencia. Tambien, por defecto, ajusta su tamanio al contenido</li>
+      <li><code>fixed</code> : Fija su posicion al viewport durante todo el scroll. Posee las mismas caracteristicas que <code>absolute</code></li>
+      <li><code>sticky</code> : Fija su posicion al viewport durante todo el scroll desde que tiene contacto con el borde. Posee las mismas caracteristicas que <code>absolute</code></li>
+    </ul>
+    <pre><code class="language-css">#element-0 {
+  position: static;
+}
+#element-1 {
+  position: relative;
+  left: 50px;
+}
+#element-2 {
+  position: absolute;
+  left: 150px;
+}</code></pre>
+    <div class="example-cont" style="height: 200px;">
+      <p id="basics__element-3A">Yo uso <code>position: static</code></p>
+      <p id="basics__element-3B">Yo uso <code>position: relative</code></p>
+      <p id="basics__element-3C">Yo uso <code>position: absolute</code></p>
+    </div>
+    <div class="example-cont">
+      <p id="basics__element-3D"><a href="{{ url_for('static', filename='html/css_position-fixed.html') }}">Ejemplo de <code>position: fixed</code></a></p>
+      <p id="basics__element-3E"><a href="{{ url_for('static', filename='html/css_position-sticky.html') }}">Ejemplo de <code>position: sticky</code></a></p>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-5">La propiedad <code>overflow</code></h3>
+    <p>Permite controlar los desbordes de contenido. Algunas propiedades son:</p>
+    <ul>
+      <li><code>visible</code> : Propiedad por defecto. Permite que el texto sobresalga del contenedor</li>
+      <li><code>auto</code> : Detecta si el texto sobresale del contenedor. Si es asi, agrega un scroll</li>
+      <li><code>scroll</code> : Obliga a que el contenedor tenga un scroll</li>
+      <li><code>hidden</code> : Oculta implicitamente el scroll</li>
+    </ul>
+    <pre><code class="language-css">#element {
+  height: 200px;
+  overflow: hidden scroll;
+}</code></pre>
+    <p>Es un shorthand porque abrevia a <code>overflow-x</code> y a <code>overflow-y</code></p>
+    <div class="example-cont" id="basics__element-4">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos fugit maxime cupiditate odio! Repellat voluptatibus ducimus asperiores et, dignissimos doloribus consequatur excepturi, eum obcaecati non pariatur? Voluptatibus optio ipsum repudiandae. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti quasi ex ullam accusamus excepturi labore, sunt soluta neque nostrum nesciunt reprehenderit id officia cum, voluptate, dicta qui deserunt sit explicabo? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam incidunt at eligendi iste numquam similique quae temporibus non animi blanditiis repellendus explicabo error adipisci, architecto eveniet neque reprehenderit perspiciatis? At! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe est natus quas, iste sed perferendis quam eius, aperiam error qui expedita! Id officiis perferendis optio est! Tempora reiciendis architecto culpa! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus officiis dignissimos culpa, natus quia nobis temporibus distinctio necessitatibus libero inventore provident veniam aut nisi? Aperiam eos ipsam fuga est dolores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quis recusandae explicabo! Tempora quam fugit ipsa, iure, animi debitis, nisi libero neque sit soluta corrupti assumenda unde expedita? Ducimus, asperiores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure at laboriosam unde! Accusantium ut, corporis quia quae dicta beatae odio maxime aut nostrum quod consectetur amet explicabo. Fugit, ea dolorem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quas mollitia ipsa excepturi necessitatibus tempore dolore nesciunt beatae consectetur officia delectus ipsum a recusandae quo, sapiente optio similique, possimus atque. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sunt, libero labore voluptate ipsa iure eveniet totam. Facilis enim dolor ex cupiditate soluta, fugit laudantium recusandae, necessitatibus aliquid atque laboriosam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed nisi dolorum quasi praesentium, dolores labore fugiat nobis obcaecati facilis? Accusantium voluptate voluptates sunt soluta impedit quisquam saepe error optio adipisci. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, repellat. Deserunt molestiae alias nobis, necessitatibus esse sit corporis velit, aspernatur quibusdam, exercitationem ea minus quae praesentium aut enim dicta voluptas? Lorem ipsum dolor sit amet consectetur adipisicing elit. At tempore quae soluta. Officia nobis maxime magni consectetur, modi blanditiis saepe quisquam ex in iure adipisci doloremque praesentium numquam. Corporis, nobis!</p>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-6">La propiedad <code>float</code></h3>
+    <p>Esta propiedad permite hacer que un elemento se ajuste a una direccion definida</p>
+    <pre><code class="language-css">#element-img {
+  width: 125px;
+  height: 75px;
+  float: right;
+}</code></pre>
+    <div class="example-cont">
+      <h4>Some title</h4>
+      <img id="basics__element-5" src="{{ url_for('static', filename='img/example_css.webp') }}" alt="image">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus numquam, optio exercitationem voluptas nesciunt delectus beatae voluptatum, minima modi ab architecto officia. Impedit magni explicabo aliquid exercitationem sit dolorem cumque. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi ullam cumque aliquid fuga quam odio exercitationem eum rerum, eaque blanditiis aspernatur vero non voluptates, nobis deleniti eius adipisci maiores quod.</p>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-7">Pseudo-clases</h3>
+    <p>Las <b>Pseudo-clases</b> son <b>keywords</b> agregadas a selectores que especifican un estado especial del elemento seleccionado</p>
+    <ul>
+      <li><code>:hover</code> : Cuando el mouse apunta a un elemento</li>
+      <li><code>:active</code> : Cuando un elemento sea pulsado por el mouse</li>
+      <li><code>:link</code> : Cuando un enlace no fue visitado</li>
+      <li><code>:visited</code> : Cuando un enlace si fue visitado</li>
+      <li><code>:focus</code> : En los input. Cuando se encuentra enfocado</li>
+    </ul>
+    <pre><code class="language-css">#element-0:hover { color: red; }
+#element-1:active { color: red; } 
+#element-2:link { color: red; }
+#element-3:visited { color: red; }
+#element-4:focus { color: red; }</code></pre>
+    <div class="example-cont">
+      <p id="basics__element-6A">Yo uso <code>:hover</code></p>
+      <p id="basics__element-6B">Yo uso <code>:active</code></p>
+      <p id="basics__element-6C"><a href="https://www.example.com/">Yo uso <code>:link</code></a></p>
+      <p id="basics__element-6D"><a href="https://www.example.com/">Yo uso <code>:visited</code></a></p>
+      <input id="basics__element-6E" type="text" placeholder="Yo uso ':focus'">
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-8">Pseudo-elementos</h3>
+    <p>Los <b>Pseudo-elementos</b> al igual que las <b>Pseudo-clases</b>, se añaden a selectores, pero en lugar de describir un estado especial, describen ciertas partes de un elemento</p>
+    <ul>
+      <li><code>::first-letter</code> : La primera letra de un texto. No funciona en elementos <code>inline</code></li>
+      <li><code>::first-line</code> : La primera linea de un texto. No funciona en elementos <code>inline</code></li>
+      <li><code>::selection</code> : La seleccion de un texto</li>
+      <li><code>::after</code> : Lo que va despues del elemento</li>
+      <li><code>::before</code> : Lo que va antes del elemento</li>
+      <li><code>::place-holder</code> : En los <code>input</code>. El texto temporal</li>
+    </ul>
+    <pre><code class="language-css">#element-0::first-letter { color: red; }
+#element-1::first-line { color: red; }
+#element-2::selection { color: red; }
+#element-3::after { color: red; content: "(Yo soy el after)"; }
+#element-4::before { color: red; content: "(Yo soy el before)"; }
+#element-5::before { color: red; }</code></pre>
+    <div class="example-cont">
+      <p id="basics__element-7A">Yo uso <code>::first-letter</code></p>
+      <p id="basics__element-7B">Yo uso <code>::first-line</code></p>
+      <p id="basics__element-7C">Yo uso <code>::selection</code></p>
+      <p id="basics__element-7D">Yo uso <code>::after</code></p>
+      <p id="basics__element-7E">Yo uso <code>::before</code></p>
+      <input id="basics__element-7F" type="text" placeholder="Yo uso '::placeholder'">
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-9">Las propiedades <code>object-fit</code> y <code>object-position</code></h3>
+    <p>La propiedad <code>object-fit</code> nos permite trabajar con imagenes ajustandola a diferentes tamanios</p>
+    <ul>
+      <li><code>contain</code> : Ajusta su tamanio a las resoluciones reales de la imagen adaptandose al contenedor</li>
+      <li><code>cover</code> : Ajusta su tamanio al contenedor recortando el espacio sobrante</li>
+      <li><code>none</code> : Ajusta el tamanio a los valores por defecto. Le chupa un huevo todo</li>
+      <li><code>scale-down</code> : Ajusta la imagen a la que se ajuste mejor al contenedor (si contain es mas pequenio, sera contain. En caso contrario, sera cover)</li>
+      <li><code>fill</code> : Expande la imagen con tal de que ocupe todo el espacio del contenedor</li>
+    </ul>
+    <pre><code class="language-css">#element-0 > img { object-fit: contain; }
+#element-1 > img { object-fit: cover; }
+#element-2 > img { object-fit: none; }
+#element-3 > img { object-fit: scale-down; }
+#element-4 > img { object-fit: fill; }</code></pre>
+    <div class="example-cont">
+      <div id="basics__element-8A"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-8B"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-8C"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-8D"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-8E"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+    </div>
+    <p>La propiedad <code>object-position</code> nos permite trabajar con imagenes junto a <code>object-fit</code> para definir su posicion principal</p>
+    <pre><code class="language-css">#element-0 > img { object-fit: contain; object-position: right; }
+#element-1 > img { object-fit: cover; object-position: bottom; }
+#element-2 > img { object-fit: none; object-position: top; }
+#element-3 > img { object-fit: scale-down; object-position: left; }
+#element-4 > img { object-fit: fill; object-position: 30px; }</code></pre>
+    <div class="example-cont">
+      <div id="basics__element-9A"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-9B"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-9C"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-9D"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+      <div id="basics__element-9E"><img src="{{ url_for('static', filename='img/example_css.webp') }}"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-10">La propiedad <code>cursor</code></h3>
+    <p>Permite alterar el cursor del mouse. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor">Aqui una lista de los posibles valores de esta propiedad</a></p>
+    <div id="basics__element-10"></div>
+    <h3 id="basics-11">Variables</h3>
+    <p>Son espacios en memoria que pueden variar mas adelante y pueden guardar un valor para utilizarlo en diferentes elementos <br> Las variables se definen anteponiendo al nombre con <code>--</code>, y se usan con la funcion <code>var()</code></p>
+    <pre><code class="language-css">:root {
+  --variable: red;
+}
+div { 
+  background: var(--variable); /* &lt- red */
+}</code></pre>
+  </section>
+  <section>
+    <h3 id="basics-12">La propiedad <code>transform</code></h3>
+    <p>Esta propiedad nos permite realizar una transformacion a un elemento</p>
+    <ul>
+      <li><code>translate(x, y)</code> : Translada un objeto a otra posicion</li>
+      <li><code>scale(size_x, size_y)</code> : Escala el tamanio de un objeto</li>
+      <li><code>skew(value_deg)</code> : Deforma el objeto</li>
+      <li><code>rotate(value_deg)</code> : Rota el objeto</li>
+    </ul>
+    <pre><code class="language-css">#element { transform: translate(25px); }</code></pre>
+    <div class="example-cont">
+      <div id="basics__element-11"></div>
+    </div>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Tambien existe una propiedad llamada <code>clip-path</code>, que pemite transformar un objeto para que tenga una forma deseada. Es posible buscar en el navegador <b>clip-path generator</b></p>
+    </div>
+  </section>
+  <section>
+    <h3 id="basics-13">La propiedad <code>background</code></h3>
+    <p>Es una propiedad que define el fondo de un elemento</p>
+    <ul>
+      <li><code>background-color</code> : Define el color de fondo (<code>rgb</code>, <code>rgba</code>, hexadecimal, etc)</li>
+      <li><code>background-image</code> : Define una imagen de fondo (<code>url()</code>)</li>
+      <li><code>background-size</code> : Define el tamanio del fondo (<code>x, y, auto, cover, contain</code>)</li>
+      <li><code>background-position</code> : Define la posicion del fondo (<code>left, top, bottom, right, center</code>)</li>
+      <li><code>background-attachement</code> : Define la posicion del fondo (<code>scroll</code> (toma como referencia al scroll. Es el valor por defecto), <code>fixed</code> (toma como referencia al viewport, asi que queda fijo), <code>inherit</code>)</li>
+      <li><code>background-clip</code> : Define los bordes que tomara en cuenta el fondo (<code>border-box, padding-box, content-box</code>)</li>
+      <li><code>background-origin</code> : Recorta la imagen de fondo para ajustarlo a su valor (<code>border-box, padding-box, content-box</code>)</li>
+      <li><code>background</code> : Shorthand de todo lo anterior</li>
+    </ul>
+  </section>
+  <section>
+    <h3 id="basics-14">La propiedad <code>filter</code></h3>
+    <p>Permite manejar los filtros de una imagen</p>
+    <ul>
+      <li><code>none</code>  : Propiedad por defecto</li>
+      <li><code>blur(px)</code> : Desenfoque de la imagen</li>
+      <li><code>brightness(0 - 1)</code> : Brillo de la imagen</li>
+      <li><code>contrast(%)</code> : Contraste de la imagen</li>
+      <li><code>drop-shadow(medidas)</code> : La sombra de la imagen (no es lo mismo que el box-shadow)</li>
+      <li><code>grayscale(%)</code> : La escala de grises</li>
+      <li><code>hue-rotate(deg)</code> : Rotacion de colores</li>
+      <li><code>invert(%)</code> : Invierte los colores</li>
+      <li><code>opacity(%)</code> : La opacidad de la imagen</li>
+      <li><code>saturate(%)</code> : Saturacion de la imagen</li>
+      <li><code>sepia(%)</code> : Lo vuelve sepia</li>
+      <li><code>url("filter.svg")</code> : Permite importar los efectos que hayamos preparado</li>
+    </ul>
+    <section>
+      <h4 id="basics-14-0">Pequenio ejemplo que quedo bien copado</h4>
+      <pre><code class="language-css">#element-cont {
+  background: white;
+  filter: contrast(30);
+}
+#element-0, #element-1 {
+  margin: 40px;
+  width: 100px;
+  height: 100px;
+  background-color: #f00;
+  border-radius: 50%;
+  filter: blur(20px);
+}
+#element-0 { animation: filter-anim 3s alternate infinite; }
+@keyframes filter-anim {
+  from { transform: translateY(0); }
+  to { transform: translateY(120px); }
+}</code></pre>
+      <div class="example-cont" id="basics__element-12-cont">
+        <div id="basics__element-12A"></div>
+        <div id="basics__element-12B"></div>
+      </div>
+    </section>
+  </section>
+  <section>
+    <h3 id="basics-15">Otras propiedades</h3>
+    <p>Existen otras propiedades, como por ejemplo <code>letter-spacing</code>, que define el espacio entre letras, o <code>scroll-behaviour</code>, que define el comportamiento del scroll</p>
+  </section>
+</section>
+<section>
+  <h2 id="flexbox">Flexbox</h2>
+  <p>Un <b>Flexbox</b> es una caja flexible. Un <b>Flexbox</b> esta compuesto de un <b>Flex-container</b> y de sus <b>Flex-item</b>s, siendo el primero el contenedor del item flexible <br> Los elementos de <code>display: flex</code> seran los elementos flexibles, mientras que el contenedor en si se comportara como un contenedor <code>display: block</code> <br> Flexbox tiene dos ejes: el <code>main-axis</code> (eje x) y <code>cross-axis</code> (eje y) <br> A su vez, el <code>main-axis</code> esta compuesto de un <b>main-start</b> (inicio) y <b>main-end</b> (final), esto apuntando de izquierda a derecha. Igualmente con el <code>cross-axis</code>, esta compuesto de un <b>cross-start</b> (inicio) y <b>cross-end</b> (final), esto apuntando de arriba a abajo</p>
+  <pre><code class="language-css">#element-cont { display: flex }</code></pre>
+  <div class="flexbox__element-cont">
+    <p class="flexbox__element-item-text">Yo soy un <b>Flex-item</b> y estoy dentro de un <b>Flex-container</b>. Y soy mucho mas grande que el otro item. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus debitis accusantium incidunt pariatur eveniet reiciendis rerum neque! Expedita non totam cupiditate? Nulla ad adipisci non voluptatibus odit mollitia. Maxime, doloremque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem asperiores corrupti nam non perspiciatis eum error ducimus a. Voluptatum vel nulla soluta veritatis recusandae, ea facere aliquid quos quibusdam corrupti.</p>
+    <p class="flexbox__element-item-text">Yo soy un <b>Flex-item</b> y estoy dentro de un <b>Flex-container</b>. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui facere voluptate unde magni quo obcaecati veniam. Soluta tempora ducimus aperiam, nobis, dolor odio, consectetur suscipit ea saepe distinctio ad alias!</p>
+  </div>
+  <div class="w3-panel note">
+    <p><b>Nota</b>: Por defecto, un <b>Flex-container</b> ajusta su tamanio a sus items, y resta ancho a un item otorgandoselo a otro si es necesario para que la altura sea siempre la misma. Esto para mantener el <code>main-axis</code></p>
+  </div>
+  <section>
+    <h3 id="flexbox-0">Cambiar direccion del <code>main-axis</code></h3>
+    <p>La propiedad <code>flex-direction</code> nos permite cambiar la direccion del <code>main-axis</code>. Sin embargo, el <code>cross-axis</code> tambien sera cambiado de direccion (si el <code>main-axis</code> esta en vertical, el <code>cross-axis</code> estara en horizontal. Si el <code>main-axis</code> esta en horizontal, el <code>cross-axis</code> estara en vertical)</p>
+    <ul>
+      <li><code>row</code> : valor por defecto. Define el comportamiento a los items como filas</li>
+      <li><code>column</code> : Define el comportamiento a los items como columnas</li>
+      <li><code>row-reverse</code> : Igual que <code>row</code> pero en sentido contrario</li>
+      <li><code>column-reverse</code> : Igual que <code>column</code> pero en sentido contrario</li>
+    </ul>
+    <pre><code class="language-css">#element-cont { flex-direction : row; }</code></pre>
+    <div class="flexbox__element-cont">
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+    <pre><code class="language-css">#element-cont { flex-direction : column; }</code></pre>
+    <div class="flexbox__element-cont" id="flexbox__element-cont-0">
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="flexbox-1">La propiedad <code>flex-wrap</code></h3>
+    <p>Nos permite modificar el comportamiento de los items cuando se ven afectados por la falta de espacio. Por ejemplo, cuando el viewport tenga menos espacio que el minimo necesario, que ubique los iems que no quepen hacia abajo o hacia arriba</p>
+    <pre><code class="language-css">#element-cont { flex-wrap: wrap; }</code></pre>
+    <div class="flexbox__element-cont" id="flexbox__element-cont-1">
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+    <pre><code class="language-css">#element-cont { flex-wrap: wrap-reverse; }</code></pre>
+    <div class="flexbox__element-cont" id="flexbox__element-cont-2">
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+    <p>Existe una propiedad <b>shorthand</b> que define el <code>flex-direction</code> y el <code>flex-wrap</code> en una sola linea. Esta propiedad es el <code>flex-flow</code></p>
+    <section>
+      <h4>Algunos ejemplos</h4>
+      <pre><code class="language-css">flex-flow: column wrap;
+flex-flow: row-reverse wrap;
+flex-flow: column-reverse wrap-reverse;</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="flexbox-2">La propiedad <code>flex-grow</code></h3>
+    <p>Esta propiedad permite que un contenedor reparta el espacio sobrante del viewport entre todos sus items, o que un item especifico se lleve todo ese espacio sobrante</p>
+    <pre><code class="language-css">.element-items { flex-grow: 1; }</code></pre>
+    <div class="flexbox__element-cont" id="flexbox__element-cont-3">
+      <div class="flexbox__element-item" id="flexbox__element-item-0"></div>
+      <div class="flexbox__element-item" id="flexbox__element-item-0"></div>
+      <div class="flexbox__element-item" id="flexbox__element-item-0"></div>
+      <div class="flexbox__element-item" id="flexbox__element-item-0"></div>
+      <div class="flexbox__element-item" id="flexbox__element-item-0"></div>
+    </div>
+    <pre><code class="language-css">#element-item-specific { flex-grow: 1; }</code></pre>
+    <div class="flexbox__element-cont">
+      <div class="flexbox__element-item" id="flexbox__element-item-1"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="flexbox-3">Las propiedades <code>flex-basis</code> y <code>flex-shrink</code></h3>
+    <p>Cuando se trabaja con flex-items, ya no se usa la propiedad <code>width</code>, generalmente es utilizado <code>flex-basis</code>, puesto a que tiene incluso mayor importancia que la propiedad width, sin embargo, funciona para lo mismo <br> La propiedad <code>flex-shrink</code> permite ajustar cuanto espacio un item debe sederle a los otros items si el espacio empieza a limitarse</p>
+    <pre><code class="language-css">#element-item {
+  flex-shrink: 2; /* Sediendo el doble de su espacio */
+  }</code></pre>
+    <div class="flexbox__element-cont">
+      <div class="flexbox__element-item" id="flexbox__element-item-2"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+    <p>Si definimos un <code>flex-shrink</code> menor a 1, entonces va a ceder esa cantidad de espacio (que seria menor a lo que por defecto se trae). Y si la definimos como 0, no va a ceder nada de espacio cuando el viewport empiece a reducir su tamanio</p>
+  </section>
+  <section>
+    <h3 id="flexbox-4">La propiedad <code>order</code></h3>
+    <p>Con <code>order</code> es posible definir la posicion de un elemento. Cuanto mas alto sea, mas alejado estara del inicio (<code>main-axis</code>)</p>
+    <pre><code class="language-css">#element-item-specific { order: 10; }</code></pre>
+    <div class="flexbox__element-cont">
+      <div class="flexbox__element-item" id="flexbox__element-item-3">Yo fui definido primero</div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+      <div class="flexbox__element-item"></div>
+    </div>
+  </section>
+</section>
+<section>
+  <h2 id="grid">Grid</h2>
+  <p>Es un tipo de elemento que facilita estructurar esteticamente a los elementos dentro de grillas</p>
+  <section>
+    <h3 id="grid-0">Composicion de un Grid</h3>
+    <ul>
+      <li><b>Grid container</b> : El contenedor Grid. Se comporta como un Block pero cambia el comportamiento de sus items</li>
+      <li><b>Grid item</b> : Los items dentro del contenedor Grid</li>
+      <li><b>Grid cell</b> : Las celdas del contenedor Grid</li>
+      <li><b>Grid tracks</b> : Se trata de las columnas y filas</li>
+      <li><b>Grid area</b> : Es un conjunto de celdas que puede contener un item</li>
+      <li><b>Grid line</b> : Se trata de las lineas entre columnas y lineas</li>
+    </ul>
+    <p>Para que un Grid container tenga columnas y filas es necesario especificarlo con <code>grid-template-rows</code> y <code>grid-template-columns</code></p>
+    <pre><code class="language-css">#element-cont {
+  display: grid;
+  grid-template-rows: 75px 75px 75px;
+  grid-template-columns: 75px 75px 75px;
+}</code></pre>
+    <div class="grid__element-cont">
+      <div class="grid__element-item">1</div>
+      <div class="grid__element-item">2</div>
+      <div class="grid__element-item">3</div>
+      <div class="grid__element-item">4</div>
+      <div class="grid__element-item">5</div>
+      <div class="grid__element-item">6</div>
+      <div class="grid__element-item">7</div>
+      <div class="grid__element-item">8</div>
+      <div class="grid__element-item">9</div>
+    </div>
+    <p>La unidad de medida <code>fr</code> usa el espacio sobrante del contenedor. Si hay mas columnas que usen esta unidad de medida, se repartiran espacios entre ellas</p>
+  </section>
+  <section>
+    <h3 id="grid-1">La propiedad <code>gap</code></h3>
+    <p>La propiedad <code>gap</code> es un shorthand de <code>gap-column</code> y <code>gap-row</code> <br> Se trata de una propiedad que separa a las celdas entre si dentro de un <b>Grid container</b></p>
+    <pre><code class="language-css">#element-cont {
+  display: grid;
+  grid-template-rows: 75px 75px 75px;
+  grid-template-columns: 75px 75px 75px;
+  gap: 30px;
+}</code></pre>
+    <div class="grid__element-cont" id="grid__element-cont-0">
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="grid-2">Las propiedades <code>grid-column</code> y <code>grid-row</code></h3>
+    <p>Estas propiedades son asignadas a <b>Grid items</b>, y sirven para indicar el la linea donde inicia este item y la linea donde termina <br> El <b>shorthand</b> <code>grid-column</code> abrevia <code>grid-colum-start</code> y <code>grid-colum-end</code>. Igualmente con <code>grid-row</code> que indica <code>grid-row-start</code> y <code>grid-row-end</code></p>
+    <pre><code class="language-css">#element-item-0 { grid-column: 1 / 3; }
+#element-item-1 { grid-row: 2 / 4; }
+#element-item-2 { grid-column: 2 / 4; }
+#element-item-3 { grid-column: 2 / 4; }</code></pre>
+    <div class="grid__element-cont">
+      <div class="grid__element-item" id="grid__element-item-0"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item" id="grid__element-item-1"></div>
+      <div class="grid__element-item" id="grid__element-item-2"></div>
+      <div class="grid__element-item" id="grid__element-item-3"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="grid-3">La funcion <code>repeat()</code></h3>
+    <p>Es una funcion que repite un valor una cantidad determinada de veces. Su sintaxis es <code>repeat(veces, valor)</code></p>
+    <pre><code class="language-css">#element-cont {
+  grid-template-rows: repeat(3, 75px); /* &lt- 75px 75px 75px */
+  grid-template-columns: repeat(5, 100px); /* &lt- 100px 100px 100px 100px 100px */
+}</code></pre>
+  </section>
+  <section>
+    <h3 id="grid-4">Grid implicito y Grid explicito</h3>
+    <p>Cuando hablamos de un grid implicito, hablamos de un Grid que no esta controlado o no esta definido <b>explicitamente</b>, mientras que un Grid explicito si esta <b>explicitamente definidio</b></p>
+    <div class="grid__element-cont-short">
+      <div class="grid__element-item">explicito</div>
+      <div class="grid__element-item">explicito</div>
+      <div class="grid__element-item">explicito</div>
+      <div class="grid__element-item">explicito</div>
+      <div class="grid__element-item">explicito</div>
+      <div class="grid__element-item">explicito</div>
+      <div class="grid__element-item">implicito</div>
+    </div>
+    <section>
+      <h4 id="grid-4-0">Programando el Grid implicito</h4>
+      <p>Es posible definirlo usando las propiedades <code>grid-auto-columns</code> y <code>grid-auto-rows</code>. Tambien podemos usar <code>grid-auto-flow</code>, que permite programar como actuara el Grid con un item implicito</p>
+      <pre><code class="language-css">#element-cont { grid-auto-rows: 125px; }</code></pre>
+      <div class="grid__element-cont-short" id="grid__element-cont-1">
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">implicito</div>
+      </div>
+      <pre><code class="language-css">#element-cont {
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+}</code></pre>
+      <div class="grid__element-cont-short" id="grid__element-cont-2">
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">explicito</div>
+        <div class="grid__element-item">implicito</div>
+      </div>
+    </section>
+  </section>
+  <section>
+    <h3 id="grid-5">Grid dinamico</h3>
+    <p>Algunas propiedades y valores facilitan el dinamismo de un Grid</p>
+    <ul>
+      <li><code>minmax(minimo, maximo)</code> : Un valor que permite definir el tamanio minimo y el tamanio maximo. Ejemplo <code>grid-template-rows: 20px 20px minmax(20px, 50px);</code></li>
+      <li><code>min-content</code> : Un valor que indica el tamanio minimo del contenido o que el contenido necesita. Ejemplo <code>minmax(min-content, 200px);</code></li>
+      <li><code>max-content</code> : Un valor que indica el tamanio maximo del contenido. Ejemplo <code>minmax(max-content, 200px);</code></li>
+      <li><code>auto-fill</code> : Un valor que genera espacio si tiene espacio suficiente. Ejemplo <code>grid-template-columns: repeat(auto-fill, 20px);</code></li>
+      <li><code>auto-fit</code> : Un valor que escala espacio si es necesario. Ejemplo <code>grid-template-columns: repeat(auto-fit, 20px);</code></li>
+    </ul>
+  </section>
+  <section>
+    <h3 id="grid-6">Las propiedades <code>align-items</code> y <code>justify-items</code></h3>
+    <p>Es posible alinear horizontalmente los <b>Grid items</b> usando la propiedad <code>justify-items</code>, o alinearlos verticalmente usando la propiedad <code>align-items</code></p>
+    <pre><code class="language-css">#element-cont {
+  grid-template-rows: repeat(3, 75px);
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center; /* Tambien puede ser "start" o "end" */
+}</code></pre>
+    <div class="grid__element-cont" id="grid__element-cont-3">
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+    </div>
+    <pre><code class="language-css">#element-cont {
+  grid-template-rows: repeat(3, 75px);
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center; /* Tambien puede ser "start" o "end" */
+}</code></pre>
+    <div class="grid__element-cont" id="grid__element-cont-4">
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+    </div>
+  </section>
+  <section>
+    <h3 id="grid-7">Las propiedades <code>align-content</code> y <code>justify-content</code></h3>
+    <p>Es posible alinear horizontalmente un los contenedores de un Grid usando la propiedad <code>justify-content</code>, o alinearlos verticalmente usando la propiedad <code>align-content</code></p>
+    <pre><code class="language-css">#element-cont {
+  grid-template-rows: repeat(3, 75px);
+  grid-template-columns: repeat(3, 75px);
+  justify-content: end; /* Tambien puede ser "start" o "center" */
+}</code></pre>
+    <div class="grid__element-cont" id="grid__element-cont-5">
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+    </div>
+    <pre><code class="language-css">#element-cont {
+  height: 400px;
+  grid-template-rows: repeat(3, 75px);
+  grid-template-columns: repeat(3, 75px);
+  align-content: center; /* Tambien puede ser "end" o "start" */
+}</code></pre>
+    <div class="grid__element-cont" id="grid__element-cont-6">
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+      <div class="grid__element-item">Hello, world!</div>
+    </div>
+    <p>Tambien podemos ponerle como valor <code>space-arround</code>, <code>space-evenly</code> y <code>space-between</code></p>
+  </section>
+  <section>
+    <h3 id="grid-8">Otras alineaciones</h3>
+    <p>Es posible alinear un solo item unico al lugar que deseemos aplicandole la propiedad <code>align-self</code> o <code>justify-self</code> (vertical y horizontalmente) o su shorthand <code>place-self</code></p>
+  </section>
+  <section>
+    <h3 id="grid-9">La propiedad <code>order</code></h3>
+    <p>Con order es posible definir la posicion de un elemento. Cuanto mas alto sea, mas alejado estara del inicio del contenedor. Basicamente funciona igual que el <a href="#flexbox-4"><code>order</code> de los Flexbox</a></p>
+    <pre><code class="language-css">#element-item { order: 10; )</code></pre>
+    <div class="grid__element-cont-short">
+      <div class="grid__element-item" id="grid__element-item-4">Yo fui definido primero</div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="grid-10">Grid Area</h3>
+    <p>Nos permite organizar el espacio de manera mas definida usando nombres de campo. Esto lo logramos a partir de la propiedad <code>grid-template-areas</code></p>
+    <pre><code class="language-css">#element-cont {
+grid-template-areas:
+  "header header header"
+  "aside main main"
+  "aside main main"
+  "footer footer footer";
+}
+#element-item-0 { grid-area: header; }
+#element-item-1 { grid-area: aside; }
+#element-item-2 { grid-area: main; }
+#element-item-3 { grid-area: footer; }</code></pre>
+    <div id="grid__element-cont-7">
+      <div class="grid__element-item" id="grid__element-item-5">header</div>
+      <div class="grid__element-item" id="grid__element-item-6">aside</div>
+      <div class="grid__element-item" id="grid__element-item-7">main</div>
+      <div class="grid__element-item" id="grid__element-item-8">footer</div>
+    </div>
+  </section>
+  <section>
+    <h3 id="grid-11">Nombrar Grid-lines</h3>
+    <p>Es posible hacerlo dentro de la misma propiedad <code>grid-template-rows</code> y <code>grid-template-columns</code></p>
+    <pre><code class="language-css">#element-cont {
+  grid-template-rows:
+    [rlinea-1] 75px
+    [rlinea-2] 75px
+    [rlinea-3] 75px
+    [rlinea-4];
+  grid-template-columns:
+    [clinea-1] 75px
+    [clinea-2] 75px
+    [clinea-3] 75px
+    [clinea-4];
+}
+#element-item {
+  grid-row: rlinea-1 / rlinea-3;
+  grid-column: clinea-1 / clinea-3;
+}</code></pre>
+    <div class="grid__element-cont" id="grid__element-cont-8">
+      <div class="grid__element-item" id="grid__element-item-9"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+      <div class="grid__element-item"></div>
+    </div>
+  </section>
+  <section>
+    <h3 id="grid-12">Ejemplo de uso de Grid</h3>
+    <p>Este es un pequenio ejemplo de uso de CSS Grid, donde se simula una especie de galeria. Para verlo, haz click <a href="{{ url_for('static', filename='html/css_grid.html') }}">aqui</a></p>
+  </section>
+</section>
+
+<section>
+  <h2 id="transition">Transiciones</h2>
+  <p>Usando la propiedad <code>transition</code> podemos definir transiciones de cambios en elementos</p>
+  <ul>
+    <li><code>transition-property</code> : Puede ser <code>all</code> (todas las propiedades van a tener transicion. No es muy recomendado), <code>none</code>, <code>property</code> (Nombre de una propiedad que sufrira el cambio)</li>
+    <li><code>transition-duration</code> : Indica la duracion de la transicion (puede ser en segundos o milisegundos)</li>
+    <li><code>transition-delay</code> : Indica el tiempo que se taradara en empezar la transicion</li>
+    <li><code>transition-timing-function</code> : Indica la curva de bezzier que se trazara en la animacion. <code>linear</code>, <code>ease</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code>, <code>step-start</code>, <code>step-end</code>, <code>steps(int, start|end)</code>, <code>initial</code>, <code>inherit</code></li>
+    <li><code>transition</code> : Es el shorthand de todo lo anterior</li>
+  </ul>
+  <pre><code class="language-css">#element {
+  transition-property: background;
+  transition-duration: 1s;
+}
+#element:active {
+  background: blue;
+}</code></pre>
+    <div class="example-cont">
+      <div id="transition__element-0">Hazme click!</div>
+    </div>
+    <pre><code class="language-css">#element {
+  transition-property: background;
+  transition-duration: .5s;
+  transition-delay: 3s;
+}
+#element:active {
+  background: blue;
+}</code></pre>
+  <div class="example-cont">
+    <div id="transition__element-1">Hazme click!</div>
+  </div>
+</section>
+
+<section>
+  <h2 id="animation">Animaciones</h2>
+  <p>Las animaciones son parecidas a las transiciones, sin embargo deben ser programadas en un bloque <code>@keyframes</code></p>
+  <ul>
+    <li><code>animation-name</code> : Aqui se indica el nombre la animacion ya programada</li>
+    <li><code>animation-duration</code> : Indica la duracion de la animacion</li>
+    <li><code>animation-delay</code> : Indica el tiempo que se taradara en empezar la transicion</li>
+    <li><code>animation-timing-function</code> : Indica la curva de bezzier que se trazara en la animacion. <code>linear</code>, <code>ease</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code>, <code>step-start</code>, <code>step-end</code>, <code>steps(int, start|end)</code>, <code>initial</code>, <code>inherit</code></li>
+    <li><code>animation-iteration-count</code> : Indica la cantidad de veces que debe repetirse (puede tener como valor <code>infinite</code> para que se repita infinitamente)</li>
+    <li><code>animation-fill-mode</code> : Indica el resultado final. Puede ser <code>backwards</code> (finaliza quedando como empezo), <code>forwards</code> (finaliza con los valores y propiedades establecidos en el ultimo fotograma), <code>both</code> (comienza con los valores del primer fotograma de la animacion sin tomar en cuenta las propiedades establecidas por defecto)</li>
+    <li><code>animation-direction</code> : Puede ser <code>normal</code>, <code>reverse</code> (empieza desde el final hasta el inicio de la animacion), <code>alternate</code> (empieza normal y luego regresa al inicio alternadamente) y <code>alternate-reverse</code> (lo mismo que el anterior pero empezando desde el final)</li>
+  </ul>
+  <pre><code class="language-css">#element {
+  position: relative;
+  background: red;
+  animation-name: anim-example;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+@keyframes anim-example {
+  from { left: 0; }
+  to { left: 100%; background: blue; }
+}</code></pre>
+  <div class="example-cont">
+    <div id="animation__element-0"></div>
+  </div>
+  <pre><code class="language-css">#element {
+  position: relative;
+  background: red;
+  animation-name: anim-example;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+@keyframes anim-example {
+  0% { left: 0; }
+  50% { background: blue; }
+  100% { left: 100%; background: green; }
+}</code></pre>
+  <div class="example-cont">
+    <div id="animation__element-1"></div>
+  </div>
+</section>
+
+<section>
+  <h2 id="responsive-design">Responsive design</h2>
+  <p>El <b>Responsive design</b> se trata de ajustar una pagina web para que se adapte a distintas resoluciones (por ejemplo, que la misma pagina web que viste desde un computador, se vea adaptado a un telefono con una resolucion menor) <br> Esto se logra generalmente a partir de <code>@media</code>, que consulta al navegador informacion referente al computador cliente que lo ejecuta</p>
+  <ul>
+    <li><code>all</code> : Lo adapta a todos los dispositivos</li>
+    <li><code>print</code> : Lo adapta a la hoja de impresion</li>
+    <li><code>screen</code> : Lo adapta a una pantalla determinada (la resolucion, la orientacion, etc)</li>
+    <li><code>speech</code> : Lo adapta a sintetizadores de voz</li>
+  </ul>
+  <p>Para el <b>Responsive design</b> se emplea <code>@media screen</code> y se usan los operadores logicos AND (<code>and</code>) y OR (<code>or</code>) <br> Primero es necesario consultar si se estara trabajando con la pantalla <code>@media screen</code> y luego podemos emplear una condicion sobre esta</p>
+  <pre><code class="language-css">@media screen and (max-width: 750px) {
+  #element {
+    /* Si la pantalla tiene una longitud maxima de 750px... */
+    background: red;
+  }
+}</code></pre>
+  <div class="example-cont">
+    <div id="responsive-design__element-0"></div>
+  </div>
+  <pre><code class="language-css">@media screen and (max-width: 750px) and (min-width: 325px) {
+  #element {
+    /* Si la pantalla tiene una longitud maxima de 750px y un minimo de 325px... */
+    background: red;
+  }
+}</code></pre>
+  <div class="example-cont">
+    <div id="responsive-design__element-1"></div>
+  </div>
+</section>
+{% endblock %}

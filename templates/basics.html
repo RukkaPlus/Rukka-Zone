@@ -1,0 +1,903 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/python.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-python.css') }}">
+<script src="{{ url_for('static', filename='js/script-python.js') }}"></script>
+{% endblock %}
+
+{% block title %}Python{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Python</h1>
+  <p><b>Python</b> es un <b>lenguaje de programacion multiproposito</b> de <b>ultima generacion</b> desarrollado por <i>Guido van Rossum</i> como substituto de <i>ABC lang</i> en los anios 80. Se trata de un lenguaje de programacion <b>multiplataforma</b> e <b>interpretado</b> de <b>codigo abierto</b> <br> <b>Python</b> es sin dudas uno de <b>los mas famosos</b> lenguajes de programacion del mundo. Y sirve para practicamente cualquier cosa que puedas imaginarte. Ademas de ser un lenguaje de programacion bastante sencillo de aprender y utilizar</p>
+</div>
+<img src="{{ url_for('static', filename='img/python.svg') }}" alt="python">
+{% endblock %}
+
+{% block index %}
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#install">Instalacion</a></li>
+<li><a href="#using">Utilizacion</a></li>
+<li><a href="#pip">pip</a></li>
+<li><a href="#venv">Virtual Environments</a></li>
+<li><a href="#hello-world">Hello, world!</a></li>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#datatype">Tipos de datos</a></li>
+<li><a href="#format">Formateo de String</a></li>
+<li><a href="#operators">Operadores</a></li>
+<li><a href="#functions">Funciones</a></li>
+<li><a href="#conditionals">Condicionales</a></li>
+<li><a href="#loops">Bucles</a></li>
+<li><a href="#for">For</a></li>
+<li><a href="#while">While</a></li>
+<li><a href="#loops-keywords">Keywords utilizados en bucles</a></li>
+<li><a href="#exceptions">Manejo de excepciones</a></li>
+<li><a href="#exceptions-keywords">Keywords utilizados en el manejo de excepciones</a></li>
+<li><a href="#multiple-exceptions">Manejo de mutiples errores</a></li>
+<li><a href="#modules">Modulos</a></li>
+<li><a href="#modules-default">Utilizacion de modulos de <b>Python</b></a></li>
+<li><a href="#modules-internal">Utilizacion de modulos propios</a></li>
+<li><a href="#modules-external">Utilizacion de modulos terceros</a></li>
+<li><a href="#packages">Paquetes</a></li>
+<li><a href="#packages-dist">Distribucion</a></li>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="syntax">Syntax</h2>
+  <ul>
+    <li>Es un <b>lenguaje de programacion multiparadigma</b></li>
+    <li>Es un <b>lenguaje de programacion dinamico</b> y de <b>tipado debil</b></li>
+    <li>Los comentarios se manejan con <code>#</code></li>
+    <li>Utiliza la <b>indentacion</b> como separador de bloques de codigo, y esta debe ser de <b>4 espacios por nivel</b></li>
+    <li>Soporta <b>Unicode</b></li>
+    <li>Los nombres de las variables no pueden comenzar con numeros, ni pueden tener un keyword como nombre ni tener espacios entre sus nombres</li>
+    <li>Las variables y funciones usan preferiblemente <b>Snake Case</b></li>
+  </ul>
+  <pre><code class="language-python">def to_cube(num):
+# Esta funcion toma un numero y retorna
+# el cuadrado del mismo.
+result = num ** 3
+return result
+
+variable_0 = 12
+variable_1 = "RukkaPlus"
+
+# Uso de las variables previamente definidas
+print(f"Hello! I\'m {variable_1}, and I have {to_cube(variable_0)} grains of coffee")</code></pre>
+  <p>Vease la <a href="https://peps.python.org">pagina de PEPs acerca de buenas practicas usando el lenguaje de programacion <b>Python</b></a></p>
+</section>
+
+<section>
+  <h2 id="install">Instalacion</h2>
+  <p>Al ser <b>Python</b> un <b>lenguaje de programacion interpretado</b>, es necesario contar con un interprete para poder ejecutar codigo de <b>Python</b> en un sistema <br> Podemos conseguir y adquirir su interprete desde la <a href="https://www.python.org/">pagina oficial de <b>Python</b></a>, mediante gestores de versiones y distribuciones de entornos <b>Python</b> (por ejemplo: <a href="https://www.anaconda.com/">Anaconda</a>) o mediante manejadores de paquetes (por ejemplo: <b>APT</b> (Debian GNU/Linux), <b>YUM</b> (Fedora GNU/Linux), <b>PACMAN</b> (Arch GNU/Linux)), entre otros</p>
+</section>
+
+<section>
+  <h2 id="using">Utilizacion</h2>
+  <p>Una vez instalado el interprete de <b>Python</b>, podremos ejecutar un script/programa de <b>Python</b> mediante el siguiente comando</p>
+  <div class="w3-container tabmanager">
+    <div class="w3-bar">
+      <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+      <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+    </div>
+    <section class="w3-border w3-panel msdos-tabpanel">
+      <pre><code class="language-shell">&gt; py direccion\del\script.py</code></pre>
+    </section>
+    <section class="w3-border w3-panel unix-tabpanel">
+      <pre><code class="language-sh">$ python3 direccion/del/script.py</code></pre>
+    </section>
+  </div>
+  <p>Para mas informacion referente a la utilizacion de la aplicacion de linea de comandos de <b>Python</b>, <a href="https://docs.python.org/3/using/cmdline.html">dirijase a la documentacion oficial de utilizacion de la aplicacion</a></p>
+  <section>
+    <h3 id="pip">pip</h3>
+    <p>Generalmente, junto a la instalacion de <b>Python</b> viene incluido un <b>gestor de paquetes</b> llamado <b>pip</b> <br> <b>pip</b> permite <b>importar/instalar, desarrollar y exportar/distribuir paquetes</b> entre otras cosas, por lo que es una herramienta bastante util al momento de desarrollar paquetes de <b>Python</b></p>
+    <h4>Utilizacion</h4>
+    <p>Una vez instalado <b>Python</b> deberiamos poder preparar y actualizar <b>pip</b> en el sistema con el siguiente comando</p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <p>Para actualizar/instalar <b>pip</b> ejecutamos el siguiente comando</p>
+        <pre><code class="language-shell">&gt; py -m pip install --upgrade pip</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <p>Para actualizar/instalar <b>pip</b> ejecutamos el siguiente comando</p>
+        <pre><code class="language-sh">$ python3 -m pip install --upgrade pip</code></pre>
+      </section>
+    </div>
+    <p>Si obtiene un error al ejecutar el comando, porfavor, <a href="https://packaging.python.org/en/latest/">consulte la documentacion oficial de <b>Python</b></a></p>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Algunas herramientas que puede instalar pueden venir en formato de binarios. Programas, utilidades o aplicaciones que se ejecutan directamente desde la linea de comandos. Para ejecutarlos correctamente, asegurese de que la carpeta de binarios de <b>Python</b> se encuentra entre sus variables de entorno. En algunos sistemas Linux, puede agregar <code>export PATH=$PATH:/home/coffee/.local/bin</code> a su archivo <code>~/.bash_profile</code></p>
+    </div>
+  </section>
+  <section>
+    <h3 id="venv">Virtual Environments</h3>
+    <p>Los <b>Virtual Environments</b> (en espaniol, <b>Entornos Virtuales</b>) son, como su nombre lo indica, entornos virtuales que uno puede preparar para desarrollar un <b>Software</b> en concreto. <br> En estos <b>Virtual Environments</b> uno puede <b>instalar o preparar paquetes</b> aislados del sistema con el fin de <b>prevenir problemas de compatibilidad o conflictos con versiones de dependencias</b> de un <b>Software</b></p>
+    <h4>Utilizacion</h4>
+    <p>Una vez instalado <b>Python</b>, por lo general, tendremos <b>dos utilidades</b> que nos permitiran manejar <b>Virtual Environments</b>: <code>venv</code> y <code>virtualenv</code> <br> En este ejemplo, utilizaremos el tradicional <code>virtualenv</code>, que es bastante completo y recomendado</p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <p>Para crear una <b>Virtual Environment</b> ejecutamos el siguiente comando</p>
+        <pre><code class="language-shell">&gt; py -m virtualenv VIRTUAL_ENVIRONMENT_NAME</code></pre>
+        <p>Seguido a ello, para activar o iniciar el <b>Virtual Environment</b> usualmente ejecutamos el siguiente comando</p>
+        <pre><code class="language-shell">&gt; VIRTUAL_ENVIRONMENT_NAME\Scripts\activate.bat</code></pre>
+        <p>Para ver mas opciones relacionadas, puede ejecutar el siguiente comando</p>
+        <pre><code class="language-shell">&gt; py -m virtualenv --help</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <p>Para crear una <b>Virtual Environment</b> ejecutamos el siguiente comando</p>
+        <pre><code class="language-sh">$ python3 -m virtualenv VIRTUAL_ENVIRONMENT_NAME</code></pre>
+        <p>Seguido a ello, para activar o iniciar el <b>Virtual Environment</b> usualmente ejecutamos el siguiente comando</p>
+        <pre><code class="language-sh">$ source /VIRTUAL_ENVIRONMENT_NAME/bin/activate</code></pre>
+        <p>Para ver mas opciones relacionadas, puede ejecutar el siguiente comando</p>
+        <pre><code class="language-sh">$ python3 -m virtualenv --help</code></pre>
+      </section>
+    </div>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Estas herramientas pueden ser ejecutadas mediante una <b>consola</b> (por ejemplo, <b>cmd</b>, <b>PowerShell</b>, <b>Sakura</b>, <b>GNOME terminal</b>, <b>Konsole</b>, etc)</p>
+    </div>
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2 id="hello-world">Hello, world!</h2>
+    <p>Es el programa mas basico que se puede hacer en un lenguaje de programacion. Imprime o escribe la palabra <i>"Hello, world!"</i> en un medio</p>
+    <pre><code class="language-python"># Imprime un 'Hello, world!' por consola
+print('Hello, world!')</code></pre>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <p>El codigo debe ser ejecutado mediante el interprete de <b>Python</b></p>
+        <pre><code class="language-sh">&gt; py \direccion\del\script.py</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <p>El codigo debe ser ejecutado mediante el interprete de <b>Python</b></p>
+        <pre><code class="language-sh">$ python3 direccion/del/script.py</code></pre>
+      </section>
+    </div>
+  </section>
+  <section>
+    <h2 id="variables">Variables</h2>
+    <p>Una variable es un espacio en memoria que almacena un dato y este puede cambiar su valor durante el programa</p>
+    <pre><code class="language-python">variable = 'RukkaPlus'
+print('La variable contiene : ' + variable)
+variable = 12
+print('Ahora la variable cambio a : ' + variable)</code></pre>
+    <p>Por convencion se utiliza <b>Snake Case</b> para definir variables, y se definen en mayusculas las variables constantes</p>
+    <pre><code class="language-python">variable_de_ejemplo  = 24
+CONSTANTE_DE_EJEMPLO = 1.5</code></pre>
+    <p>Podemos eliminar espacios de memoria usando la funcion <code>del</code></p>
+    <pre><code class="language-python">variable = 'Hello, world!'
+print(variable) # -> Hello, world!
+del(variable)
+print(variable) # -> Error</code></pre>
+  </section>
+  <section>
+    <h2 id="datatype">Tipos de datos</h2>
+    <p>En <b>Python</b> existen varios tipos de datos. Y los datos primitivos de <b>Python</b> son los siguientes: <code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code>, <code>list</code>, <code>tuple</code>, <code>set</code>, <code>dict</code>, <code>NoneType</code> <br> La funcion <code>type</code> de <b>Python</b> retorna en formato de <code>str</code> el tipo de dato de un dato ingresado como parametro</p>
+    <pre><code class="language-python"># [ String ] (str)
+# Los String son cadenas de caracteres que forman textos
+variable = 'Hello, world'
+variable = "Hello, world"
+variable = '''Hello, world'''
+variable = """Hello, world"""
+type(variable) # -> 'str'
+
+# [ Integer ] (int)
+# Los Integer son numeros enteros sin decimales
+variable = 10
+variable = 5 + 5
+variable = 5 * 2
+type(variable) # -> 'int'
+
+# [ Float ] (float)
+# Los Float son numeros decimales
+variable = 10.5
+variable = 1.5 + 4.5
+variable = 5.0001 * 1000
+type(variable) # -> 'float'
+
+# [ Boolean ] (bool)
+# Los Boolean son valores logicos binarios (True o False)
+variable = True
+variable = False
+type(variable) # -> 'bool'
+
+# [ List ] (list)
+# Los List son listas que almacenan valores dentro
+variable = []
+variable = [10, 'RukkaPlus', True, 2.5, [0, 1, 2]]
+variable = [
+  0, 1, 2,
+  3, 4, 5,
+]
+type(variable) # -> 'list'
+
+# [ Tuple ] (tuple)
+# Los Tuple son listas que almacenan valores y no pueden cambiar
+variable = (1, 2, 3, 4, 10)
+variable = (10, 'RukkaPlus', True, 2.5, [0, 1, 2])
+variable = (
+  0, 1, 2,
+  3, 4, 5,
+)
+type(variable) # -> 'tuple'
+
+# [ Set ] (set)
+# Los Set son listas que almacenan valores desordenadamente
+variable = {1, 2, 3, 4, 10}
+variable = {10, 'RukkaPlus', True, 2.5, [0, 1, 2]}
+variable = {
+  0, 1, 2,
+  3, 4, 5,
+}
+type(variable) # -> 'set'
+
+# [ Dictionaries ] (dict)
+# Los Dictionaries son listas que almacenan valores dentro de subespacios
+variable = { 'espacio-0': 12, 'espacio-1': 'RukkaPlus' } 
+variable = {
+  'espacio-0': 12,
+  'espacio-1': 'RukkaPlus',
+} 
+type(variable) # -> 'dict'
+
+# [ None ] (NoneType)
+# Representa un valor nulo
+variable = None
+type(variable) # -> 'NoneType'</code></pre>
+  <div class="w3-container tabmanager-special">
+    <div class="w3-bar">
+      <button class="w3-bar-item w3-button str-tab">String</button>
+      <button class="w3-bar-item w3-button list-tab">List</button> 
+      <button class="w3-bar-item w3-button set-tab">Set</button>
+      <button class="w3-bar-item w3-button dict-tab">Dictionary</button>
+    </div>
+    <section class="w3-border w3-panel str-tabpanel">
+      <h3>String (<code>str</code>)</h3>
+      <pre><code class="language-python"># [ String ] (str)
+# Los String son cadenas de caracteres que forman textos
+variable = 'Hello, world'
+variable = "Hello, world"
+variable = '''Hello, world'''
+variable = """Hello, world"""
+type(variable) # -> 'str'
+
+# Cada caracter de un string tiene un indice especifico,
+# y para acceder a ese indice debemos encerrar su posicion
+# numerica en corchetes
+char_0 = variable[4]  # Esto seria usando numeros positivos (De izquierda a derecha)
+char_1 = variable[-2] # Esto seria usando numeros negativos (De derecha a izquierda)
+char_0 # -> 'o'
+char_1 # -> 'l'
+
+# Slicing : Extraer caracteres que van de un indice a otro
+variable[0:5]
+variable[3:-1] # Esto tambien es valido.
+variable[2:]   # Si dejamos un espacio vacio, se tomara
+               # por defecto el primer o ultimo indice,
+               # en este caso, el ultimo
+    
+# Concatenacion: Union de dos o mas Strings
+variable = 'Estos son ' + '10' + ' numeros'
+variable # 'Estos son 10 numeros'
+
+# Formateo: Integra valores a un String formateandolo
+f'Esto es un texto "{variable}" formateado'
+'Esto es un texto "{}" formateado'.format(variable)
+'Este es un texto "{1}" y "{0}" formateado'.format(
+  variable,
+  'Bye, world!',
+)
+'Este es un texto "{data_0}" y "{data_1}"'.format(
+  data_0 = variable,
+  data_1 = 'Bye, world!',
+)
+'Este es un texto "%s" formateado' % 'RukkaPlus'
+
+# Caracteres escapados: Caracteres especiales que usan
+# el simbolo de escape '\'
+'Tabulacion: \t'     # -> "tab"
+'Salto de linea: \n' # -> "new line"
+'Backslash: \\'      # -> "escaped backslash"
+'Comillas escapadas: \'comillas\''
+"Comillas escapadas: \"comillas\""
+
+# Multiplicaciones de Strings
+('Hello ' * 5) + ', world!'
+    
+# Reversion de Strings
+"nohtyP"[::-1] # -> "Python"
+
+# String crudo: Strings que no interpretan caracteres escapados
+r'Hello\world!'
+
+# Con el keyword 'in' podemos comprobar la existencia de un
+# substring dentro de un String
+'Hello' in 'Hello, world!' # -> True
+
+# [ Metodos, atributos y funciones ]
+# Longitud de un String
+len("Hello, world!")
+
+# Repeticion de substrings:
+"Hello, world!".count('o')
+
+# Busqueda del indice de un substring:
+"Hello, world - world!".find('mundo')
+
+# Busqueda del indice de un substring (reversa):
+"Hello, world - world!".rfind('mundo')
+
+# Compatibilidad numerica
+"1000".isdigit() # -> True
+
+# Compatibilidad alfanumerica
+"ABCDE12345".isalnum() # -> True
+# Nota: Si en la cadena hubiera algo que no sea
+# alfanumerico (Guiones, barras, etc) daria "False"
+
+# Comprobacion de caracteres alfabetos:
+"ABCDE".isalpha() # -> True
+# Nota: Si pusieramos un espacio o numero u otros datos
+# que no sean unicamente letras, nos daria un "False"
+
+# Comprobacion mayuscula o minuscula
+"HELLO, WORLD!".isupper() # -> True
+"hello, world!".islower() # -> True
+
+# Comprobacion de titulo (Primera letra mayuscula):
+"Hello, world!".istitle() # -> True
+
+# Comprobacion de composicion de espacios:
+"             ".isspace()    # -> True
+
+# Comprobacion de inicio:
+"Hello, world!".startswith('Hello') # -> True
+
+# Comprobacion de final
+"Hello, world!".endswith("world!")  # -> True
+
+# Conversion a mayuscula y minuscula:
+"hello, world!".upper() # -> "HELLO, WORLD!"
+"HELLO, WORLD!".lower() # -> "hello, world!"
+
+# Capitalizacion
+"hello, world!".capitalize() # -> "Hello, world!"
+
+# Inversion de mayusculas y minusculas
+"Hello, world!".swapcase()   # -> "hELLO, WORLD!"
+
+# Titulacion:
+"hello, world!".title()      # -> "Hello, World!"
+
+# Separacion de Strings en listas:
+"Hello Hello Hello".split()    # -> ['Hello', 'Hello', 'Hello']
+"Hello-Hello-Hello".split('-') # -> ['Hello', 'Hello', 'Hello']
+
+# Entreconcadenacion:
+"-".join("HelloHelloHello")    # -> 'H-e-l-l-o-H-e-l-l-o-H-e-l-l-o'
+
+# Stripado:
+"      Hello, world!      ".strip()    # -> 'Hello, world!'
+"------Hello, world!------".strip("-") # -> 'Hello, world!'
+
+# Reemplazo de substrings:
+"Hello, world!".replace("o", "0")            # -> 'Hell0, w0rld!'
+"Hello Hello Hello".replace("Hello", "0", 2) # -> '0 0 Hello'</code></pre>
+    </section>
+    <section class="w3-border w3-panel list-tabpanel">
+      <h3>List (<code>list</code>)</h3>
+      <pre><code class="language-python"># [ List ] (list)
+# Los List son listas que almacenan valores dentro
+variable = [
+  "Hello, world!",
+  14,
+  2.25,
+  True,
+  ["List", 1],
+  ("Tuple", 2),
+  {"Set", 3},
+  {"Dictionary": 4},
+]
+type(variable) # -> 'list'
+
+colores_primarios   = ['Rojo', 'Azul', 'Amarillo']
+colores_secundarios = ['Anaranjado', 'Violeta', 'Marron']
+colores_neutrales   = ['Blanco', 'Negro']
+
+# Cada valor dentro de una lista tiene un indice especifico,
+# y para acceder a ese indice debemos encerrar su posicion
+# numerica en corchetes
+variable[0]    # -> 'Hello, world!'
+variable[4][0] # -> 'List'
+
+# Con el keyword 'in' podemos comprobar la existencia de un
+# dato dentro de la lista
+2 in [0, 1, 2, 3] # -> True
+
+# [ Metodos, atributos y funciones ]
+# Longitud de una List
+len([0, 1, 2])
+
+# Busqueda de un valor
+["foo", "bar", "baz"].index("bar") # -> 1
+
+# Repeticion de valores
+["foo","foo","foo","bar"].count("foo") # -> 3
+
+# Rango de valores
+variable = list(range(1, 100)) # range(INICIO, FIN, SALTOS DE NUMERO)
+variable -> [1, 2, 3, 4, 5, 6, 7, ... 100]
+
+# Agregacion de valores
+[0, 1, 2].append(3) # -> [0, 1, 2, 3]
+
+# Limpieza de listas
+[0, 1, 2, 3].clear() # -> []
+
+# Union de listas
+[0, 1, 2].extend([3, 4, 5]) # -> [0, 1, 2, 3, 4, 5]
+
+# Agregacion de valores (a una posicion)
+[0, 1, 2].insert(1,"foo")   # list[1] -> 'foo'
+[0, 1, 2].insert(-1, "bar") # list[-1] -> 'bar'
+
+# Eliminacion de valores
+["foo", "bar", "baz"].pop()  # ["foo", "bar"]
+["foo", "bar", "baz"].pop(1) # ["foo", "baz"]
+
+# Eliminacion de items por busqueda
+["Delete", "this item"].remove("this item") # -> ["Delete"]
+# Nota: si tiene elementos repetidos del mismo valor
+# solo borrara el primero
+
+# Reversion de valores
+[4, 3, 2, 1, 0].reverse() # -> [0, 1, 2, 3, 4]
+
+# Union de lista
+variable = "".join(['H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!'])
+variable # -> 'Hello, world!'
+
+# Orden de lista
+variable = [5, -10, 10, 15, -5, 0, -15].sort()
+variable # -> [-15, -10, -5, 0, 5, 10, 15]
+variable = [5, -10, 10, 15, -5, 0, -15].sort(reverse = true)
+variable # -> [15, 10, 5, 0, -5, -10, -15]</code></pre>
+    </section>
+    <section class="w3-border w3-panel set-tabpanel">
+      <h3>Set (<code>set</code>)</h3>
+      <pre><code class="language-python"># [ Set ] (set)
+# Los Set son listas que almacenan valores desordenadamente
+variable = {1, 2, 3, 4, 10}
+variable = {10, 'RukkaPlus', True, 2.5, [0, 1, 2]}
+variable = {
+  0, 1, 2,
+  3, 4, 5,
+}
+type(variable) # -> 'set'
+# Nota: En los conjuntos no pueden haber datos repetidos
+
+# Con el keyword 'in' podemos comprobar la existencia de un
+# dato dentro del set
+4 in variable # -> True
+
+# [ Metodos, atributos y funciones ]
+# Distincion entre sets
+{0, 1, 2}.isdisjoint({3, 4, 5})     # -> True
+
+# Diferencia entre sets
+{0, 1, 2}.difference({0, 3, 4, 5})  # -> {1, 2}
+
+# Agregacion de valores
+{0, 2, 3, 4}.add(1) # -> {0, 1, 2, 3, 4}
+
+# Eliminacion de valores
+{0, 1, 2, 3, 4}.discard(1) # -> {0, 2, 3, 4}
+{0, 1, 2, 3, 4}.remove(2)  # -> {0, 1, 3, 4}
+
+# Copia de sets
+{0, 1, 2, 3}.copy() # Asi podemos guardarlo en una
+                    # variable sin apuntar al mismo dato
+
+# Limpieza de set
+{0, 1, 2}.clear() # -> {}
+
+# Union de sets
+{0, 1, 2}.union({3, 4, 5}) # -> {0, 1, 2, 3, 4, 5}
+
+# Actualizacion de sets
+{0, 1, 2}.update(1, 2, 3)  # -> {0, 1, 3}</code></pre>
+      </section>
+      <section class="w3-border w3-panel dict-tabpanel">
+        <h3>Dictionaries (<code>dict</code>)</h3>
+        <pre><code class="language-python"># [ Dictionaries ] (dict)
+# Los Dictionaries son listas que almacenan valores dentro de subespacios
+variable = { 'espacio-0': 12, 'espacio-1': 'RukkaPlus' } 
+variable = {
+  'espacio-0': 12,
+  'espacio-1': 'RukkaPlus',
+}
+type(variable) # -> 'dict'
+
+# Cada valor dentro de un diccionario tiene un espacio
+# especifico, y para acceder a ese indice debemos encerrar
+# su posicion numerica en corchetes
+variable['espacio-1'] # -> 'RukkaPlus'
+variable['espacio-2'] = 15.2 # Agregacion de espacios
+
+# Con el keyword 'in' podemos comprobar la existencia de un
+# espacio dentro del dictrionary
+'espacio-1' in variable # -> True
+
+# [ Metodos, atributos y funciones ]
+# Acceso a un espacio y que defina otorgue una respuesta por defecto
+variable.get("espacio-x", "No encontrado")
+
+# Extraccion de todos los espacios disponibles
+variable.keys()
+
+# Extraccion de todos los valores disponibles
+variable.values()
+
+# Extraccion de todos los items disponibles
+variable.items()
+
+# Copia de un diccionario
+variable_copia = variable.copy()
+
+# Eliminacion de un espacio
+variable.pop("espacio-2")
+
+# Limpieza del diccionario
+variable.clear()</code></pre>
+      </section>
+    </div>
+    <div class="w3-panel note">
+      <p><b>Note</b>: Para obtener todos los metodos relacionados a un objeto podemos usar la funcion <code>dir(objeto)</code></p>
+    </div>
+  </section>
+  <section>
+    <h2 id="format">Formateo de String</h2>
+    <p>El metodo <code>format()</code> posee bastantes caracteristicas interesantes de formateo que cabe mencionar</p>
+    <pre><code class="language-python">
+# Alinecion a partir de espacios:
+"{:>30}".format("Una palabra alineada a 30 espacios")
+
+# Alineacion a partir de espacios (derecha):
+"{:30}".format("Una palabra alineada a 30 espacios a la derecha")
+
+# Alineacion a partir de espacios (centro)
+"{:^30}".format("Una palabra alineada a 30 espacios al centro")
+
+# Truncamiento:
+"{:.11}".format("Una palabra con un truncamiento de 11 caracteres")
+"{:>30.11}".format("Una palabra alineada a 30 espacios y con truncamiento de 11 caracteres")
+
+# Formateo de numeros enteros, con rellenos especificos:
+"{:4d}".format(10)   # El "4d" simboliza "Cuatro digitos" (Nosotros
+"{:4d}".format(100)  # podemos ponerle incluso mas o menos digitos)
+"{:4d}".format(1000)
+
+# Formateo de numeros enteros, con rellenos a cero:
+"{:04d}".format(10)   # Debemos colocar el digito deseado antes de
+"{:04d}".format(100)  # colocar el "4d"
+"{:04d}".format(1000)
+
+# Formateo de numeros flotantes, rellenos con espacios:
+"{:.2f}".format(3.1415926) # El "2f" simboliza "2 digitos flotantes"
+                           # (Esto sirve para recortar o agregar numeros/ceros
+                           # flotantes)
+
+# Formateo de numeros flotantes, con rellenos especificos:
+"{:7.3f}".format(3.1415926) # Hay que poner el numero de digitos en los que
+                            # queremos espaciar los datos justo antes del corte
+                            # de flotantes.</code></pre>
+  </section>
+  <section>
+    <h2 id="operators">Operadores</h2>
+    <p>Los operadores son aquellos simbolos que nos permite relacionar variables, constantes o expresiones</p>
+    <pre><code class="language-python"># [ Operadores aritmeticos ]
+suma         = 10 + 20 # 30
+resta        = 20 - 10 # 10
+producto     = 5 * 5   # 25
+division     = 45 / 5  # 9.0
+division_int = 45 // 5 # 9
+modulo       = 11 % 3  # 2
+potencia     = 3 ** 4  # 81
+
+# [ Operadores relacionales ]
+relacion        = "Juan" == "Carlos" # False
+diferencia      = "Carlos" != "Pepe" # True
+mayor_que       = 10 > 20            # False
+menor_que       = 30 < 50            # True
+mayor_igual_que = 50 >= 39           # False
+menor_igual_que = 20 <= 20           # True
+
+# [ Operadores logicos ]
+Operador_and = True and True # True
+Operador_or  = False or True # True
+Operador_not = not(True)     # False
+
+# [ Parsing ]
+var_str   = str(123)                 # '123'
+var_int   = int('123')               # 123
+var_float = float(123)               # 123.0
+var_bool  = bool('True')             # True
+var_list  = list(1, 2, 3)            # [1, 2, 3]
+var_tuple = tuple(1, 2, 3)           # (1, 2, 3)
+var_set   = set(1, 2, 3)             # {1, 2, 3}
+var_dict  = dict([('key', 'value')]) # {'key': 'value'}
+
+# [ Operadores de asignacion ]
+incremento = 5;    incremento   += 2  # 7
+decremento = 5;    decremento   -= 2  # 3
+producto = 5;      producto     *= 5  # 25
+division = 27;     division     /= 3  # 9.0
+division_int = 27; division_int //= 3 # 9
+modulo = 59;       modulo       %= 5  # 4
+potencia = 3;      potencia     **= 4 # 81
+# Nota: Si realizas una operacion entre un numero
+# entero y uno flotante te devolvera un resultado
+# flotante</code></pre>
+  </section>
+  <section>
+    <h2 id="functions">Funciones</h2>
+    <p>Una funcion es un algoritmo definido que puede ser ejecutado durante el programa. Dichas funciones pueden recibir parametros para trabajar con ellos y/o retornar valores resultados <br> Para definirlo, debemos anteponer el keyword <code>def</code> al nombre de esta funcion. Seguido a ello, opcionalmente podemos definir los parametros que recibira (o definir que no requiera parametros)</p>
+    <pre><code class="language-python"># Para definir una funcion
+def funcion_0():
+# Es importante indentar el codigo
+# para separarlo como bloque de codigo
+return 'Hello, world!'
+# 'return' indica el valor que sera
+# devuelto por la funcion
+
+# Para definir una funcion con parametros
+def funcion_1(parm_0, parm_1 = 2):
+# Podemos requerir cuantos parametros
+# deseemos. Y como en el caso de 'parm_1',
+# indicar su valor por defecto en caso de 
+# que este no sea ingresado
+return f'''Hello, {parm_0}!
+You have {parm_1} apples'''
+
+# Para definir una funcion 'lambda'
+funcion_lambda = lambda num_0, num_1: num_0 + num_1
+
+# Para ejecutar funciones
+return_0 = funcion_0()
+return_1 = funcion_1('RukkaPlus', 24)
+return_lambda = funcion_lambda(12, 52)
+print(return_0)
+print(return_1)
+print(return_lambda)</code></pre>
+  </section>
+  <section>
+    <h2 id="conditionals">Condicionales</h2>
+    <p>Las <b>condicionaes</b> son <b>estructuras de control de flujo</b> que cambian el flujo de ejecucion en base a una condicion</p>
+    <pre><code class="language-python">tu_edad = 16
+if tu_edad > 18:
+  print('Tienes mas de 18 anios de edad')
+elif tu_edad == 18:
+  print('Tienes 18 anios de edad')
+else:
+  print('Tienes menos de 18 anios de edad')</code></pre>
+    <p>Podemos usar el keyword <code>pass</code> dentro de una condicion para salir de la condicion instantaneamente</p>
+  </section>
+  <section>
+    <h2 id="loops">Bucles</h2>
+    <p>Los bucles son <b>estructuras de control de flujo</b> que repiten un bloque de codigo una cantidad determinada de veces <br> En <b>Python</b> tenemos dos estructuras de bucle: <b>For</b> y <b>While</b></p>
+    <section>
+      <h3 id="for">For</h3>
+      <p>El bucle <b>For</b> itera un dato (como una lista) y ejecuta un bloque de codigo (con el dato temporalmente almacenado) hasta terminar de recorrer todos los datos del iterable</p>
+      <pre><code class="language-python">comidas = [
+  'Leche', 'Pan', 'Queso',
+  'Galletas', 'Cafe',
+]
+for comida in comidas:
+  print(comida)</code></pre>
+    </section>
+    <section>
+      <h3 id="while">While</h3>
+      <p>El bucle <b>While</b> ejecuta un bloque de codigo en base a una condicion. Siempre que la condicion establecida sea cumplida, repetira el bloque de codigo indicado</p>
+      <pre><code class="language-python">variable = 0
+while variable > 6:
+  print('Estoy dentro del bucle WHILE')
+  variable += 1
+print('He salido del bucle WHILE')</code></pre>
+    </section>
+    <section>
+      <h3 id="loops-keywords">Keywords utilizados en bucles</h3>
+      <ul>
+        <li><code>continue</code> : Repite el bucle</li>
+        <li><code>break</code> : Rompe el bucle y continua con el programa</li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <h2 id="exceptions">Manejo de excepciones</h2>
+    <p>El <b>manejo de excepciones</b> nos permite controlar el <b>flujo y comportamiento del programa</b> a partir de la causa una excepcion. Esto lo podemos manejar con las estructuras <code>try</code>, <code>catch</code>, <code>except</code>, <code>finally</code> u <code>raise</code></p>
+    <section>
+      <h3 id="exceptions-keywords">Keywords utilizados en el manejo de excepciones</h3>
+      <ul>
+        <li><code>try</code> : Ejecuta un bloque de codigo propenso a errores</li>
+        <li><code>except</code> : Captura un error producido dentro del <code>try</code> y ejecuta un bloque de codigo</li>
+        <li><code>finally</code> : Ejecuta un bloque de codigo haya o no ocurrido un error</li>
+        <li><code>raise</code> : Produce y arroja un error</li>
+      </ul>
+    </section>
+    <pre><code class="language-python">try: # Ejecuta un codigo propenso a errores...
+  print('Este bloque producira un error')
+  raise SyntaxError('Soy un error!!!') # Esto arroja un error
+
+except: # Si ocurre un error...
+  print('Ha ocurrido un error durante la ejecucion del programa!')
+
+else: # Si no ocurre un error...
+  print('Todo ha funcionado correctamente')
+
+finally: # Ocurra o no ocurra un error...
+  print('Programa ha finalizado')</code></pre>
+    <section>
+      <h3 id="multiple-exceptions">Manejo de mutiples errores</h3>
+      <p>Es posible manejar multiples errores en caso de que hayan sido ocurridos durante el programa</p>
+      <pre><code class="language-python">from random import random
+  
+try:
+  valor = random()
+  if valor > 0.5:
+    raise TypeError('Ocurrio un error de tipo [TypeError]')
+else:
+  raise ValueError('Ocurrio un error de tipo [ValueError]')
+except TypeError: # Si produce un error de tipo [TypeError]...
+  print("Error: ocurrio un error de tipo!")
+except ValueError: # Si produce un error de tipo [ValueError]...
+  print("Error: ocurrio un error de valor!")</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2 id="modules">Modulos</h2>
+    <p>Los <b>Modulos</b> son las <b>Librerias/Bibliotecas</b> de <b>Python</b>. <br> Un <b>Modulo</b>, en conceptos simples, es un programa o script de <b>Python</b> creado que puede ser importado por otros programas o scripts con la intencion de reutilizar conceptos como funciones, variables, clases, entre otras. <br> Para importar un modulo, podemos utilizar la keyword <code>import nombre_del_modulo</code> o <code>from nombre_del_modulo import datos_de_importacion</code> <br> Tenemos los siguientes tipos de modulos</p>
+    <ul>
+      <li>Modulos de <b>Python</b> : Estos vienen por defecto por <b>Python</b> y pueden ser importados en cualquier programa o script</li>
+      <li>Modulos propios : Son modulos que nosotros desarrollamos y que podemos importar dentro de nuestro programa siempre que lo tengamos disponible</li>
+      <li>Modulos terceros : Son modulos desarrollados por terceros y que podemos importar dentro de nuestro programa siempre que lo tengamos disponible</li>
+    </ul>
+    <section>
+      <h3 id="modules-using">Utilizacion de modulos de <b>Python</b></h3>
+      <p>Al venir por defecto integrado en el entorno de <b>Python</b>, podemos importarlos en cualquier programa o script sin importar su ubicacion</p>
+      <pre><code class="language-python"># | main.py |
+# [ Importacion de un modulo ]
+import math   # Importacion del modulo 'math'
+math.sqrt(16) # Utilizacion de la funcion 'sqrt' del modulo 'math'
+
+# [ Importacion de conceptos de un modulo ]
+from math import sqrt # importacion directa de 'sqrt' del modulo 'math'
+sqrt(16)              # Ya no es necesario anteponer 'math.'</code></pre>
+    </section>
+    <section>
+      <h3 id="modules-internal">Utilizacion de modulos propios</h3>
+      <p>Tambien podemos importar modulos propios dentro de un programa o script de <b>Python</b> si lo tenemos disponible. Osea, si lo tenemos instalado con <b>pip</b> o indicamos su ubicacion exacta</p>
+      <pre><code class="language-python"># | my_module.py |
+def say_hello():
+  print('Hello, world!')</code></pre>
+      <pre><code class="language-python"># | main.py |
+# [ Importacion de un modulo ]
+  import my_module      # Importacion del modulo 'my_module'
+my_module.say_hello() # Utilizacion de la funcion 'say_hello' del modulo 'my_module'
+  
+# [ Importacion de conceptos de un modulo ]
+from my_module import say_hello # importacion directa de 'say_hello' del modulo 'my_module'
+say_hello()                     # Ya no es necesario anteponer 'my_module.'</code></pre>
+    </section>
+    <section>
+      <h3 id="modules-external">Utilizacion de modulos terceros</h3>
+      <p>Tambien podemos importar modulos de terceros dentro de un programa o script de <b>Python</b> si lo tenemos disponible. Osea, si lo tenemos instalado con <b>pip</b> o indicamos su ubicacion exacta</p>
+      <pre><code class="language-python"># | main.py |
+# [ Importacion de un modulo ]
+import colorama           # Importacion del modulo 'colorama'
+print(colorama.Fore.RED + # Utilizacion del dato 'Fore' del modulo 'colorama'
+  'Hello, world!')
+
+# [ Importacion de conceptos de un modulo ]
+from colorama import Fore # importacion directa de 'Fore' del modulo 'colorama'
+print(Fore.RED +          # Ya no es necesario anteponer 'colorama.'
+  'Hello, world!')</code></pre>
+      <p>Para hacer mas sencillo entender como funciona la importacion de modulos. <b>Python</b>, al encontrar con un <code>import nombre_del_modulo</code> o <code>from nombre_del_modulo import ...</code>, primero revisa el directorio del programa o script que solicita la importacion del modulo para observar si encuentra dicho modulo en ese directorio. Si <b>Python</b> no lo encuentra en ese directorio, revisa en los directorios donde se almacenan los modulos instalados con <b>pip</b> o sus gestores de paquetes. Entre estos, generalmente se encuentran los modulos propios de la <b>API de Python</b></p>
+    </section>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Podemos usar <code>from nombre_del_modulo import *</code> para importar directamente todos los conceptos del modulo (no muy recomendable), o <code>from nombre_del_modulo import concept_1, concept_2</code> para importar directamente los conceptos indicados</p>
+    </div>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Generalmente, los modulos de terceros poseen la documentacion de uso del modulo en su propia entrada de <a href="https://pypi.org/">PyPi</a> o <a href="https://github.com/">Github</a></p>
+    </div>
+  </section>
+  <section>
+    <h2 id="packages">Paquetes</h2>
+    <p>Un paquete es una manera bastante interesante de almacenar varios modulos relacionados en un mismo directorio <br> La estructura de un paquete es la siguiente</p>
+    <pre><code class="language-sh">.
+├── Nombre_del_paquete/ # -> El nombre del paquete.
+│   ├── __init__.py     # -> El archivo de inicio. Este archivo indica a
+│   │                   # Python que se encuentra dentro de un paquete.
+│   │                   # Tambien representa el primer script en ser
+│   │                   # ejecutado al importar el paquete.
+│   ├── saludos.py      # -> Un modulo del paquete.
+│   └── despedida.py    # -> Otro modulo del paquete.
+└── main.py             # -> Este archivo no pertenece al paquete.</code></pre>
+    <div>
+      <p><b>Nota</b>: De la misma forma, un paquete puede contener subpaquetes dentro. Todos con la misma estructura en general</p>
+    </div>
+    <p>Podemos importar este paquete desde un programa o script externo de la siguiente forma</p>
+    <pre><code class="language-python"># | main.py |
+from Nombre_del_paquete.saludos import saludar
+# Asumiendo que en el modulo existe una funcion
+# llamada 'saludar'.
+
+saludar()</code></pre>
+    <section>
+      <h3 id="packages-dist">Distribucion</h3>
+      <p>Aunque podemos implementar el uso de paquetes en nuestras aplicaciones, puede ser conveniente hacer del paquete un <b>paquete distribuible</b> <br> Los paquetes distribuibles, son paquetes que pueden ser instalados en un sistema y almacenados en los directorios de paquetes y modulos. De esta manera, pueden ser importados en cualquier programa o script de <b>Python</b> sin tener que acceder manualmente desde ellos a los directorios de estos paquetes. Es de hecho, de esta manera en la que los paquetes son distribuidos en <a href="https://pypi.org">PyPi</a> <br> Para poder hacer un paquete distribuible, necesitamos, por supuesto, un paquete ya desarrollado e incluir fuera del directorio raiz de dicho paquete el archivo <code>setup.py</code>, el cual debe tener el siguiente contenido</p>
+      <pre><code class="language-python"># | setup.py |
+import setuptools # Importamos el modulo 'setuptools'
+
+setuptools.setup(
+  name="Nombre del paquete",             # -> Nombre del paquete
+  version="0.1.0",                       # -> Version del paquete
+  description="Descripcion del paquete", # -> Descripcion del paquete
+  author="RukkaPlus",                    # -> Autor del paquete
+  author_email="example@gmail.com",      # -> Email del autor del paquete
+  packages=setuptools.find_packages(where="Nombre_del_paquete"),
+  # packages=["Nombre_del_paquete", "Subpaquete_0", "Subpaquete_1"...]
+)</code></pre>
+      <div>
+        <p><b>Nota</b>: Para mas informacion referente al empaquetado y distribucion de paquetes, revise <a href="https://packaging.python.org/en/latest/tutorials/packaging-projects/#packaging-python-projects">La guia oficial de empaquetado</a></p>
+      </div>
+      <p>Finalmente, para generar el paquete, ejecutamos el siguiente comando en una terminal o linea de comandos</p>
+      <div class="w3-container tabmanager">
+        <div class="w3-bar">
+          <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+          <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+        </div>
+        <section class="w3-border w3-panel msdos-tabpanel">
+          <pre><code class="language-shell">&gt; py setup.py sdist</code></pre>
+        </section>
+        <section class="w3-border w3-panel unix-tabpanel">
+          <pre><code class="language-sh">$ python3 setup.py sdist</code></pre>
+        </section>
+      </div>
+      <p>Esto generara un archivo comprimido (dependiendo del <b>OS</b> sera <code>.zip</code> o <code>.tar.gz</code>) distribuible</p>
+      <div class="w3-container tabmanager">
+        <div class="w3-bar">
+          <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+          <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+        </div>
+        <section class="w3-border w3-panel msdos-tabpanel">
+          <p>Para instalar el paquete ejecutamos el siguiente comando</p>
+          <pre><code class="language-shell">&gt; pip install paquete-0.1.0.zip</code></pre>
+          <p>Para desinstalar el paquete ejecutamos el siguiente comando</p>
+          <pre><code class="language-shell">&gt; pip uninstall paquete-0.1.0.zip</code></pre>
+        </section>
+        <section class="w3-border w3-panel unix-tabpanel">
+          <p>Para instalar el paquete ejecutamos el siguiente comando</p>
+          <pre><code class="language-shell">$ pip3 install paquete-0.1.0.tar.gz</code></pre>
+          <p>Para desinstalar el paquete ejecutamos el siguiente comando</p>
+          <pre><code class="language-shell">$ pip3 uninstall paquete-0.1.0.tar.gz</code></pre>
+        </section>
+      </div>
+    </section>
+  </section>
+</section>
+{% endblock %}

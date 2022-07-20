@@ -1,0 +1,43 @@
+:root {
+  --principal-color: #f9c74f;
+  --secondary-color: #f9c74f;
+  --principal-text-color: #000;
+}
+button {
+  font-family: var(--text-monospace);
+  cursor: pointer;
+  width: 100%;
+}
+form button {
+  width: max-content;
+}
+.example-cont code {
+  padding: 1px;
+  border-radius: 3px;
+  font-family: var(--text-monospace);
+  background: rgba(0, 0, 0, .1);
+}
+.example-cont, .example-cont-big {
+  margin: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: var(--text-monospace);
+  background: rgba(0, 0, 0, .1);
+}
+.example-cont-big {
+  display: flex;
+  height: 200px;
+}
+.example-cont-big img, .example-cont-big p {
+  flex-grow: 1;
+}
+.example-cont-big img {
+  object-fit: scale-down;
+}
+.example-cont-big p {
+  text-align: center;
+  align-self: center;
+}
+.example-cont-big button {
+  width: 25%;
+}

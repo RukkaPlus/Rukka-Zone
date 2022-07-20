@@ -1,0 +1,740 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/coffee.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-coffee.css') }}">
+<script src="{{ url_for('static', filename='js/lib/coffeescript.js') }}"></script>
+<script src="{{ url_for('static', filename='js/web/script-coffee.js') }}"></script>
+{% endblock %}
+
+{% block title %}CoffeeScript{% endblock %}
+
+{% block header %}
+<div>
+  <h1>CoffeeScript</h1>
+  <p><b>CoffeeScript</b> es un lenguaje basado en <b>JavaScript</b> que agrega <b>azucar sintactico</b>, lo que facilita la legibilidad y permite la reduccion ade codigo y la eliminacion del codigo redundante <br> <b>CoffeeScript</b> se transpila linea por linea a <b>JavaScript</b>, y no es tan diferente a el</p>
+</div>
+<img src="{{ url_for('static', filename='img/coffee.svg') }}" alt="coffee">
+{% endblock %}
+
+{% block index %}
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#environment">Entorno</a></li>
+<li><a href="#environment-0">CoffeeScript en el navegador</a></li>
+<li><a href="#environment-1">CoffeeScript en Node.js</a></li>
+<li><a href="#environment-2">La herramienta <code>coffee</code></a></li>
+<li><a href="#basics-0">Hello, world!</a></li>
+<li><a href="#basics-1">Variables</a></li>
+<li><a href="#basics-2">Tipos de datos</a></li>
+<li><a href="#basics-2-0">Tipos de datos neutros</a></li>
+<li><a href="#basics-3">Operadores</a></li>
+<li><a href="#basics-4">Funciones</a></li>
+<li><a href="#basics-5">Control de flujo</a></li>
+<li><a href="#basics-5-0">Bucles</a></li>
+<li><a href="#basics-5-1">Condicionales y switches</a></li>
+<li><a href="#basics-5-2">Manejo de excepciones</a></li>
+<li><a href="#basics-6">Slices y Splices</a></li>
+<li><a href="#advanced-0">Generator functions</a></li>
+<li><a href="#advanced-1">Arrow functions</a></li>
+<li><a href="#advanced-2">Promises</a></li>
+<li><a href="#advanced-3">Async functions</a></li>
+<li><a href="#advanced-4">Regular expressions</a></li>
+<li><a href="#advanced-4-0">Usando las expresiones regulares</a></li>
+<li><a href="#advanced-4-1">Modificadores</a></li>
+<li><a href="#advanced-4-2">Patrones</a></li>
+<li><a href="#advanced-4-3">Cuantificadores</a></li>
+<li><a href="#oop">Programacion Orientada a Objetos</a></li>
+<li><a href="#oop-0">Clases</a></li>
+<li><a href="#oop-0-0">Clases en CoffeeScript</a></li>
+<li><a href="#oop-1">Objetos</a></li>
+<li><a href="#oop-1-0">Objetos en CoffeeScript</a></li>
+<li><a href="#oop-2">Abstraccion</a></li>
+<li><a href="#oop-3">Encapsulacion</a></li>
+<li><a href="#oop-3-0">Encapsulacion en CoffeeScript</a></li>
+<li><a href="#oop-4">Herencia</a></li>
+<li><a href="#oop-4-0">Herencia en CoffeeScript</a></li>
+<li><a href="#oop-5">Polimorfismo</a></li>
+<li><a href="#oop-5-0">Polimorfismo en CoffeeScript</a></li>
+<li><a href="#json">JSON</a></li>
+<li><a href="#json-0">Convirtiendo JSON en Objetos</a></li>
+<li><a href="#json-1">Convirtiendo Objetos en JSON</a></li>
+<li><a href="#json-2">Principales reglas de un archivo JSON</a></li>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="syntax">Syntax</h2>
+  <p>El syntax de <b>CoffeeScript</b> es <b>Ruby-like</b>, por lo que...</p>
+  <ul>
+    <li>Las expresiones no necesitan finalizar con <code>;</code> ni se hace uso de <code>{}</code></li>
+    <li>Los comentarios se manejan con <code>#</code> o <code>### ... ###</code></li>
+    <li>Para separar bloques de codigo se utiliza la <b>indentacion</b></li>
+    <li>Soporta <b>Unicode</b></li>
+    <li>Los nombres de las variables no pueden comenzar con numeros, ni pueden tener un keyword como nombre ni tener espacios entre sus nombres</li>
+    <li>Las variables no necesitan declaracion de un keyword</li>
+    <li>Las variables pueden usar <b>Camel Case</b> o <b>Snake Case</b></li>
+  </ul>
+  <pre><code class="language-coffee" id="input-0">variable1 = 12
+variable2 = 'RukkaPlus'
+
+###
+Esta funcion toma un numero y retorna
+el cuadrado del mismo.
+###
+toCube = (num) -> num ** 3  
+
+# Uso de las variables previamente definidas
+console.log "Hello! I'm #{variable2}, and I have #{toCube variable1} grains of coffee"</code></pre>
+  <button class="w3-button" onclick="execute('input-0', 'output-0');">Ejecutar</button>
+  <div class="output-cont" id="output-0"></div>
+</section>
+<section>
+  <h2 id="environment">Entorno</h2>
+  <p>A diferencia de <b>JavaScript</b>, el navegador no soporta de forma nativa el codigo de <b>CoffeeScript</b>, y <b>Node.js</b> necesita instalar un modulo para igualmente ejecutarlo</p>
+  <section>
+    <h3 id="environment-0">CoffeeScript en el navegador</h3>
+    <p>Para ejecutar <b>CoffeeScript</b> en el navegador, podemos importar su <b>transpilador</b> en un archivo <b>HTML</b> y luego escribir codigo de <b>CoffeeScript</b> en las etiquetas <code>script</code> con el atributo <code>type="text/coffeescript"</code></p>
+    <pre><code class="language-html">&lt!DOCTYPE html&gt
+&lthtml&gt
+&lthead&gt
+  &lt!-- Importando mediante una CDN --&gt
+  &ltscript src="https://coffeescript.org/v2/browser-compiler-legacy/coffeescript.js"&gt&lt/script&gt
+  &lt!-- Tambien puede ser importado localmente
+  &ltscript src="direccion/del/transpilador/coffeescript.js"&gt&lt/script&gt--&gt
+&lt/head&gt
+&ltbody&gt
+  &ltscript type="text/coffeescript"&gt
+    document.write "Hello, world!"
+  &lt/script&gt
+&lt/body&gt
+&lt/html&gt</code></pre>
+    <p>Esto no es recomendado para un trabajo serio. Ademas, para importar programas mediante el atributo <code>src</code>, es necesario estar en un protocolo <b>HTTP</b></p>
+  </section>
+  <section>
+    <h3 id="environment-1">CoffeeScript en Node.js</h3>
+    <p>Para instalarlo en <b>Node.js</b> podemos instalar su modulo mediante <b>NPM</b></p>
+    <pre><code class="language-sh"># Instalando en un proyecto
+npm install --save-dev coffeescript
+
+# Instalando en el sistema
+npm install -g coffeescript</code></pre>
+  </section>
+  <section>
+    <h3 id="environment-2">La herramienta <code>coffee</code></h3>
+    <p>Es una herramienta <b>CLI</b> que se instala en el sistema y permite interpretar codigo de <b>CoffeeScript</b> entre otras utilidades como transpilarlo directamente a <b>JavaScript</b></p>
+    <pre><code class="language-sh"># Ejecutar el interprete
+coffee
+
+# Ejecutar un programa de CoffeeScript
+coffee direccion/del/programa.coffee
+
+# Transpilar programa de CoffeeScript a JavaScript
+coffee -c direccion/del/programa.coffee</code></pre>
+  </section>
+</section>
+<section>
+  <h2 id="basics-0">Hello, world!</h2>
+  <p>Es el programa mas basico que se puede hacer en un lenguaje de programacion. Imprime o escribe la palabra "Hello, world!" en un medio</p>
+  <pre><code class="language-coffee" id="input-1"># Imprime "Hello, world!" en consola
+console.log 'Hello, world!'
+
+# Imprime "Hello, world!" en el DOM
+# document.write 'Hello, world!'
+
+# Notifica un "Hello, world!" en el navegador
+# alert 'Hello, world!'</code></pre>
+  <button class="w3-button" onclick="execute('input-1', 'output-1');">Ejecutar</button>
+  <div class="output-cont" id="output-1"></div>
+</section>
+<section>
+  <h2 id="basics-1">Variables</h2>
+  <p>Es un espacio en memoria que almacena un dato y puede cambiar de valor durante el programa. En <b>CoffeeScript</b> no es necesario usar un keyword para declarar una variable</p>
+  <pre><code class="language-coffee" id="input-2"># [ Definiendo una variable ]
+variable = 12 # &lt- Declarado
+console.log variable
+
+variable = 24 # &lt- Modificado
+console.log variable</code></pre>
+  <button class="w3-button" onclick="execute('input-2', 'output-2');">Ejecutar</button>
+  <div class="output-cont" id="output-2"></div>
+</section>
+<section>
+  <h2 id="basics-2">Tipos de datos</h2>
+  <p>En <b>CoffeeScript</b> existen diferentes tipos de datos, y cada uno de ellos se comporta de diferentes formas. Existen los <b>String</b>, los <b>Number</b>, los <b>Boolean</b>, los <b>Array</b>, los <b>Object</b>, etc</p>
+  <pre><code class="language-coffee"># [ String ]
+"Hello, world!"
+'Hello, world!'
+"""Hello, world!"""
+'''Hello, world!'''
+# [ Number ]
+12
+12.5
+# [ Boolean ]
+true
+false
+# [ Array ]
+[12, 20.8, 'foo']
+[
+  0, 1, 2
+  3, 4, 5
+  6, 7, 8
+]
+# [ Object ]
+object0 = name: 'Rukka', programming: 'CoffeeScript'
+object1 =
+  name: 'Rukka',
+  programming: 'CoffeeScript'</code></pre>
+  <section>
+    <h3 id="basics-2-0">Tipos de datos neutros</h3>
+    <p>Los datos neutros no son utilizados en expresiones convencionalmente. Estos son <code>undefined</code>, <code>null</code> y <code>NaN</code></p>
+    <pre><code class="language-coffee">undefined # Representa un valor no definido
+null      # Representa a un valor nulo
+NaN       # Representa a un valor que no es un numero</code></pre>
+  </section>
+</section>
+<section>
+  <h2 id="basics-3">Operadores</h2>
+  <p>Los operadores son aquellos signos que nos permite relacionar variables, constantes o expresiones</p>
+  <pre><code class="language-coffee">a = 5
+b = 10
+# [ Operadores aritmeticos ]
+5 + 2   # Suma
+8 - 4   # Resta
+5 * 6   # Multiplicacion
+60 / 5  # Division
+21 % 4  # Modulo (resto)
+3 ** 8  # Exponenciacion
+3 // 5  # Division (resultado no decimal)
+3 %% 11 # (a % b + b) % b
+x++     # Incremento
+x--     # Decremento
+
+# [ Operadores relacionales ]
+10 > 5;     # Mayor que...
+11 &lt 5      # Menor que...
+40 is 40    # Igual que...
+50 isnt 50  # Diferente a...
+60 >= 50    # Mayor o igual que...
+30 &lt= 30    # Menor o igual que...
+true then 'String 1' # Operador
+     else 'String 2' # ternario
+
+# [ Alias ]
+on           # true
+yes          # true
+off          # false
+no           # false
+@            # this
+@property    # this.property
+a in b       # [].indexOf.call(b, a) >= 0
+a of b       # a in b
+for a from b # for (a of b)
+
+# [ Operadores Logicos ]
+true and true  # AND
+true or false  # OR
+not false      # NOT
+
+# [ Operadores de origen ]
+typeof 'I am a String' # Retorna su tipo de dato
+12 instanceof Number   # Retorna su clase padre
+
+# [ Operadores de asignacion ]
+x = 12  # Asignacion standard
+x += 5  # Asignacion con adicion
+x -= 5  # Asignacion con resta
+x *= 2  # Asignacion con multiplicacion
+x /= 3  # Asignacion con division
+x %= 3  # Asignacion con modulo
+x **= 5 # Asignacion con potenciacion
+
+# [ Operadores binarios ]
+5 & 1   # AND (0101 & 0001 = 0001 = 5)
+5 | 1   # OR  (0101 | 0001 = 0101 = 5)
+~5      # NOT (~0101       = 1010 = 10)
+5 ^ 1   # XOR (0101 ^ 0001 = 0100 = 4)
+5 &lt&lt 1  # Zero fill left shift (0101 &lt&lt 1 = 1010 = 10)
+5 >> 1  # Signed fill right shift (0101 >> 1 = 0010 = 2)
+5 >>> 1 # Zero fill right shift (0101 >>> 1 = 0010 = 2)</code></pre>
+</section>
+<section>
+  <h2 id="basics-4">Funciones</h2>
+  <p>Una funcion es un algoritmo definido que puede ser ejecutado durante el programa. Se definen usando una flecha <code>-></code></p>
+  <pre><code class="language-coffee" id="input-3"># Para definir una funcion
+myFunction0 = -> console.log 'Hello, World!'
+# Para definir una funcion con parametros
+myFunction1 = (parm) -> console.log "Hello, #{parm}!"
+myFunction2 = (parm0, parm1) -> "#{parm0} + #{parm1} = #{parm0 + parm1}" # &lt- Retorna un valor
+
+# Ejecutando funciones
+myFunction0()
+myFunction1 'RukkaPlus'
+console.log myFunction2 5, 10</code></pre>
+  <button class="w3-button" onclick="execute('input-3', 'output-3');">Ejecutar</button>
+  <div class="output-cont" id="output-3"></div>
+</section>
+<section>
+  <h2 id="basics-5">Control de flujo</h2>
+  <p>Son estructuras que nos permite controlar el flujo del programa. Pueden ser <b>bucles</b>, <b>condicionales y switches</b> y <b>manejadores de excepciones</b></p>
+  <section>
+    <h3 id="basics-5-0">Bucles</h3>
+    <p>Son estructuras que repiten un algoritmo una determinada cantidad de veces. En <b>CoffeeScript</b> exsiten diferentes keywords que facilitan repeticiones</p>
+    <pre><code class="language-coffee" id="input-4"># Repite un numero de veces una sentencia
+console.log "Me voy a repetir 5 veces" for i in [0..5]
+
+# Itera un dato
+list = ['Orange', 'Apple', 'Banana']
+console.log "Ahora estoy apuntando al elemento #{i}" for i in list
+
+# Itera un dato con una condicional
+list = ['Red', 'Green', 'Blue', 'Purple']
+console.log "Ahora estoy apuntando al elemento #{i}" for i in list when i isnt 'Purple'
+
+# Itera un dato cada cierto salto
+list = ['Orange', null, 'Apple', null, 'Banana']
+console.log "Ahora estoy apuntando al elemento #{i}" for i in list by 2
+
+# Itera los indices de un dato
+list = ['Lion', 'Elephant', 'Giraffe']
+console.log "Ahora estoy apuntando al elemento numero #{i}" for i of list
+
+# Itera una propiedad de un objeto
+object = numbers: [0, 1, 2, 3, 4, 5], colors: ['Red', 'Blue', 'Green']
+console.log "Ahora estoy apuntando a la propiedad #{prop}
+  y su valor es: #{value}" for own prop, value of object
+
+# Itera una funcion generadora
+myFunction = ->
+  yield 0
+  yield 1
+  yield 2
+console.log "Ahora estoy apuntando al resultado #{i}" for i from myFunction()
+
+# Itera un dato y retorna un resultado fijo
+newList = i for i in list
+console.log "La nueva lista es #{newList}"
+
+# Repite siempre que cumpla una condicion
+i = 0
+myFunction = -> 
+  console.log "Me voy a repetir 5 veces"
+  i++
+myFunction() while i isnt 5
+
+# Repite siempre que no cumpla una condicion
+i = 0
+myFunction = -> 
+  console.log "Me voy a repetir 5 veces"
+  i++
+myFunction() until i is 5
+
+# Repite siempre hasta que sea forzosamente detenido
+i = 0
+loop
+  myFunction()
+  if i is 5 then break
+
+# Repite una funcion (funciona en 'while' y 'for')
+i = 0
+while i isnt 5
+  do ->
+    console.log "Me voy a repetir 5 veces"
+    i++
+  
+### [ Keywords ]
+break : Rompe la ejecucion de un bloque.
+continue : Repite el bloque de codigo.
+###</code></pre>
+    <button class="w3-button" onclick="execute('input-4', 'output-4');">Ejecutar</button>
+    <div class="output-cont" id="output-4"></div>
+  </section>
+  <section>
+    <h3 id="basics-5-1">Condicionales y switches</h3>
+    <p>Permite que el programa ejecute un algoritmo en base a una condicion o caso. En <b>CoffeeScript</b> tenemos a las condicionales <code>if...else</code>, <code>unless...else</code> y la estructura <code>switch</code></p>
+    <pre><code class="language-coffee" id="input-5"># [ Condicionales ]
+variable = 'RukkaPlus'
+if variable is 'RukkaPlus'
+  # Si esta condicion se cumple...
+  console.log 'La primera condicion fue cumplida'
+else if variable is 'Narumi'
+  # Si la condicion anterior no se cumple, pero
+  # esta si, entonces...
+  console.log 'La segunda condicion fue cumplida'
+else
+  # Si ninguna anterior se cumple, entonces...
+  console.log 'Ninguna de las anteriores fue cumplida'
+
+# [ Condicionales opuestos ]
+unless variable isnt 'RukkaPlus' and variable is 'Narumi'
+  # Si la condicion no se cumple...
+  console.log 'La primera condicion fue cumplida'
+else unless variable isnt 'Narumi' and variable is 'RukkaPlus'
+  # Si la condicion anterior se cumple, y
+  # esta no, entonces...
+  console.log 'La segunda condicion fue cumplida'
+else
+  # Si todas si se cumplieron, entonces...
+  console.log 'Ninguna de las anteriores fue cumplida'
+
+# [ Switch ]
+switch variable
+  when 'Narumi' then console.log 'Se cumplio el caso 1'    # Si este es el caso, entonces...
+  when 'RukkaPlus' then console.log 'Se cumplio el caso 2' # Si este es el caso, entonces...
+  else console.log 'Se cumplio el caso default'            # Si este es el caso, entonces...</code></pre>
+    <button class="w3-button" onclick="execute('input-5', 'output-5');">Ejecutar</button>
+    <div class="output-cont" id="output-5"></div>
+  </section>
+  <section>
+    <h3 id="basics-5-2">Manejo de excepciones</h3>
+    <p>El manejo de excepciones nos permite controlar el flujo del programa a partir de la causa una excepcion. Esto lo podemos manejar con las estructuras <code>try</code>, <code>catch</code>, <code>finally</code> y <code>throw</code></p>
+    <pre><code class="language-coffee" id="input-6"># [ Estructuras ]
+try
+  # Esta estructura es propensa a errores...
+  throw 'ERROR GRAVISIMO!!!' # Arroja un error
+catch variableError
+  # Si un error se produjo...
+  console.error 'Se ha producido un error'
+finally
+  # Haya ocurrido o no un error...
+  console.log 'Ha terminado la ejecucion'
+
+### [ Glosario ]
+try : Define a una estructura propensa a errores.
+    : Se ejecuta el algoritmo hasta que ocurra uno.
+catch err  : Maneja el error que se haya producido
+           : en la estructura `try`.
+finally : Define a una estructura que se ejecutara
+        : si hubo o no un error.
+throw : Arroja un error personalizado. Puede ser de
+      : de tipo String, Numero, etc.
+###</code></pre>
+    <button class="w3-button" onclick="execute('input-6', 'output-6');">Ejecutar</button>
+    <div class="output-cont" id="output-6"></div>
+  </section>
+</section>
+<section>
+  <h2 id="basics-6">Slices y Splices</h2>
+  <p><b>CoffeeScript</b> introduce los <b>Rangos</b> para facilitar el <b>Slicing</b> y <b>Splicing</b> en <b>Arrays</b> y <b>Objetos iterables</b></p>
+  <pre><code class="language-coffee">numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [ Slicing ]
+start   = numbers[0..2]   # [1, 2, 3]
+middle  = numbers[3...-2] # [4, 5, 6]
+end     = numbers[-2..]   # [7, 8, 9]
+copy    = numbers[..]     # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# [ Splicing ]
+numbers[3..6] = [-3, -4, -5, -6] # [1, 2, -3, -4, -5, -6, 7, 8, 9]</code></pre>
+</section>
+<section>
+  <h2 id="advanced-0">Generator functions</h2>
+  <p>Los <b>generator functions</b> son funciones que trabajan como <b>objetos iterables</b>. Para definirlos simplemente, en la definicion de una funcion, se coloca <code>yield someValue</code> en cada lugar lugar donde deba retornarse un valor. Para ir avanzando de <code>yield</code> en <code>yield</code>, se utiliza el metodo de <b>objetos iterables</b> <code>next()</code></p>
+  <pre><code class="language-coffee" id="input-7">myFunction = ->
+  console.log 'Iniciando carga...'
+  yield 20 # Aqui se detiene la iteracion
+           # y retorna un valor
+  console.log 'Cargando archivos...'
+  yield 40
+
+  console.log 'Carga completa!'
+  yield 60
+
+myIterable = myFunction()
+num = myIterable.next() # &lt- { value: 20, done: false }
+num = myIterable.next() # &lt- { value: 40, done: false }
+num = myIterable.next() # &lt- { value: 60, done: true }</code></pre>
+  <button class="w3-button" onclick="execute('input-7', 'output-7');">Ejecutar</button>
+  <div class="output-cont" id="output-7"></div>
+</section>
+<section>
+  <h2 id="advanced-1">Promises</h2>
+  <p>Los <b>Promisees</b> vienen con la intencion de remover los <b>Callback hell</b>, que consisten en realizar varias funciones anidadas (donde al finalizar una funcion se llama a otra sucesivamente). <br> Un <code>Promise</code> (o promesa) representa el final (o fracaso) eventual de una operacion asincrona</p>
+  <pre><code class="language-coffee"># [ Callback hell ]
+compras = []
+setTimeout ->
+  compras.push 'Verduras'
+  console.log 'He terminado de comprar verduras'
+  setTimeout ->
+    compras.push 'Carne'
+    console.log 'He terminado de comprar carne'
+    setTimeout ->
+      compras.push 'Granos'
+      console.log 'He terminado de comprar granos'
+    , 2000
+  , 2000
+, 2000
+
+# Notese la piramide del medio del codigo...</code></pre>
+  <pre><code class="language-coffee" id="input-8"># [ Promises ]
+compras = []
+new Promise (res, rej) ->
+  # Resolve indica el final exitoso de la promesa
+  # Reject indica el error ocurrido en la promesa
+  setTimeout ->
+    compras.push 'Verduras'
+    console.log 'He terminado de comprar verduras'
+    res "Success!"
+  , 2000
+.then (result) ->
+  # Si el Resolve es ejecutado con exito...
+  new Promise (res, rej) ->
+    setTimeout ->
+      compras.push 'Carne'
+      console.log 'He terminado de comprar carne'
+      res "Success!"
+    , 2000
+  .then (result) ->
+    # Si el Resolve es ejecutado con exito...
+    new Promise (res, rej) ->
+      setTimeout ->
+        compras.push 'Granos'
+        console.log 'He terminado de comprar granos'
+        rej "Error!"
+      , 2000
+    .catch (err) ->
+      # Si un Reject es activado...
+      console.error 'Ocurrio un error : ' + err</code></pre>
+  <button class="w3-button" onclick="execute('input-8', 'output-8');">Ejecutar</button>
+  <div class="output-cont" id="output-8"></div>
+</section>
+<section>
+  <h2 id="advanced-2">Async functions</h2>
+  <p>Las <b>Async functions</b> son funciones que ejecutan procesos dentro de ellas de manera asincrona (esperando a que un proceso termine completamente antes de continuar). Esta es una actualizacion basado en promesas <br> Nuevamente, para definir <b>Async functions</b>, simplemente usamos el keyword <code>await</code> dentro del bloque de definicion de una funcion</p>
+  <pre><code class="language-coffee" id="input-9">compras = []
+myFunction = ->
+  await new Promise (res, rej) ->
+    setTimeout ->
+      compras.push 'Verduras'
+      console.log 'He terminado de comprar verduras'
+      res 'Terminamos!'
+    , 2000
+  await new Promise (res, rej) ->
+    setTimeout ->
+      compras.push 'Carne'
+      console.log 'He terminado de comprar carne'
+      res 'Terminamos!'
+    , 2000
+  await new Promise (res, rej) ->
+    setTimeout ->
+      compras.push 'Granos'
+      console.log 'He terminado de comprar granos'
+      res 'Terminamos!'
+    , 2000
+myFunction()</code></pre>
+  <button class="w3-button" onclick="execute('input-9', 'output-9');">Ejecutar</button>
+  <div class="output-cont" id="output-9"></div>
+</section>
+<section>
+  <h2 id="advanced-3">Regular expressions</h2>
+  <p>Las expresiones regulares en <b>CoffeeScript</b> se representan en un tipo de dato que se conoce como <code>regExp</code> y se escriben con el syntax <code>/pattern/modifier</code></p>
+  <pre><code class="language-coffee"># Ejemplo de regExp
+myRegExp = /CoffeeScript/i
+
+# 'CoffeeScript' es el patron usado en la busqueda
+# 'i' es un modificador que indica 'case insensitive'</code></pre>
+  <section>
+    <h3 id="advanced-3-0">Usando las expresiones regulares</h3>
+    <p>Se usan en metodos de busqueda. Mas especificamente en <code>search()</code> y <code>replace()</code> de los Strings</p>
+    <pre><code class="language-coffee" id="input-10"># Ejemplo de regExp en 'search()'
+text0 = "This is a text writted in COFFEESCRIPT language"
+result0 = text0.search /coffeescript/i # return 27
+
+# Ejemplo de regExp en 'replace()'
+text1 = "In this text, 'cookie' will be replaced by 'replaceme'"
+result1 = text1.replace /REPLACEME/i, 'milk' # return String
+
+console.log "La posicion de 'COFFEESCRIPT' en 'text0' es : #{result0}"
+console.log "La palabra 'cookie' en 'text1' fue reemplazada por 'milk' : #{result1}"</code></pre>
+    <button class="w3-button" onclick="execute('input-10', 'output-10');">Ejecutar</button>
+    <div class="output-cont" id="output-10"></div>
+  </section>
+  <section>
+    <h3 id="advanced-3-1">Modificadores</h3>
+    <ul>
+      <li><code>i</code> : Perform case-insensitive matching</li>
+      <li><code>g</code> : Perform a global match (find all matches rather than stopping after the first match)</li>
+      <li><code>m</code> : Perform multiline matching</li>
+    </ul>
+  </section>
+  <section>
+    <h3 id="advanced-3-2">Patrones</h3>
+    <ul>
+      <li><code>[abc]</code> : Find any of the characters between the brackets</li>
+      <li><code>[0-9]</code> : Find any of the digits between the brackets</li>
+      <li><code>(x|y)</code> : Find any of the alternatives separated with '|'</li>
+      <li><code>\d</code> 5: Find a digit</li>
+      <li><code>\s</code> : Find a whitespace character</li>
+      <li><code>\b</code> : Find a match at the beginning of a word like this: \bWORD, or at the end of a word like this: WORD\b</li>
+      <li><code>\uxxxx</code> : Find the Unicode character specified by the hexadecimal number xxxx</li>
+    </ul>
+  </section>
+  <section>
+    <h3 id="advanced-3-3">Cuantificadores</h3>
+    <ul>
+      <li><code>n+</code> : Matches any string that contains at least one n</li>
+      <li><code>n*</code> : Matches any string that contains zero or more occurrences of n</li>
+      <li><code>n?</code> : Matches any string that contains zero or one occurrences of n</li>
+    </ul>
+  </section>
+</section>
+<section>
+  <h2 id="oop">Programacion Orientada a Objetos</h2>
+  <p>La programacion orientada a objetos es un paradigma de la programacion que nos permite manejar y estructurar de una manera mas ordenada y compacta un programa <br> <b>JavaScript</b> (al igual que <b>CoffeeScript</b>) es un lenguaje completamente orinetado a objetos, por lo que entenderlo es importante para conocer otros aspectos del lenguaje <br> Para suerte de todo programador, la programacion orientada a objetos en <b>JavaScript</b> es muy sencilla de entender</p>
+  <section>
+    <h3 id="oop-0">Clases</h3>
+    <p>Una clase es una abstraccion que hacemos para nuestra experiencia sensible. El ser humano tiende a agrupar cosas (objetos) con caracteristicas similares en grupos (clases). Por ejemplo: Un vaso pequenio o un vaso grande, ambos son de la clase "Vaso"</p>
+    <section>
+      <h4 id="oop-0-0">Clases en CoffeeScript</h4>
+      <p>Para definir una clase, es necesario anteponer el keyword <code>class</code> al nombre de la clase <br> El metodo constructor es necesario para definir la construccion del objeto. Al momento de instanciar la clase, se ejecutara este metodo constructor</p>
+      <pre><code class="language-coffee">class Persona
+  # Metodo constructor
+  constructor: (nombre, edad) ->
+    @nombre = nombre
+    @edad = edad
+  ###
+  El mismo metodo constructor resumido:
+  constructor: (@nombre, @edad) ->
+  ###
+  # Metodo standard
+  caminar: -> console.log this.nombre + ' esta caminando'
+  # Metodos getter/setter
+  attrNombre: -> @nombre
+  attrEdad: (x) -> @edad = x
+}</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="oop-1">Objetos</h3>
+    <p>Es un conjunto de atributos y metodos. Un objeto se deriva de una clase. Por ejemplo: Un vaso pequenio es un objeto de la clase "Vaso"</p>
+    <ul>
+      <li>El vaso pequenio tiene como atributo: Es pequenio.</li>
+      <li>El vaso pequenio tiene como metodo: Servir agua en el.</li>
+    </ul>
+    <section>
+      <h4 id="oop-1-0">Objetos en CoffeeScript</h4>
+      <p>En <b>CoffeeScript</b> <b>casi todo es un objeto</b>. Desde los <b>tipos de datos primitivos</b> (String, Number, Boolean, BigInt, undefined, Symbol, null) hasta los <b>tipos de datos no-primitivos</b> (Array, Object, etc) <br> Para instanciar una clase previamente definida, se antepone el keyword <code>new</code> a la clase de la que se realizara una instancia</p>
+      <pre><code class="language-coffee"># Instanciando una clase
+personaStd = new Persona 'RukkaPlus', 16
+
+# Accediendo a metodos
+personaStd.caminar()
+
+# Accediendo a un getter/setter
+personaStdNombre = personaStd.objNombre # &lt- RukkaPlus
+personaStd.objEdad 18                   # -&gt 18</code></pre>
+      <p>Como se puede apreciar, para realizar una instancia es necesario escribir <code>new NombreDeClase(1, 2, 3);</code>, donde <code>new</code> indica que se realizara una instancia, y <code>NombreDeClase(1, 2, 3);</code> es el nombre de la clase y la llamada a su metodo constructor</p>
+    </section>
+  </section>
+  <section>
+    <h3 id="oop-2">Abstraccion</h3>
+    <p>Es un proceso mental de extraccion de las caracteristicas esenciales de algo, ignorando los detalles superfluos. Por ejemplo: El vaso pequenio tiene como detalles que... Es pequenia; Podemos servir agua en ella; Es redonda; Es de vidrio; etc. Por que habria de poner algo como... El numero atomico que tiene? (a no ser que nuestro programa lo requiera)</p>
+  </section>
+  <section>
+    <h3 id="oop-3">Encapsulacion</h3>
+    <p>Es un proceso por el cual se ocultan los detalles del soporte de las caracteristicas de una abstraccion. Por ejemplo: Cuando te sirves agua en el vaso pequenio y la bebes, solo la estas utilizando. No necesitas saber de que metodos o atributos tendrian (por ejemplo) el vidrio con el que esta hecho, solo necesitas saber que te sirvio para beber agua. Encapsulas ese objeto para que no te metas con los datos</p>
+    <section>
+      <h4 id="oop-3-0">Encapsulacion en CoffeeScript</h4>
+      <p>En <b>CoffeeScript</b> tenemos tres categorias de atributos y metodos: <b>Public</b> (el atributo/metodo esta disponible en todo el programa y pueden ser heredadas), <b>Protected</b> (el atributo/metodo esta disponible dentro de las instancias y pueden ser heredadas) y <b>Private</b> (el atributo/metodo esta disponible unicamente dentro de las instacias y no pueden ser heredadas)</p>
+      <pre><code class="language-coffee">### [ Definicion de atributos/metodos ]
+Los atributos/metodos publicos son definidos normalmente
+Los atributos/metodos protegidos son definidos con "_" al inicio
+Los atributos/metodos privados son definidos mediante "=" y no ":"
+###
+class MyClass
+  myPublicAttr     : "Hello, world!"
+  _myProtectedAttr : "Hello, world!"
+  myPrivateAttr    = "Hello, world!"
+  getAttr: ->
+    publicAttr: @myPublicAttr,        # "Hello, world!"
+    protectedAttr: @_myProtectedAttr, # "Hello, world!"
+    privateAttr: @myPrivateAttr       # "Hello, world!"
+class MySubClass extends MyClass
+  getAttr: ->
+    publicAttr: @myPublicAttr,       # "Hello, world!"
+    protectedAttr: @_myProtectedAttr # "Hello, world!"
+    # privateAttr: @myPrivateAttr    # ERROR
+instance = new MyClass()
+instance.myPublicAttr       # "Hello, world!"
+# instance._myProtectedAttr # ERROR
+# instance.myPrivateAttr    # ERROR</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="oop-4">Herencia</h3>
+    <p>La herencia es donde una clase nueva se crea a partir de una clase ya existente, heredando todos sus atributos y metodos. Por ejemplo: De la clase "Vaso" (superclase) se pudo haber sacado otra clase heredada llamada "Vaso pequenio" (subclase). Asi se heredan sus atributos y metodos variando solo algunas caracteristicas como por ejemplo, su tamanio</p>
+    <section>
+      <h4 id="oop-4-0">Herencia en CoffeeScript</h4>
+      <p>Como se ha mencionado anteriormente, la herencia es <b>la accion de heredar de una clase ya existente</b>, heredando los atributos y metodos de la <b>superclase</b> a la <b>subclase</b>. (tambien llamados <b>clase padre</b> y <b>clase hijo</b> respectivamente) <br> Para realizar una herencia en <b>CoffeeScript</b>, en la linea de declaracion de la subclase, se usa el keyword <code>extends</code> seguido del nombre de la superclase.</p>
+      <pre><code class="language-coffee">class Programador extends Persona
+  # Metodo constructor
+  constructor: (nombre, edad, @lenguaje) ->
+    super nombre, edad
+    @lenguaje = lenguaje
+  # Metodo standard
+  programar = -> console.log @nombre + ' esta programando con ' + @lenguaje
+# Instanciacion
+programadorStd = new Programador 'RukkaPlus', 15, 'JavaScript'
+programadorStd.programar() # Metodo nuevo
+programadorStdNombre = programadorStd.objNombre # Metodo heredado</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="oop-5">Polimorfismo</h3>
+    <p>Es aquella cualidad que poseen los objetos para responder de distinto modo ante el mismo mensaje. Por ejemplo: Si servimos agua en un vaso pequenio y en un vaso grande, ambos responderan de distinta forma ante el mismo metodo (por ejemplo, en el vaso pequenio entrara menos agua y en el vaso grande entrara mas)</p>
+    <section>
+      <h4 id="oop-5-0">Polimorfismo en JavaScript</h4>
+      <p>Son los metodos que a pesar de ser heredados de una superclase <b>poseen diferentes algoritmos</b>, por lo que podria llamarse como el reemplazo de metodos.</p>
+      <pre><code class="language-coffee"># Superclase
+class Persona
+  caminar: -> console.log 'Soy una persona y estoy caminando'
+# Subclases
+class Trabajador extends Persona
+  caminar: -> # Polimorfismo
+    console.log 'Soy un trabajador y estoy caminando'
+class Estudiante extends Persona
+  caminar: -> # Polimorfismo
+    console.log 'Soy un estudiante y estoy caminando'
+
+objeto1 = new Persona()
+objeto2 = new Trabajador()
+objeto3 = new Estudiante()
+objeto1.caminar()
+objeto2.caminar()
+objeto3.caminar()</code></pre>
+    </section>
+  </section>
+</section>
+<section>
+  <h2 id="json">JSON</h2>
+  <p><b>J</b>ava<b>S</b>cript <b>O</b>bject <b>N</b>otation (<b>JSON</b>) es un formato de archivo que permite almacenar datos en notacion de <b>Objetos de JavaScript</b>. Esto facilitando la lectura, la escritura y el manejo en general del archivo</p>
+  <pre><code class="language-js">{
+  "name" : "RukkaPlus",
+  "age" : 15,
+  "height" : 1.70,
+  "languages" : ["HTML", "CSS", "JavaScript"]
+}</code></pre>
+  <p>Es muy parecido a un objeto de JavaScript</p>
+  <section>
+    <h3 id="json-0">Convirtiendo JSON en Objetos</h3>
+    <p>Con esto viene un String, el texto sacado del archivo JSON. Por lo que podemos convertirlo en objetos adaptables al lenguaje <b>CoffeeScript</b></p>
+    <pre><code class="language-coffee"># Convirtiendo un String JSON a Object
+objVar = JSON.parse '{"name":"John", "age":30, "city":"New York"}'
+objVar.name
+objVar.age
+objVar.city</code></pre>
+  </section>
+  <section>
+    <h3 id="json-1">Convirtiendo Objetos en JSON</h3>
+    <p>Al igual que podemos hacer lo contrario, podemos convertir un Objeto de <b>CoffeeScript</b> en un String adaptable a JSON</p>
+    <pre><code class="language-coffee"># Convirtiendo un Object a String JSON
+jsonFile = JSON.stringify objVar
+console.log jsonFile</code></pre>
+  </section>
+  <section>
+    <h3 id="json-2">Principales reglas de un archivo JSON</h3>
+    <ol>
+      <li>Siempre se actua como con un Objeto de <b>JavaScript</b> (siempre se usa la sintaxis <code>{"nombre de llave" : "valor"}</code>)</li>
+      <li>Solo se permiten valores de tipo <code>Number</code>, <code>String</code>, <code>Array</code>, <code>Object</code>, <code>Boolean</code> y <code>null</code>. Esta prohibido otros tipos de datos (incluyendo <code>Function</code>, <code>Date</code> y <code>undefined</code>)</li>
+      <li>Se mantiene la sintaxis original de agrupacion de datos (los <code>[]</code> representan Arrays y los <code>{}</code> representan Objetos)</li>
+    </ol>
+  </section>
+</section>
+{% endblock %}

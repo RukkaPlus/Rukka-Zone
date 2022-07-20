@@ -1,0 +1,26 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/kivy.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-kivy.css') }}">
+{% endblock %}
+
+{% block title %}Kivy{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Kivy</h1>
+  <p></p>
+</div>
+<img src="{{ url_for('static', filename='img/kivy.svg') }}" alt="kivy">
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block main %}
+<article>
+  <section>
+  </section>
+</article>
+{% endblock %}

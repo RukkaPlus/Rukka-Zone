@@ -1,0 +1,499 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/nodejs.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-nodejs.css') }}">
+<script src="{{ url_for('static', filename='js/web/script-nodejs.js') }}"></script>
+{% endblock %}
+
+{% block title %}Node.js{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Node.js</h1>
+  <p>Esta pagina (entrada) es dedicada al <b>uso de JavaScript en el Backend</b>. El Backend es el trabajo dirigido al <b>lado del servidor</b>. <b>Node.js</b> se trata de un interprete multiplataforma basado en el motor <b>V8</b> de Google que permite ejecutar <b>JavaScript</b> fuera del navegador. Lo que permite trabajar con este lenguaje del lado del servidor <br> Fue desarrollado por la <a href="https://openjsf.org"><b>OpenJS Foundation</b></a> el 27 de mayo de 2009 <br> Esta herramienta tambien posee su propio manejador de paquetes llamado <a href="https://www.npmjs.com"><b>NPM</b></a></p>
+</div>
+<img src="{{ url_for('static', filename='img/nodejs.svg') }}" alt="nodejs">
+{% endblock %}
+
+{% block index %}
+<li><a href="#scripts">Scripts</a></li>
+<li><a href="#npm">Manejo de paquetes</a></li>
+<li><a href="#npm-0">Iniciar un paquete</a></li>
+<li><a href="#npm-0-0">El archivo <code>package.json</code></a></li>
+<li><a href="#npm-0-1">Empaquetando</a></li>
+<li><a href="#npm-1">Instalar un paquete</a></li>
+<li><a href="#npm-2">Estructura de un paquete</a></li>
+<li><a href="#modules">Modulos</a></li>
+<li><a href="#modules-0">Importando modulos</a></li>
+<li><a href="#modules-1">Desarrollando modulos</a></li>
+<li><a href="#modules-1-0">Importando un modulo local</a></li>
+<li><a href="#modules-1-1">Instalando un modulo local</a></li>
+<li><a href="#example">Ejemplo de trabajo en un paquete</a></li>
+<li><a href="#http">Servidor Web con <code>http</code></a></li>
+<li><a href="#http-0">Explicacion</a></li>
+
+<li><a href="dotenv">Variables de entorno</a></li>
+
+<li><a href="pkg">PKG</a></li>
+<li><a href="pkg-0">Casos de uso</a></li>
+<li><a href="pkg-1">Instalacion y uso</a></li>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2>Instalar Node.js</h2>
+  <p>Podemos ver las instrucciones de instalacion en la <a href="https://nodejs.org/">pagina ofcial de Node.js</a>. Tambien podemos podemos instalarlo desde la mayoria de manejadores de paquetes del sistema operativo. Por ejemplo...</p>
+  <pre><code class="language-sh"># apt-get install nodejs npm # Ubuntu, Linux Mint, Debian</code></pre>
+</section>
+<section>
+  <h2>Usar Node.js</h2>
+  <p>Al ser un interprete de <b>JavaScript</b>, podemos usarlo para ejecutar programas escritos en este lenguaje. Para ello, es solo usar el siguiente comando</p>
+  <div class="w3-container tabmanager">
+    <div class="w3-bar">
+      <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+      <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+    </div>
+    <section class="w3-border w3-panel msdos-tabpanel">
+      <pre><code class="language-shell">&gt; nodejs direccion\del\archivo.js</code></pre>
+    </section>
+    <section class="w3-border w3-panel unix-tabpanel">
+      <pre><code class="language-sh">$ nodejs direccion/del/archivo.js</code></pre>
+    </section>
+  </div>
+</section>
+<section>
+  <h2 id="scripts">Scripts</h2>
+  <p>Al ser una pagina referente a <b>Node.js</b> y no al uso del <b>JavaScript</b>, es importante primero saber <a href="{{ url_for('webdocs', filename='js') }} "><b>JavaScript</b></a></p>
+</section>
+<section>
+  <h2 id="npm">Manejo de paquetes</h2>
+  <p>Un paquete basicamente es un <b>Software</b>, <b>Libreria</b> o <b>Framework</b> con una estructura y organizacion. En el se escriben programas, se depuran y se <b>importan o exportan otros paquetes</b> <br> Para el manejo de paquetes contamos con la herramienta <b>NPM</b> (default), <b>YARN</b> y <b>PNPM</b>, que permiten <b>iniciar, importar y exportar paquetes</b>. Pero vamos a centrarnos en <b>NPM</b> y <b>PNPM</b></p>
+  <div class="w3-panel note">
+    <p><b>Note</b>: Para utilizar <b>PNPM</b> necesitamos instalarlo desde <b>NPM</b> o desde su <a href="https://pnpm.io">pagina oficial</a>. Para instalarlo desde <b>NPM</b> ejecute el siguiente comando en una linea de comandos o terminal</p>
+    <pre><code class="language-sh">npm install -g pnpm</code></pre>
+  </div>
+  <section>
+    <h3 id="npm-0">Iniciar un paquete</h3>
+    <p>Para iniciar un paquete de <b>Node.js</b> con <b>NPM</b>, podemos ejecutar el siguiente comando dentro de un directorio</p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button npm-tab">NPM</button>
+        <button class="w3-bar-item w3-button pnpm-tab">PNPM</button>
+      </div>
+      <section class="w3-border w3-panel npm-tabpanel">
+        <pre><code class="language-sh">npm init</code></pre>
+      </section>
+      <section class="w3-border w3-panel pnpm-tabpanel">
+        <pre><code class="language-sh">pnpm init</code></pre>
+      </section>
+    </div>
+    <p>Opcionalmente podemos pasar una serie de argumentos. Entre los mas comunes esta <code>-y</code> o <code>--yes</code>. Este argumento va a generar una estructura del <code>package.json</code> con valores automaticos. Mas tarde podemos modificar el archivo</p>
+    <section>
+      <h4 id="npm-0-0">El archivo <code>package.json</code></h4>
+      <p>Este archivo es el que define la estructura del proyecto, las dependencias, la informacion del proyecto, los comandos del proyecto, etc <br> Por defecto, este archivo se ve asi:</p>
+      <pre><code class="language-js">{
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+}</code></pre>
+      <p>Este archivo puede ser modificado para expandir su funcionalidad y su informacion</p>
+    </section>
+    <section>
+      <h4 id="npm-0-1">Empaquetando</h4>
+      <p>Podemos empaquetar el paquete para exportarlo o distribuirlo. Para ello, ejecutamos el siguiente comando en el directorio raiz de nuestro proyecto</p>
+      <div class="w3-container tabmanager">
+        <div class="w3-bar">
+          <button class="w3-bar-item w3-button npm-tab">NPM</button>
+          <button class="w3-bar-item w3-button pnpm-tab">PNPM</button>
+        </div>
+        <section class="w3-border w3-panel npm-tabpanel">
+          <pre><code class="language-sh">npm pack</code></pre>
+        </section>
+        <section class="w3-border w3-panel pnpm-tabpanel">
+          <pre><code class="language-sh">pnpm pack</code></pre>
+        </section>
+      </div>
+      <p>Esto generara un archivo comprimido del proyecto</p>
+    </section>
+  </section>
+  <section>
+    <h3 id="npm-1">Instalar un paquete</h3>
+    <p>Podemos instalar un paquete y utilizarlo dentro de nuestro paquete. Esto es muy util, porque hay muchos paquetes almacenados en los <a href="https://www.npmjs.com">repositorios de <b>NPM</b></a> que facilitan varios trabajos. Para hacerlo, podemos ejecutar el siguiente comando dentro de nuestro proyecto</p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button npm-tab">NPM</button>
+        <button class="w3-bar-item w3-button pnpm-tab">PNPM</button>
+      </div>
+      <section class="w3-border w3-panel npm-tabpanel">
+        <pre><code class="language-sh">npm install nombe-del-paquete</code></pre>
+      </section>
+      <section class="w3-border w3-panel pnpm-tabpanel">
+        <pre><code class="language-sh">pnpm add nombe-del-paquete</code></pre>
+      </section>
+    </div>
+    <p>Generalmente, esto traera una serie de <b>modulos</b> (almacenados en una carpeta llamada <code>node_modules</code>) que podemos integrar en nuestros programas (dentro del paquete) sencillamente</p>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: A diferencia de <b>NPM</b>, <b>PNPM</b> no traera los modulos y paquetes directamente en la carpeta <code>node_modules</code>. Esto <b>NO</b> es malo en lo absoluto. Mas bien, <b>PNPM</b> instala paquetes en un directorio almacen local, y en el paquete ingresa direcciones a modulos de ese almacen local, esto con la intencion de <b>ahorrar datos, espacio y tiempo</b>. <b>PNPM</b> es una alternativa muy rapida y ligera a <b>NPM</b> (e igualmente compatible con todo el repositorio de <b>NPM</b>)</p>
+    </div>
+  </section>
+  <section>
+    <h3 id="npm-2">Estructura de un paquete</h3>
+    <p>Aunque no hay una estructura estricta que seguir, es importante tomar algunas practicas (referentes a la separacion de directorios) en cuenta para mejorar la organizacion de un trabajo e incluso para evitar problemas</p>
+    <pre><code class="language-sh">.
+├── LICENSE         : Licencia del proyecto (puede llamarse "COPYING").
+├── node_modules    : Directorio de librerias y paquetes de terceros.
+├── package.json    : Archivo de estructura del paquete.
+├── README          : Archivo informativo referente al paquete.
+└── src             : Directorio de trabajo.
+    ├── libs        : Directorio de librerias y paquetes propios.
+    ├── models      : Directorio de archivos "Schemas" de Mongoose.
+    ├── public      : Directorio de archivos publicos del paquete.
+    │   ├── assets  : Directorio de archivos multimedia.
+    │   │   ├── img : Directorio de archivos de imagenes (puede llamarse "images").
+    │   │   └── pdf : Directorio de archivos PDF.
+    │   ├── css     : Directorio de archivos CSS.
+    │   └── js      : Directorio de programas de JavaScript.
+    ├── spec        : Directorio de especificaciones para tests BBD.
+    ├── tests       : Directorio de unit-tests del paquete.
+    ├── vendor      : Directorio de librerias y paquetes de terceros (puede llamarse "support"). (Obsoleto)
+    └── views       : Directorio de plantillas.</code></pre>
+  </section>
+</section>
+<section>
+  <h2 id="modules">Modulos</h2>
+  <p>Los modulos son archivos que pueden ser importados en un programa. Pueden ser <b>librerias</b> o <b>piezas de un framework</b>. Estos generalmente se almacenan en una carpeta llamada <code>node_modules</code> dentro del proyecto</p>
+  <section>
+    <h3 id="modules-0">Importando modulos</h3>
+    <p>Para importar un modulo usamos la funcion y keyword <code>require(name)</code>. Esto va a retornar un dato, por lo que podemos guardarlo en una constante o variable para utilizarla comodamente en el programa <br> Tambien podemos dar un vistazo a los modulos de la <a href="https://nodejs.org/api/">API de Node.js</a></p>
+    <pre><code class="language-js">const myModule = require("module-name");</code></pre>
+  </section>
+  <section>
+    <h3 id="modules-1">Desarrollando modulos</h3>
+    <p>Podemos desarrollar un modulo en base a un programa. Los modulos pueden poseer <b>atributos</b> y <b>metodos</b>, tales y como un <b>objeto</b>. Vease el siguiente ejemplo</p>
+    <pre><code class="language-js">class Color {
+  constructor(name, code) {
+    this.name = name;
+    this.code = code;
+  }
+}
+const allColors = [
+  new Color('brightred', '#E74C3C'),
+  new Color('soothingpurple', '#9B59B6'),
+  new Color('skyblue', '#5DADE2'),
+  new Color('leafygreen', '#48C9B0'),
+  new Color('sunkissedyellow', '#F4D03F'),
+  new Color('groovygray', '#D7DBDD'),
+];
+function getRandomColor() {
+  let index = Math.floor(Math.random() * allColors.lenght);
+  return allColors[index];
+}
+
+// Exportaciones del modulo
+module.exports = {
+  getRandomColor,
+  allColors
+}</code></pre>
+    <p>El objeto <code>module.exports</code> es el que nos va a permitir exportar los atributos y elementos que deseemos. Como se ve en el ejemplo anterior, estamos exportando un <b>metodo</b> llamado <code>getRandomColor</code> y un <b>atributo</b> llamado <code>allColors</code>, desde el que podremos acceder una vez importemos el modulo</p>
+    <section>
+      <h4 id="modules-1-0">Importando un modulo local</h4>
+      <p>Importar un modulo local es tan facil como importar uno del <b>manejador de paquetes</b>. Sin embargo, para esto debemos especificar la ruta del archivo</p>
+      <pre><code class="language-js">const myModule = require("./module-name");</code></pre>
+      <p>Respecto al ejemplo anterior, su uso seria el siguiente</p>
+      <pre><code class="language-js">myModule.getRandomColor(); // Imprime un color aleatorio
+console.log(myModule.allColors); // Imprime todos los colores</code></pre>
+    </section>
+    <section>
+      <h4 id="modules-1-1">Instalando un modulo local</h4>
+      <p>A veces es conveniente instalar un modulo local. De esta forma, tendremos un acceso rapido al mismo de una forma mucho mas sencilla (sin tener que especificar su direccion). Para ello, el modulo debe ser <b>un proyecto de Node.js</b>, lo que significa que debe contar con su propio archivo <code>package.json</code>. Luego podemos instalarlo con el siguiente comando</p>
+      <div class="w3-container tabmanager">
+        <div class="w3-bar">
+          <button class="w3-bar-item w3-button npm-tab">NPM</button>
+          <button class="w3-bar-item w3-button pnpm-tab">PNPM</button>
+        </div>
+        <section class="w3-border w3-panel npm-tabpanel">
+          <pre><code class="language-shell">&gt; npm install .\direccion\del\paquete\</code></pre>
+          <pre><code class="language-sh">$ npm install ./direccion/del/paquete/</code></pre>
+        </section>
+        <section class="w3-border w3-panel pnpm-tabpanel">
+          <pre><code class="language-shell">&gt; pnpm add .\direccion\del\paquete\</code></pre>
+          <pre><code class="language-sh">$ pnpm add ./direccion/del/paquete/</code></pre>
+        </section>
+      </div>
+      <p>El manejador de paquetes detectara automaticamente el archivo de estructura y lo incluira en la carpeta de modulos</p>
+    </section>
+  </section>
+</section>
+<section>
+  <h2 id="example">Ejemplo de trabajo en un paquete</h2>
+  <p>Esta seccion simplemente es un ejemplo para saber mas o menos como funciona el desarrollo de un paquete <br> Para empezar, <b>vamos a iniciar un paquete con PNPM</b></p>
+  <pre><code class="language-sh">pnpm init</code></pre>
+  <p>Recordemos que esto generara un archivo <code>package.json</code> dentro del directorio raiz <br> Es recomendable crear una carpeta llamada <code>src</code> (como en la estructura anteriormente mencionada) donde introducir los programas y archivos de trabajo del paquete. De modo que la estructura sea la siguiente</p>
+  <pre><code class="language-sh">.
+├── package.json
+└── src
+
+1 directory, 1 file</code></pre>
+  <p>Segun el archivo <code>package.json</code>, nuestro programa principal del paquete es un <code>index.js</code>. Por lo que vamos a crear un archivo con ese nombre dentro de la carpeta <code>src</code> anteriormente creada, de modo que la nueva estructura del paquete sea la siguiente</p>
+  <pre><code class="language-sh">.
+├── package.json
+└── src
+    └── index.js
+
+1 directory, 2 files</code></pre>
+  <p>Este paquete de ejemplo se tratara de un programa de interaccion simple con el usuario. Algo tal como un programa que hable directamente con el usuario y le permita a este hacer que la aplicacion "le salude", "le sirva una taza de cafe" y "le permita beberla" (obviamente es ficticia) y por ultimo poder salir del programa <br> Entonces, en el programa principal (<code>index.js</code>) vamos a escribir el siguiente codigo</p>
+  <pre><code class="language-js">const prompts = require('prompts');
+let election;</code></pre>
+  <p>La primera linea importa un modulo que permite leer la entrada de datos del usuario. Mas informacion en la <a href="https://www.npmjs.com/package/prompts">pagina del paquete <code>prompts</code></a>. Sin embargo, para ello primero debemos instalar el paquete usando <b>PNPM</b>. El comando seria el siguiente</p>
+  <pre><code class="language-sh">pnpm add prompts</code></pre>
+  <p>La segunda linea define una variable que vamos a usar para leer la eleccion del usuario</p>
+  <section>
+    <h3>Definiendo el funcionamiento de la aplicacion</h3>
+    <p>Vamos a definirlo en una clase, esto nos sera util para organizar mejor nuestro proyecto</p>
+    <pre><code class="language-js">class Machine {
+  constructor(name) {
+    // Nombre del usuario
+    this.name = name;
+    // Estado del cafe (cargado o descargado)
+    this.coffee = false;
+  }
+</code></pre>
+    <p>El primer atributo de la clase define el nombre que el usuario va a ingresar por consola <br> El segundo atributo pertenece al estado del cafe. Si esta descargado, tendra como valor <code>false</code>, si el usuario decide cargar cafe se definira a <code>true</code>. Por defecto estara descargado</p>
+    <pre><code class="language-js">  greet() {
+    console.clear();
+    return `Hello ${this.name}\n${greetMessage}`;
+  }
+  greetMessage() {
+    let message; 
+    let number = Math.floor(Math.random() * 5);
+    switch (number) { 
+      case 1: message = "Your name is so cool! ;)"; break;
+      case 2: message = "Nice to have you here! :)"; break;
+      case 3: message = "You have a beautiful name! :)"; break;
+      default: message = "Good to see you again! :D";
+    }
+    return message;
+  }</code></pre>
+    <p>El metodo <code>greet</code> saludara al usuario por su nombre y luego imprimira aleatoriamente uno de los 4 mensajes definidos en el metodo <code>greetMessage</code></p>
+    <pre><code class="language-js">  loadCoffee() {
+    console.clear();
+    if (this.coffee != true) {
+      this.coffee = true;
+      return `&lt;${this.name} has loaded a cup of coffee&gt;\n`;
+    } else
+      return `You already have a cup of coffee\nYou can drink it with option 2!`
+  }</code></pre>
+    <p>El metodo <code>loadCoffee</code> cargara un poco de cafe ficticio al usuario para que pueda beberlo. Claro, esto si el usuario "no tiene cargada ya la taza de cafe"</p>
+    <pre><code class="language-js">  drinkCoffee() {
+    console.clear();
+    if (this.coffee == true) {
+      this.coffee = false;
+      return `&lt;${this.name} had a cup of coffee&gt;\n${coffeeMessage()}`;
+    } else
+      return "You don't have coffee\nYou can load more with option 3!"
+  }
+  coffeeMessage() {
+    let message;
+    let number = Math.floor(Math.random() * 5);
+    switch (number) {
+      case 1: message = "The coffee is a little hot, but it is still delicious"; break;
+      case 2: message = "It is warm and sweet; quite delicious"; break;
+      case 3: message = "The coffee is a bit cold, it would do you good to warm it up a bit more"; break;
+      case 4: message = "The coffee is quite sour, but still not bad";
+    }
+    return message;
+  }
+}</code></pre>
+    <p>Al igual que con el metodo <code>greet</code>, <code>drinkCoffee</code> tomara un mensaje aleatorio del metodo <code>coffeeMessage</code> y luego lo imprimira. Claro, esto si es que el usuario "tiene cafe en la taza"</p>
+    <pre><code class="language-js">(async () => {
+  console.log("Welcome to the \"HelloConsole\" application!");
+  let name = await prompts({
+    "type": "text",
+    "name": "value",
+    "message": "What is your name?"
+  }).trim()
+  let machine;
+  if (name.value == "")
+    machine = new Machine("Example");
+  else
+    machine = new Machine(name);</code></pre>
+    <p>Ahora viene la ejecucion de la aplicacion. En este momento estamos preguntando al usuario sobre su nombre. Si su nombre solo son espacios vacios, este lo va a cambiar por "Example"</p>
+    <pre><code class="language-js">  console.log("[ Enter a choice ]");
+  do {
+    election = await prompts({
+      "type": "list",
+      "name": "value",
+      "message": 
+        "[1] Greet\n"        +
+        "[2] Drink coffee\n" +
+        "[3] Load coffee\n"  +
+        "[4] Exit"
+    });
+    election = Number(election.value)
+    switch (election) {
+      case 1:  console.log(machine.greet()); break;
+      case 2:  console.log(machine.drinkCoffee()); break;
+      case 3:  console.log(machine.loadCoffee()); break;
+      case 4:  console.log("See you soon!\nAnd good luck with everything!"); break;
+      default: console.clear; console.error("Election not found");
+    }
+    if (election == 4)
+      break;
+  } while (true)
+})();</code></pre>
+    <p>Finalmente, tenemos un loop que permitira al usuario interactuar con la aplicacion (tecnicamente dicho "el objeto <code>machine</code>" <br> Despues de esto, podemos programar un comando para que sea mas facil ejecutar esta aplicacion. Por lo que nos dirigiremos al archivo <code>package.json</code> y vamos a modificar la propiedad <code>"scripts"</code></p>
+    <pre><code class="language-js">"scripts": {
+  "start": "node src/index.js"
+},</code></pre><div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <p>Ahora, para ejecutar nuestro programa no sera necesario escribir lo siguiente</p>
+        <pre><code class="language-sh">&gt; nodejs direccion\del\archivo.js</code></pre>
+        <p>Sino que podemos simplemente ejecutar lo siguiente</p>
+        <pre><code class="language-sh">&gt; pnpm start</code></pre>
+        <p>Que hara exactamente lo mismo</p>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <p>Ahora, para ejecutar nuestro programa no sera necesario escribir lo siguiente</p>
+        <pre><code class="language-sh">$ nodejs direccion/del/archivo.js</code></pre>
+        <p>Sino que podemos simplemente ejecutar lo siguiente</p>
+        <pre><code class="language-sh">$ pnpm start</code></pre>
+        <p>Que hara exactamente lo mismo</p>
+      </section>
+    </div>
+  </section>
+</section>
+<section>
+  <h2 id="http">Servidor Web con <code>http</code></h2>
+  <p>Como dijimos, podemos usar <b>Node.js</b> en el backend de un servidor. Y si queremos montar un servidor con <b>Node.js</b> podemos usar el modulo de la <a href="https://nodejs.org/api/">API de Node.js</a> llamada <code>http</code>, o usar el paquete <b>Express</b> (que es un paquete mucho mas completo y sencillo de usar) <br> Para montar un servidor con el modulo <code>http</code>, primero debemos importarlo en nuestra aplicacion. Seguido a ello, podemos definir el <b>port</b> de nuestro server</p>
+  <pre><code class="language-js">const http = require('http'),
+      port = 8080;</code></pre>
+  <p>Luego de esto, ya podemos montar un servidor</p>
+  <pre><code class="language-js">let server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end("&lth1&gtHello, world!&lth1&gt");
+}).listen(port, () => {
+  console.log(`Server in http://localhost:${port}/`);
+});</code></pre>
+  <p>Con esto ya podemos ejecutar la aplicacion y tendremos montado un servidor que responde un "Hello, world!" en las etiquetas <code>h1</code></p>
+  <section>
+    <h3 id="http-0">Explicacion</h3>
+    <p>En este caso, estamos definiendo un <b>servidor</b> alojado en el puerto <code>8080</code> anteriormente definido (esto es un ejemplo. Al usar un <b>Hosting</b> (servicio donde alojamos un servidor) nos proveen generalmente un puerto aleatorio). Que una ves, el usuario mande una <b>solicitud</b> (<code>req</code>) este sea <b>respondido</b> (<code>res</code>) con la funcion determinada. <br> Estando a la <b>escucha</b> de ese puerto en el <b>localhost</b> (mediante el metodo <code>listen</code>), ejecutara una funcion <b>callback</b> que imprima en la consola <b>la direccion del servidor</b> (<code>http://localhost:${port}/</code>)</p>
+  </section>
+</section>
+<section>
+  <h2 id="dotenv">Variables de entorno</h2>
+  <p>Las variables de entorno son aquellas variables (aunque realmente son constantes) que se ejecutan en un entorno o paquete especifico. Dichos espacios estan diseniados para almacenar de manera segura algunas constantes que van a ser utilizadas dentro de un paquete o programa de <b>Node.js</b> <br> Para empezar a usarlas, debemos instalar el paquete <code>dotenv</code>, que nos permitira gestionar de manera sencilla y segura dichas variables de entorno</p>
+  <div class="w3-container tabmanager">
+    <div class="w3-bar">
+      <button class="w3-bar-item w3-button npm-tab">NPM</button>
+      <button class="w3-bar-item w3-button pnpm-tab">PNPM</button>
+    </div>
+    <section class="w3-border w3-panel npm-tabpanel">
+      <pre><code class="language-sh">npm install dotenv</code></pre>
+    </section>
+    <section class="w3-border w3-panel pnpm-tabpanel">
+      <pre><code class="language-sh">pnpm add dotenv</code></pre>
+    </section>
+  </div>
+  <p>Ahora podemos utilizarlo de la siguiente manera. Primero que nada debemos de escribir lo siguiente en nuestro programa principal</p>
+  <pre><code class="language-js">require('dotenv').config();</code></pre>
+  <p>Esto va a cargar todas las variables de entorno que hayamos definido. Por defecto, estas variables de entorno se encuentran dentro del archivo <code>.env</code>. Vease el siguiente ejemplo</p>
+  <pre><code class="language-sh"># Ejemplo de ".env"
+USERNAME=exampleuser
+PASSWORD=examplepassword
+DATABASE=exampledb</code></pre>
+  <p>Para acceder a dichas variables de entorno en nuestro programa, solo debemos acceder al objeto <code>process.env</code></p>
+  <pre><code class="language-js">console.log(process.env.USERNAME); // 'exampleuser'</code></pre>
+</section>
+<section>
+  <h2 id="pkg">PKG</h2>
+  <p>Se trata de una herramienta <b>CLI</b> que permite <b>compilar</b> a <b>multiples plataformas</b> paquetes de <b>Node.js</b></p>
+  <section>
+    <h3 id="pkg-0">Casos de uso</h3>
+    <ul>
+      <li>Privatizar el codigo de un software</li>
+      <li>Hacer una <b>demo</b>/<b>beta</b>/<b>alpha</b> o version especial de un software sin presentar el codigo</li>
+      <li>Compilar un software a multiples plataformas (cross-compilation)</li>
+      <li>Hacer una especie de <b>self-extracting archive</b> o instalador</li>
+      <li>Hacer un software que no requiera de <b>Node.js</b> o <b>NPM</b> para su ejecucion</li>
+      <li>No necesitar instalar dependencias para ejecutar un software</li>
+      <li>Compilar todos los archivos de un proyecto a un solo ejecutable portable</li>
+      <li>Probar un software con una nueva version de <b>Node.js</b> sin necesidad de instalarlo</li>
+    </ul>
+  </section>
+  <section>
+    <h3 id="pkg-1">Instalacion y uso</h3>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button npm-tab">NPM</button>
+        <button class="w3-bar-item w3-button pnpm-tab">PNPM</button>
+      </div>
+      <section class="w3-border w3-panel npm-tabpanel">
+        <p>Al ser una herramienta <b>CLI</b> en binario, debemos instalarlo para su uso global en la maquina. Para ello usamos el flag <code>-g</code></p>
+        <pre><code class="language-sh">npm install -g pkg</code></pre>
+      </section>
+      <section class="w3-border w3-panel pnpm-tabpanel">
+        <p>Al ser una herramienta <b>CLI</b> en binario, debemos instalarlo para su uso global en la maquina. Para ello usamos el flag <code>-g</code></p>
+        <pre><code class="language-sh">pnpm add -g pkg</code></pre>
+        <div class="w3-panel note">
+          <p><b>Nota</b>: Si esto da un error, la misma terminal le informara los pasos a realizar, pero lo mas probable es que pueda ser resuelto con un simple <code>pnpm setup</code></p>
+        </div>
+      </section>
+    </div>
+    <p>Despues de ello, podemos escribir en la <b>CLI</b> el comando <code>pkg --help</code> para descubrir las funciones que ofrece, lo que imprimira en consola algo parecido a lo siguiente</p>
+    <pre><code class="language-sh">pkg [options] <input>
+
+Options:
+
+  -h, --help           output usage information
+  -v, --version        output pkg version
+  -t, --targets        comma-separated list of targets (see examples)
+  -c, --config         package.json or any json file with top-level config
+  --options            bake v8 options into executable to run with them on
+  -o, --output         output file name or template for several files
+  --out-path           path to save output one or more executables
+  -d, --debug          show more information during packaging process [off]
+  -b, --build          don't download prebuilt base binaries, build them
+  --public             speed up and disclose the sources of top-level project
+  --public-packages    force specified packages to be considered public
+  --no-bytecode        skip bytecode generation and include source files as plain js
+  --no-native-build    skip native addons build
+  --no-dict            comma-separated list of packages names to ignore dictionaries. Use --no-dict * to disable all dictionaries
+  -C, --compress       [default=None] compression algorithm = Brotli or GZip
+
+Examples:
+
+- Makes executables for Linux, macOS and Windows
+  $ pkg index.js
+- Takes package.json from cwd and follows 'bin' entry
+  $ pkg .
+- Makes executable for particular target machine
+  $ pkg -t node14-win-arm64 index.js
+- Makes executables for target machines of your choice
+  $ pkg -t node12-linux,node14-linux,node14-win index.js
+- Bakes '--expose-gc' and '--max-heap-size=34' into executable
+  $ pkg --options "expose-gc,max-heap-size=34" index.js
+- Consider packageA and packageB to be public
+  $ pkg --public-packages "packageA,packageB" index.js
+- Consider all packages to be public
+  $ pkg --public-packages "*" index.js
+- Bakes '--expose-gc' into executable
+  $ pkg --options expose-gc index.js
+- reduce size of the data packed inside the executable with GZip
+  $ pkg --compress GZip index.js</code></pre>
+    </section>
+  </section>
+</section>
+{% endblock %}

@@ -1,0 +1,423 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/python.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-examples.css') }}">
+{% endblock %}
+
+{% block title %}Python{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Python</h1>
+  <p><b>Python</b> es un <b>lenguaje de programacion multiproposito</b> de <b>ultima generacion</b> desarrollado por <i>Guido van Rossum</i> como substituto de <i>ABC lang</i> en los anios 80. Se trata de un lenguaje de programacion <b>multiplataforma</b> e <b>interpretado</b> de <b>codigo abierto</b> <br> <b>Python</b> es sin dudas uno de <b>los mas famosos</b> lenguajes de programacion del mundo. Y sirve para practicamente cualquier cosa que puedas imaginarte. Ademas de ser un lenguaje de programacion bastante sencillo de aprender y utilizar</p>
+</div>
+<img src="{{ url_for('static', filename='img/python.svg') }}" alt="python">
+{% endblock %}
+
+{% block index %}
+<li><a href="#math">Matematicas</a></li>
+<li><a href="#input">Entrada por consola</a></li>
+<li><a href="#random">Numeros aleatorios</a></li>
+<li><a href="#datetime">Horarios</a></li>
+<li><a href="#join">Rutas de archivos/directorios</a></li>
+<li><a href="#cmd">Comandos del sistema</a></li>
+<li><a href="#pickle">Pickle</a></li>
+<li><a href="#json">JSON</a></li>
+<li><a href="#json-0">Reglas para el uso de JSON</a></li>
+<li><a href="#json-1">Tabla de equivalencia Python | JSON</a></li>
+<li><a href="#toml">TOML</a></li>
+<li><a href="#pyinstaller">pyinstaller</a></li>
+<li><a href="#pyinstaller-0">Instalacion</a></li>
+<li><a href="#pyinstaller-1">Utilizacion</a></li>
+{% endblock %}
+
+{% block main %}
+<article>
+  <section>
+    <h2 id="math">Matematicas</h2>
+    <p>Para el uso de matematicas avanzadas, podemos usar el modulo que nos ofrece la <b>API de Python</b> <code>math</code> <br> Este modulo contiene varias de las funciones mas utilizadas en las matematicas; el modulo, al pertenecer por defecto en la <b>API de Python</b>, puede ser importada globalmente</p>
+    <pre><code class="language-python">import math
+
+variable = 3.1415
+# Para redondear un numero (esta funcion, viene autoincorporada
+# en versiones actuales)
+round(variable)
+
+# Para redondear un numero a la baja
+math.floor(variable) # -> 3
+
+# Para redondear un numero al alza
+math.ceil(variable) # -> 4
+
+# Para saber el valor absoluto de un numero (Por defecto)
+abs(-10) # -> 10
+
+# Para realizar una suma de varios elementos de una lista (Por defecto)
+sum([1, 2, 3, 4, 5, 6, 7, 8, 9]) # -> 45
+
+# Para realizar una suma de varios elementos de una lista (Mejorada por Math)
+math.fsum([0.9999999999, 1, 2, 3]) # -> 6.9999999999
+
+# Para realizar un truncamiento
+math.trunc(100.123456) # -> 100
+
+# Para realizar una potencia (Por Math)
+math.pow(2, 3) # -> 6
+
+# Para buscar la raiz cuadrada (Por math)
+math.sqrt(9) # -> 3
+
+# La constante PI
+math.pi # -> 3.141592653589793
+
+# La constante de Euler
+math.e # -> 2.718281828459045</code></pre>
+  </section>
+  <section>
+    <h2 id="input">Entrada por consola</h2>
+    <p>Para ingresar datos por consola podemos usar la funcion incorporada <code>input</code>. Esta funcion retornara en formato de String (<code>str</code>) los datos ingresados por consola, por lo que es importante convertirlo a otro tipo de dato si es preciso hacerlo</p>
+    <pre><code class="language-python">print("Hello! What is your name?")
+name = input() # Retorna 'str'
+
+print("Cool! Now. What is your age?")
+age = int(input()) # Convierte a 'int'
+
+print("Do you like chocolate?")
+chocolate = input("[yes/no] : ") # Este String aparecera detras
+                                 # del cursor de escritura
+
+if chocolate == "yes":
+  last_line = "You like chocolate. "
+else:
+  last_line = "You don't like chocolate. "
+if age > 18:
+  last_line += "And you are more greater than 18"
+else:
+  last_line += "And you are not more greater than 18"
+
+print(f"You are {name}. You have {age} years of old\n{last_line}")</code></pre>
+  </section>
+  <section>
+    <h2 id="random">Numeros aleatorios</h2>
+    <p>En <b>Python</b> tenemos un modulo bastante interesante que permite la generacion de numeros aleatorios de manera sencilla, ese modulo es <code>random</code></p>
+    <pre><code class="language-python">import random
+
+# Para obtener un valor aleatorio
+random.random() # Esto seria un valor >= 0 y &lt; 1.0
+
+# Para obtener un valor aleatorio entre dos definidos
+random.uniform(1, 10) # Entre 1 y 10
+
+# Para sacar un valor aleatorio hasta uno definido
+random.randrange(10) # Entre 0 y 9
+
+# Para sacar un numero aleatorio entre dos definidos
+random.randrange(0, 101, 2) # Entre 0 y 100 pero solo contando los multiplos de 2
+
+# Para sacar un item de una coleccion
+string = "Hello, world!"
+lista = ["uno", "dos", "tres"]
+random.choice(string)
+random.choice(lista)
+
+# Para abarajar aleatoriamente y exparcir los items de una lista
+random.shuffle(lista)
+
+# Para tomar una muestra aleatoria de una lista o coleccion
+random.sample(lista, 2) # Tomara dos pruebas aleatorias</code></pre>
+  </section>
+  <section>
+    <h2 id="datetime">Horarios</h2>
+    <p>Para trabajar con informacion horaria, el modulo <code>datetime</code> de <b>Python</b> nos facilita mucho una gran cantidad de trabajos referentes a ello</p>
+    <pre><code class="language-python">import datetime
+
+# Para obtener el tiempo actual
+tiempo_actual = datetime.datetime.now
+
+# Para obtener un tiempo personalizado
+tiempo_personalizado = datetime.datetime(2000, 1, 1, 0, 0)
+
+# Para para reemplazar un tiempo personalizado
+tiempo_personalizado.replace(year=3000, moth=2, day=15, hour=19, minute=45, second=28, microsecond=607208)
+
+# Para sumar o restar tiempos
+tiempo_de_distancia = datetime.timedelta(days=14, hour=4)
+dentro_de_dos_semanas = tiempo_actual + tiempo_de_distancia
+hace_dos_semanas = tiempo_actual - tiempo_de_distancia
+
+# Para formatear de forma estandar el tiempo
+tiempo_actual.isoformat()
+
+# Para formatear de forma personalizada el tiempo
+tiempo_actual.strftime("%A %d %B %Y %I:%M")
+# El dia              %A
+# El dia de la semana %d
+# El mes (Escrito)    %B
+# El anio             %Y
+# La hora             %I
+# Los minutos         %M</code></pre>
+  </section>
+  <section>
+    <h2 id="join">Rutas de archivos/directorios</h2>
+    <p>Los sistemas operativos pueden tener diferentes sistemas de enrutamiento a archivos o directorios, como es el caso de <b>MSWindows</b> y los sistemas basados en <b>UNIX</b>, que poseen el separador <code>direccion\del\archivo_directorio</code> y <code>direccion/del/archivo_directorio</code> respectivamente <br> Para mejorar la portabilidad de una aplicacion, podemos usar la funcion <code>join</code> de <code>os.path</code></p>
+    <pre><code class="language-python">from os.path import join
+path = join("my", "directory", "filename.txt") # -> 'my\directory\filename.txt'
+                                               # -> 'my/directory/filename.txt'
+file = open(path, "a+")
+file.write("Hello, world!")
+file.close()</code></pre>
+  </section>
+  <section>
+    <h2 id="cmd">Comandos del sistema</h2>
+    <p>Para ejecutar comandos del sistema podemos usar la funcion <code>system</code> del modulo <code>os</code>. Esto nos permite ejecutar comandos del sistema como si lo hicieramos por la linea de comandos, la terminal o un programa de comandos</p>
+    <pre><code class="language-python">from os import system, name
+
+if name in ('nt', 'dos'):  # If Machine is running on Windows...
+  system("cls")
+else:
+  system("clear")
+
+system("echo 'Hello, world! from bash'")</code></pre>
+  </section>
+  <section>
+    <h2 id="pickle">Pickle</h2>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Pickle no es totalmente seguro, y durante el desamblaje puede ejecutar codigo malicioso no deseado, por lo que es recomendable emplear sistemas de notacion no cifrados mas seguros como <b>JSON</b>, <b>YAML</b>, <b>TOML</b>, etc <br> Aunque Pickle puede ser considerada una buena opcion para la encriptacion de datos en sistemas locales (claro, contando con opciones seguras dentro de ellas)</p>
+    </div>
+    <p>La libreria Pickle es una libreria que puede llegar a ser muy util a la hora de manejar archivos binarios ensamblados. Ademas de poseer caracteristicas bastante interesantes como la encriptacion de datos, la compresion y la carga de submodulos encriptados directamente</p>
+    <pre><code class="language-python">lista = [1, 2, 3, 3, 4, 5, 6, 7, 8]
+
+# [ Escribiendo en binario ]
+# Abrimos un archivo en modo escritura binaria ('wb')
+archivo = open('archivo.pckl', 'wb') # La extension puede ser cualquiera
+
+pickle.dump(lista, archivo) # Primero indicamos el item y despues el archivo
+archivo.close()             # Con esto debemos cerrar el archivo
+# Nota: El archivo se escribira en binario, por lo que sera
+# ilegible a nuestros ojos
+
+# [ Lectura en binario ]
+# Abrimos un archivo en modo lectura binaria ('rb')
+archivo = open('archivo.pckl', 'rb')
+
+# Y para recargar el fichero en lista, podemos hacer lo siguiente
+lista_recup = pickle.load(archivo)
+
+print(lista_recup)</code></pre>
+  </section>
+  <section>
+    <h2 id="json">JSON</h2>
+    <p><b>JSON</b> (JavaScript Object Notation) es un formato de archivo que permite almacenar datos en notacion de <b>Objetos de JavaScript</b>. Esto facilitando la lectura, la escritura y el manejo en general del archivo</p>
+    <pre><code class="language-javascript">{
+  "name": "PC Game",
+  "default": {
+    "profile_name": "Profile",
+    "player_name": "Player",
+    "profile_created": "1979-05-27T15:32:00.000Z",
+    "sound": true
+  },
+  "user": {
+    "profile": {
+      "name": "profile1",
+      "player_name": "player1",
+      "class": "warrior"
+    },
+    "settings": {
+      "sound": false
+    }
+  },
+  "default_inventory": {
+    "warrior": [
+      ["sword", "shield"],
+      ["plate armor", "plate helm"]
+    ],
+    "mage": [
+      ["staff", "wand"],
+      ["robe", "hood"]
+    ],
+    "items": [
+      "health potion",
+      "antidote",
+      "mana potion"
+    ]
+  }
+}</code></pre>
+    <p>El modulo <code>json</code> de <b>Python</b> permite trabajar con archivos en formato <b>JSON</b> de manera bastante sencilla. A continuacion, algunos ejemplos</p>
+    <pre><code class="language-python">import json
+
+# Convertir JSON a 'dict'
+my_json = '{ "name": "RukkaPlus", "lang": "Python" }'
+my_dict = json.loads(my_json)
+type(my_dict) # -> 'dict'
+
+# Convertir 'dict' a JSON
+my_dict = { "name": "RukkaPlus", "lang": "Python" }
+my_json = json.dumps(my_dict)
+type(my_json) # -> 'str'</code></pre>
+    <section>
+      <h3 id="json-0">Reglas para el uso de JSON</h3>
+      <p>Existen ciertos parametros que merecen ser conocidos al trabajar con archivos de formato <b>JSON</b></p>
+      <ul>
+        <li>Siempre se actua como con un Objeto de JavaScript (siempre se usa la sintaxis {"nombre de llave" : "valor"})</li>
+        <li>Solo se permiten valores de tipo <code>Number</code>, <code>String</code>, <code>Array</code>, <code>Object</code>, <code>Boolean</code> y <code> null</code>. Esta prohibido otros tipos de datos (incluyendo <code>Function</code>, <code>Date</code> y <code>undefined</code>)</li>
+        <li>Se mantiene la sintaxis original de agrupacion de datos (los [] representan Arrays y los {} representan Objetos)</li>
+      </ul>
+    </section>
+    <section>
+      <h3 id="json-1">Tabla de equivalencia Python | JSON</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Python</th>
+            <th>JSON</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="language-python">dict</code></td>
+            <td><code class="language-javascript">Object</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">list</code></td>
+            <td><code class="language-javascript">Array</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">tuple</code></td>
+            <td><code class="language-javascript">Array</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">str</code></td>
+            <td><code class="language-javascript">String</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">int</code></td>
+            <td><code class="language-javascript">Number</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">float</code></td>
+            <td><code class="language-javascript">Number</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">True</code></td>
+            <td><code class="language-javascript">true</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">False</code></td>
+            <td><code class="language-javascript">false</code></td>
+          </tr>
+          <tr>
+            <td><code class="language-python">None</code></td>
+            <td><code class="language-javascript">null</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+  <section>
+    <h2 id="toml">TOML</h2>
+    <p><b>TOML</b> (Tom's Obvious Minimal Language) es otro formato de archivo que permite almacenar datos en una notacion muy sencilla y directa; priorizando la legibilidad y tambien su alta compatibilidad</p>
+    <pre><code class="language-toml">name = "PC Game"
+
+[default]
+profile_name = "Profile"
+player_name = "Player"
+profile_created = 1979-05-27T07:32:00-08:00
+sound = true
+
+[user]
+
+  [user.profile]
+  name = "profile1"
+  player_name = "player1"
+  class = "warrior"
+
+  [user.settings]
+  sound = false
+
+[default_inventory]
+warrior = [ ["sword", "shield"], ["plate armor", "plate helm"] ]
+mage = [ ["staff", "wand"], ["robe", "hood"] ]
+items = [
+  "health potion",
+  "antidote",
+  "mana potion"
+]</code></pre>
+    <p>El modulo externo <code>toml</code> permite trabajar con archivos en formato <b>TOML</b> de manera semejante a como lo hariamos con <code>json</code></p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <p>Instalando el modulo <code>toml</code></p>
+        <pre><code class="language-shell">&gt; py -m pip install toml</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <p>Instalando el modulo <code>toml</code></p>
+        <pre><code class="language-sh">$ python3 -m pip install toml</code></pre>
+      </section>
+    </div>
+    <pre><code class="language-python">import toml
+
+# Convertir TOML a 'dict'
+my_toml = 'name = "RukkaPlus"\nlang = "Python" }'
+my_dict = toml.loads(my_json)
+type(my_dict) # -> 'dict'
+
+# Convertir 'dict' a TOML
+my_dict = { "name": "RukkaPlus", "lang": "Python" }
+my_toml = toml.dumps(my_dict)
+type(my_toml) # -> 'str'</code></pre>
+    <p>Para mas informacion referente a <b>TOML</b>, puede <a href="https://toml.io/en/">consultar la pagina oficial del proyecto</a></p>
+  </section>
+  <section>
+    <h2 id="pyinstaller">pyinstaller</h2>
+    <p>Se trata de una herramienta que permite cerrar el codigo de una aplicacion o programa desarrollado en <b>Python</b>. De esta forma podremos comercializarla y portarla facilmente, ya que junto a la compilacion de la aplicacion o programa, tambien compila el mismo interprete. De esta forma evita que sea requerido instalarlo para la ejecucion de la aplicacion</p>
+    <section>
+      <h3 id="pyinstaller-0">Instalacion</h3>
+      <p>Para poder utilizarlo, primero es necesario instalar esta utilidad en el sistema, lo que es sencillo usando el gestor de paquetes integrado <b>pip</b></p>
+      <div class="w3-container tabmanager">
+        <div class="w3-bar">
+          <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+          <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+        </div>
+        <section class="w3-border w3-panel msdos-tabpanel">
+          <pre><code class="language-shell">&gt; py -m pip install pyinstaller</code></pre>
+        </section>
+        <section class="w3-border w3-panel unix-tabpanel">
+          <pre><code class="language-sh">$ python3 -m pip install pyinstaller</code></pre>
+        </section>
+      </div>
+      <p>Esto instalara la version estable de la utilidad mencionada</p>
+    </section>
+    <section>
+      <h3 id="pyinstaller-1">Utilizacion</h3>
+      <p>Su uso es mediante la ejecucion de un archivo binario llamado <code>pyinstaller</code>. Puede ejecutarlo desde una terminal o linea de comandos</p>
+      <div class="w3-container tabmanager">
+        <div class="w3-bar">
+          <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+          <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+        </div>
+        <section class="w3-border w3-panel msdos-tabpanel">
+          <p>Para ver todos los comandos disponibles puede ejecutar el siguiente comando</p>
+          <pre><code class="language-shell">&gt; pyinstaller -h</code></pre>
+          <p>Para cerrar el codigo de un programa o aplicacion, ejecute el siguiente comando</p>
+          <pre><code class="language-shell">&gt; pyinstaller direccion\del\script.py</code></pre>
+          <p>Esto retornara algunas carpetas y archivos relacionados a la aplicacion o programa compilado. Entre ellas, se encuentra el programa en formato binario</p>
+        </section>
+        <section class="w3-border w3-panel unix-tabpanel">
+          <p>Para ver todos los comandos disponibles puede ejecutar el siguiente comando</p>
+          <pre><code class="language-sh">$ pyinstaller -h</code></pre>
+          <p>Para cerrar el codigo de un programa o aplicacion, ejecute el siguiente comando</p>
+          <pre><code class="language-shell">$ pyinstaller direccion/del/script.py</code></pre>
+          <p>Esto retornara algunas carpetas y archivos relacionados a la aplicacion o programa compilado. Entre ellas, se encuentra el programa en formato binario</p>
+        </section>
+      </div>
+      <div class="w3-panel note">
+        <p><b>Nota</b>: Cabe recalcar que <code>pyinstaller</code> <b>NO</b> es multiplataforma y que <b>TAMPOCO</b> puede compilar un programa o aplicacion para diferentes sistemas desde uno solo. Lo que quiere decir que si desea compilar un programa o aplicacion para diferentes sistemas, debera compilarlo en cada sistema respectivamente</p>
+      </div>
+    </section>
+  </section>
+</article>
+{% endblock %}

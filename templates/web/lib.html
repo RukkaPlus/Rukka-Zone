@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{ url_for('static', filename='img/library.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/w3.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-lib.css') }}">
+  <script src="{{ url_for('static', filename='js/lib/jquery-3.6.0.min.js') }}"></script>
+  <title>Libraries &amp; Frameworks</title>
+</head>
+<body>
+  <noscript>
+    <div id="noscript-div">
+      <span>JavaScript esta deshabilitado!</span> Puede que la pagina funcione de manera indeseada
+    </div>
+  </noscript>
+  <header class="w3-container w3-teal">
+    <h1>Libraries &amp; Frameworks</h1>
+    <p>Librerias y frameworks referentes al <b>desarrollo Web</b> y <b>desarrollo de Software general</b> tanto para el <b>Browser</b> (navegador) como para <b>Node.js</b></p>
+  </header>
+
+  <main id="main">
+    <section class="w3-container">
+      <h2>Browser</h2>
+      <ul class="w3-ul">
+        <li><a href="{{ url_for('webdocs_lib', filename='less') }}">Less</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='jquery') }}">jQuery</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='w3') }}">W3Schools</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='chartjs') }}">Chart.js</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='ace') }}">Ace</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='kontra') }}">Kontra</a></li>
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>Node.js</h2>
+      <ul class="w3-ul">
+        <li><a href="{{ url_for('webdocs_lib', filename='express') }}">Express.js</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='sql') }}">Bases de datos SQL</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='nosql') }}">Bases de datos NoSQL</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='electron') }}">Electron.js</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='nwjs') }}">NW.js</a></li>
+        {# <li><a href="{{ url_for('webdocs_lib', filename='react-native') }}">React Native</a></li> #}
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>Svelte</h2>
+      <ul class="w3-ul">
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') }}">Documentacion</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#intro'}}">Introduccion</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#intro-0'}}">Reactividad</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#intro-1'}}">Componentes</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#intro-2'}}">Eventos</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#intro-2-0'}}">Eventos personalizados</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#init'}}">Iniciando un proyecto</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#components'}}">Componentes</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#components-0'}}">El archivo <code>main.js</code></a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#bind'}}">Binding</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#include'}}">Incluyendo componentes</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='svelte') + '#include-0'}}">Variables reactivas</a></li>
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>React.js</h2>
+      <ul class="w3-ul">
+        <li><a href="{{ url_for('webdocs_lib', filename='react') }}">Documentacion</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#intro' }}">Introduccion</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#intro-0' }}">Reactividad</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#intro-1' }}">Componentes</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#init' }}">Iniciando un proyecto</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#components' }}">Componentes</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#components-0' }}">El archivo <code>index.js</code></a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#components-1' }}">Y el JSX?</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#import' }}">Importando componentes</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#event' }}">Eventos</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#props' }}">Propiedades</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='react') + '#iter' }}">Iteraciones</a></li>
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>Angular</h2>
+      <ul class="w3-ul">
+        {# <li><a href="{{ url_for('webdocs_lib', filename='angular') }}">Documentacion</a></li> #}
+        <li>Proximamente</li>
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>Vue</h2>
+      <ul class="w3-ul">
+        {# <li><a href="{{ url_for('webdocs_lib', filename='vue') }}">Documentacion</a></li> #}
+        <li>Proximamente</li>
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>Webpack</h2>
+      <ul class="w3-ul">
+        <li><a href="{{ url_for('webdocs_lib', filename='webpack') }}">Documentacion</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='webpack') + '#intro' }}">Introduccion a Webpack</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='webpack') + '#loaders' }}">Loaders</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='webpack') + '#plugins' }}">Plugins</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='webpack') + '#example' }}">Ejemplo de Webpack</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='webpack') + '#full-example' }}">Codigo de ejemplo completo</a></li>
+      </ul>
+    </section>
+    <section class="w3-container">
+      <h2>Gulp</h2>
+      <ul class="w3-ul">
+        <li><a href="{{ url_for('webdocs_lib', filename='gulp') }}">Documentacion</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='gulp') + '#intro' }}">Introduccion a Gulp</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='gulp') + '#config' }}">Configuraciones de Gulp</a></li>
+        <li><a href="{{ url_for('webdocs_lib', filename='gulp') + '#plugins' }}">Plugins</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="w3-container w3-padding w3-teal" id="footer">
+    <div class="w3-col s12 l6 w3-center" id="license">
+      <p>Este sitio fue escrito por <b>RukkaPlus</b> (Lucca Nahuel Arancibia). Este proyecto es <b>OSS</b> (<b>O</b>pen <b>S</b>ource <b>S</b>oftware) y esta sujeto a la licencia <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a></p>
+      <div>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" src="{{ url_for('static', filename='img/license.svg') }}"></a>
+      </div>
+    </div>
+    <div class="w3-row w3-col s12 l6 w3-padding w3-hide-small" id="footer-div">
+      <img class="w3-third" src="{{ url_for('static', filename='img/html.svg') }}" alt="html">
+      <img class="w3-third" src="{{ url_for('static', filename='img/css.svg') }}" alt="css">
+      <img class="w3-third" src="{{ url_for('static', filename='img/js.svg') }}" alt="js">
+    </div>
+  </footer>
+</body>
+</html>

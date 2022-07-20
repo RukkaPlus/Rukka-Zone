@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Galeria</title>
+    </head>
+    <body>
+        <div class="gallery-cont">
+            <img src="https://wallpapercave.com/wp/wp4472240.jpg" alt="wallpaper">
+            <img src="https://www.pixelstalk.net/wp-content/uploads/images1/Lake-dock-sunrise-wallpaper.jpg" alt="wallpaper">
+            <img src="http://wallpapersdsc.net/wp-content/uploads/2016/09/Hvitserkur-full-HD.jpg" alt="wallpaper">
+            <img src="https://wallup.net/wp-content/uploads/2016/05/02/115536-cityscape-lake-night.jpg" alt="wallpaper">
+            <img src="http://wallpapersdsc.net/wp-content/uploads/2017/04/Pier-Desktop-1.jpg" alt="wallpaper">
+            <img src="http://www.pixelstalk.net/wp-content/uploads/2016/11/HD-Flat-Design-Wallpapers-Download.jpg" alt="wallpaper">
+            <img src="https://www.100hdwallpapers.com/wallpapers/2560x1600/iceberg-widescreen_wallpapers.jpg" alt="wallpaper">
+            <img src="http://wallpapersdsc.net/wp-content/uploads/2017/04/Piano-High-Definition-Wallpapers-.jpg" alt="wallpaper">
+            <img src="https://wallup.net/wp-content/uploads/2018/09/27/965042-abstract-bokeh-beauty.jpg" alt="wallpaper">
+            <img src="https://wallpapercave.com/wp/wp2324468.jpg" alt="wallpaper">
+            <img src="https://wallpapercave.com/wp/wp6336969.jpg" alt="wallpaper">
+            <img src="https://images.wallpapersden.com/image/download/synthwave-and-retrowave_66497_3840x2160.jpg" alt="wallpaper">
+            <img src="https://wallpapercave.com/wp/wp7848940.jpg" alt="wallpaper">
+            <img src="https://wallpapercave.com/wp/wp1895634.png" alt="wallpaper">
+            <img src="https://wallpapercave.com/wp/wp6871453.jpg" alt="wallpaper">
+            <img src="https://wallpapercave.com/wp/wp1895632.jpg" alt="wallpaper">
+            <img src="https://wallpapertag.com/wallpaper/full/5/a/8/410325-best-vaporwave-wallpapers-1920x1080-for-mobile-hd.jpg" alt="wallpaper">
+        </div>
+    </body>
+</html>
+
+<!-- Estilos en HTML (obsoleto) -->
+<style>
+    .gallery-cont {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-auto-rows: 100px;
+        gap: 10px;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Estilos especificos */
+    img:first-child {
+        grid-row: 1 / 3;
+        grid-column: 1 / 3;
+    }
+    img:nth-child(6) {
+        grid-row: 2 / 4;
+        grid-column: 3 / 5;
+    }
+    img:nth-child(10) {
+        grid-row: span 3; /* Es lo mismo que decir "Que ocupe exactamente 3 filas" */
+    }
+</style>

@@ -1,0 +1,64 @@
+:root {
+  --principal-color: #3f51b5;
+  --principal-text-color: #fff;
+}
+#header, #footer, div.note {
+  color: var(--principal-text-color);
+  background-color: var(--principal-color);
+}
+#header > div:nth-child(2) {
+  display: flex;
+}
+#header > div:nth-child(2) > img {
+  display: none;
+  opacity: .6;
+  align-self: center;
+  height: 210px;
+}
+#aside {
+  display: none;
+  width: 100%;
+}
+.aside-btn {
+  margin: 10px 0;
+}
+#aside > div > button.aside-btn {
+  width: 100%;
+}
+#header > div > button.aside-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: fit-content;
+}
+code {
+  padding: .05em;
+  border-radius: .1em;
+  background-color: rgba(0, 0, 0, .1);
+}
+button.msdos-tab, button.unix-tab {
+  border-bottom: none!important;
+}
+div.tabmanager > section {
+  margin-top: 0;
+}
+div.note {
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+@media screen and (min-width: 601px) {
+  #header, #footer, #main {
+    margin-right: 25%;
+  }
+  #header > div:nth-child(2) > img {
+    display: inline-block;
+  }
+  #aside {
+    display: block;
+    right: 0;
+    width: 25%;
+  }
+  .aside-btn {
+    display: none;
+  }
+}

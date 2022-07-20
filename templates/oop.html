@@ -1,0 +1,138 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/python.svg') }}">
+{% endblock %}
+
+{% block title %}Python{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Python</h1>
+  <b>Python</b> es un <b>lenguaje de programacion multiproposito</b> de <b>ultima generacion</b> desarrollado por <i>Guido van Rossum</i> como substituto de <i>ABC lang</i> en los anios 80. Se trata de un lenguaje de programacion <b>multiplataforma</b> e <b>interpretado</b> de <b>codigo abierto</b> <br> <b>Python</b> es sin dudas uno de <b>los mas famosos</b> lenguajes de programacion del mundo. Y sirve para practicamente cualquier cosa que puedas imaginarte. Ademas de ser un lenguaje de programacion bastante sencillo de aprender y utilizar</p>
+</div>
+<img src="{{ url_for('static', filename='img/python.svg') }}" alt="python">
+{% endblock %}
+
+{% block index %}
+<li><a href="#oop">Programacion Orientada a Objetos</a></li>
+<li><a href="#oop-0">Clases</a></li>
+<li><a href="#oop-0-0">Clases en Python</a></li>
+<li><a href="#oop-0-0-0">Tipos de metodos</a></li>
+<li><a href="#oop-1">Objetos</a></li>
+<li><a href="#oop-1-0">Objetos en Python</a></li>
+<li><a href="#oop-2">Encapsulacion</a></li>
+<li><a href="#oop-2-0">Encapsulacion en Python</a></li>
+<li><a href="#oop-3">Herencia</a></li>
+<li><a href="#oop-3-0">Herencia en Python</a></li>
+{% endblock %}
+
+{% block main %}
+<article>
+  <section>
+    <h2 id="oop">Programacion Orientada a Objetos</h2>
+    <p>La <b>programacion orientada a objetos</b> es un paradigma de la programacion que nos permite manejar y estructurar a partir del manejo de <b>clases</b> y <b>objetos</b> con sus <b>metodos</b> y atributos</p>
+  </section>
+  <section>
+    <h2 id="oop-0">Clases</h2>
+    <p>Una clase es una abstraccion que hacemos para nuestra experiencia sensible. El ser humano tiende a agrupar cosas (objetos) con caracteristicas similares en grupos (clases). Por ejemplo: Un vaso pequenio o un vaso grande, ambos son de la clase "Vaso".</p>
+    <section>
+      <h3 id="oop-0-0">Clases en Python</h3>
+      <p>Las clases, al ser moldes de objetos, pueden definir sus metodos (funciones) y atributos (variables) relacionados. Entre estos metodos, se encuentran los metodos especiales <code>__init__</code>, <code>__str__</code> y <code>__del__</code>. De los cuales, <code>__init__</code> representa el metodo constructor, que es ejecutado al llamar a la clase durante la instanciacion; <code>__str__</code> representa el metodo que sera ejecutado cuando un objeto relacionado sea llamado "crudamente"; y <code>__del__</code> representa el metodo que sera ejecutado cuando un objeto relacionado sea eliminado</p>
+      <pre><code class="language-python">class Persona:
+  hobby = "caminar" # Atributo normal
+  def __init__(self, nombre, edad): # Metodo constructor (Se ejecuta al instanciar un objeto)
+    # El keyword 'self' hace referencia al propio objeto
+    self.nombre = nombre
+    self.edad   = edad
+  def __str__(self): # Metodo de informacion (Se ejecuta al hacer referencia a una instancia)
+    return f"Persona de nombre {self.nombre} con {self.edad} anios de edad"
+  def __del__(self): # Metodo destructor (Se ejecuta al borrar una instancia)
+    print("El objeto es borrado")
+    
+  def practicar_hobby(self): # Metodo normal
+    print(f"Soy {self.nombre} y estoy haciendo mi hobby ({self.hobby})")</code></pre>
+      <section>
+        <h4 id="oop-0-0-0">Tipos de metodos</h4>
+        <p>Tenemos 3 tipos de metodos incluidos en una clase. Estan los <b>metodos normales</b> (acceden a la instancia, pero no a la clase), los <b>metodos de clase</b> (acceden a la clase, pero no a la instancia) y los <b>metodos estaticos</b> (no acceden ni a la clase ni a la instancia)</p>
+        <pre><code class="language-python">class Example:
+  def metodoNormal(self): # Metodo que accede a la instancia pero no a la clase
+    print("Metodo normal: ", self)
+
+  @classmethod
+  def metodoDeClase(cls): # Metodo que accede a la clase pero no a la instancia
+    print("Metodo de clase: ", cls)
+    
+  @staticmethod
+  def metodoEstatico(): # Metodo que no accede ni a la clase ni a la instancia
+    print("Metodo estatico")</code></pre>
+      </section>
+    </section>
+  </section>
+  <section>
+    <h2 id="oop-1">Objetos</h2>
+    <p>Es un conjunto de atributos y metodos. Un objeto se deriva de una clase. Por ejemplo: Un vaso pequenio es un objeto de la clase "Vaso"; tiene como atributo que "Es pequenio"; tiene como metodo que "Puedes servir agua en el"</p>
+    <section>
+      <h3 id="oop-1-0">Objetos en Python</h3>
+      <p>Al ser un objeto una instancia de una clase, necesitamos referenciar a esta clase, y si lo requiere, introducir los datos que requiera su metodo constructor</p>
+      <pre><code class="language-python"># Instaciacion de la clase
+objeto = Persona("Juan", 19) # Por defecto se pasa el objeto
+                             # al parametro 'self'
+
+# Acceso a atributos y metodos de la clase
+objeto.hobby = "correr"
+objeto.practicar_hobby()
+
+# Acceso a metodos y atributos especiales de la clase
+print(objeto) # Aqui se hace uso del metodo '__str__'
+del(objeto)   # Aqui se hace uso del metodo '__del__'</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2 id="oop-2">Encapsulacion</h2>
+    <p>Es un proceso por el cual se ocultan los detalles del soporte de las caracteristicas de una abstraccion. Por ejemplo: Cuando te sirves agua en el vaso pequenio y la bebes, solo la estas utilizando. No necesitas saber de que metodos o atributos tendrian (por ejemplo) el vidrio con el que esta hecho, solo necesitas saber que te sirvio para beber agua. Encapsulas ese objeto para que no te metas con los datos</p>
+    <section>
+      <h3 id="oop-2-0">Encapsulacion en Python</h3>
+      <p>En <b>Python</b> no existe una manera canonica de encapsular metodos o atributos de una clase, sin embargo pueden ser simulados anteponiendo <code>__</code> al nombre de cada atributo o metodo</p>
+      <pre><code class="language-python">class Example:
+  __atributoPrivado = "Soy un atributo encapsulado"
+  def __metodoPrivado(self):
+    print("Soy un metodo encapsulado")
+  
+  # Getters
+  def getAtributo(self):
+    return self.__atributoPrivado
+  def getMetodo(self):
+    self.__metodoPrivado()
+  
+  # Setters
+  def setAtributo(self,parametro):
+    self.__atributoPrivado = parametro
+
+objeto = Encapsulamiento()
+# objeto.__atributoPrivado # Error
+# objeto.__metodoPrivado() # Error
+
+objeto.getAtributo() # -> 'Soy un atributo encapsulado'
+objeto.getMetodo()   # -> 'Soy un metodo encapsulado'
+objeto.setAtributo("Ya no soy un atributo 100% inaccesible")</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2 id="oop-3">Herencia</h2>
+    <p>La herencia es donde una clase nueva se crea a partir de una clase ya existente, heredando todos sus atributos y metodos. Por ejemplo: De la clase "Vaso" (superclase) se pudo haber sacado otra clase heredada llamada "Vaso pequenio" (subclase). Asi se heredan sus atributos y metodos variando solo algunas caracteristicas como por ejemplo, su tamanio</p>
+    <section>
+      <h3 id="oop-3-0">Herencia en Python</h3>
+      <p>Para definir una subclase, debemos ingresar la referencia a la superclase dentro de parentesis <code>()</code> seguido del nombre de esta clase que tomara la herencia</p>
+      <pre><code class="language-python">class Programador(Persona): # subclase = Programador, superclase = Persona
+  hobby = "programar" # Atributo
+  def __init__(self, nombre, edad, lang): # Metodo constructor
+    Persona.__init__(self, nombre, edad)  # Llama al metodo constructor de 'Persona'
+    self.lang = lang                      # Agrega un atributo nuevo
+  
+  def programar(self):
+    print(f"Soy {self.nombre} y estoy programando en {self.lang}")</code></pre>
+    </section>
+  </section>
+</article>
+{% endblock %}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="{{ url_for('static', filename='img/internet.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/w3.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/lib/jquery-3.6.0.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <title>Rukka Zone</title>
+</head>
+<body>
+  <aside class="w3-sidebar w3-bar-block w3-hide-small w3-teal" id="aside">
+    <div class="w3-container w3-bar-item">
+      <h2>Entradas</h2>
+      <p>Ingrese a las entradas documentadas y observe su contenido. Si necesita un navegar dentro de las paginas, puede usar el indice de navegacion de las respectivas paginas</p>
+    </div>
+    <div class="w3-container w3-bar-item">
+      <h2>Proximas entradas (<b>TODO</b>)</h2>
+      <ul class="w3-ul">
+        <li>python-gtk</li>
+        <li>wxpython</li>
+        <li>examples &gt; python-for-android</li>
+        <li>kivy</li>
+        <li>django</li>
+        <li>sql &gt; mariadb</li>
+        <li>nosql &gt; mongodb</li>
+        <li>nosql &gt; redis</li>
+        <li>web &gt; lib &gt; kontra</li>
+        <li>web &gt; lib &gt; w3schools</li>
+        <li>web &gt; lib &gt; sql &gt; mariadb</li>
+        <li>web &gt; lib &gt; react-native</li>
+        <li>web &gt; lib &gt; vue</li>
+        <li>web &gt; lib &gt; angular</li>
+      </ul>
+    </div>
+  </aside>
+
+  <header class="w3-container w3-teal" id="header">
+    <h1>Rukka Zone</h1>
+    <p>Este es un <b>sitio Web</b> documentativo orientado a referenciar el <b>desarrollo Web</b> y <b>desarrollo de Software</b>. Este <b>proyecto</b> esta desarrollado con intenciones informativas; los archivos de este proyecto pueden ser libremente leidos, modificados, ejecutados y compartidos de acuerdo a la licencia <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a></p>
+  </header>
+
+  <main class="w3-container" id="main">
+    <article class="w3-container">
+      <section class="w3-card w3-margin" id="python">
+        <header class="w3-container w3-indigo">
+          <h3>Python</h3>
+        </header>
+        <div class="w3-container">
+          <p><b>Python</b> es un <b>lenguaje de programacion multiproposito</b> de <b>ultima generacion</b> desarrollado por <i>Guido van Rossum</i> como substituto de <i>ABC lang</i> en los anios 80. Se trata de un lenguaje de programacion <b>multiplataforma</b> e <b>interpretado</b> de <b>codigo abierto</b> <br> <b>Python</b> es sin dudas uno de <b>los mas famosos</b> lenguajes de programacion del mundo. Y sirve para practicamente cualquier cosa que puedas imaginarte. Ademas de ser un lenguaje de programacion bastante sencillo de aprender y utilizar</p>
+        </div>
+        <div class="w3-container w3-row">
+          <a class="w3-button w3-hover-indigo w3-third" href="{{ url_for('pydocs', filename='basics') }}">Conceptos basicos</a>
+          <a class="w3-button w3-hover-indigo w3-third" href="{{ url_for('pydocs', filename='advanced') }}">Conceptos avanzados</a>
+          <a class="w3-button w3-hover-indigo w3-third" href="{{ url_for('pydocs', filename='oop') }}">Conceptos POO</a>
+          <a class="w3-button w3-hover-indigo w3-third" href="{{ url_for('pydocs', filename='tkinter') }}">Tkinter</a>
+          <a class="w3-button w3-hover-indigo w3-third" href="{{ url_for('pydocs', filename='gtk') }}">GTK+</a>
+          <a class="w3-button w3-hover-indigo w3-third" href="{{ url_for('pydocs', filename='examples') }}">Ejemplos</a>
+        </div>
+      </section>
+      <section class="w3-card w3-margin" id="wxpython">
+        <header class="w3-container w3-red">
+          <h3>wxPython</h3>
+        </header>
+        <div class="w3-container">
+          <p><b>wxPython</b> es una libreria popular y muy completa que permite el desarrollo de interfaces graficas de usuario (<b>GUI</b>) nativas de escritorio (<b>Windows</b>, <b>Linux</b> y <b>MacOS</b>). Tiene una tonelada de widgets y es muy utilizado profesionalmente</p>
+        </div>
+        <div class="w3-container w3-row">
+          <a class="w3-button w3-hover-red w3-half" href="{{ url_for('pydocs', filename='wxpython') }}">Informacion</a>
+          <a class="w3-button w3-hover-red w3-half" href="https://www.wxpython.org/">Pagina oficial</a>
+        </div>
+      </section>
+      <section class="w3-card w3-margin" id="kivy">
+        <header class="w3-container w3-blue-gray">
+          <h3>Kivy</h3>
+        </header>
+        <div class="w3-container">
+          <p><b>Kivy</b> es un framework muy popular que permite el desarrollo de <b>interfaces graficas de usuario</b> (GUI) completas y totalmente multiplataforma (<b>MSWindows</b>, <b>GNU/Linux</b>, <b>MacOS</b>, <b>Android</b>, <b>iOS</b>)</p>
+        </div>
+        <div class="w3-container w3-row">
+          <a class="w3-button w3-hover-blue-gray w3-half" href="{{ url_for('pydocs', filename='kivy') }}">Informacion</a>
+          <a class="w3-button w3-hover-blue-gray w3-half" href="https://kivy.org">Pagina oficial</a>
+        </div>
+      </section>
+      <section class="w3-card w3-margin" id="flask">
+        <header class="w3-container w3-green">
+          <h3>Flask</h3>
+        </header>
+        <div class="w3-container">
+          <p><b>Flask</b> es un micro-framework orientado al <b>desarrollo Web (Backend)</b>. Es sencillo y rapido de usar; desarrollado para ser extensible y de rapido desarrollo, entrega un entorno bastante minimalista y sencillo</p>
+        </div>
+        <div class="w3-container w3-row">
+          <a class="w3-button w3-hover-green w3-half" href="{{ url_for('pydocs', filename='flask') }}">Informacion</a>
+          <a class="w3-button w3-hover-green w3-half" href="https://palletsprojects.com/p/flask/">Pagina oficial</a>
+        </div>
+      </section>
+      <section class="w3-card w3-margin" id="django">
+        <header class="w3-container w3-light-green">
+          <h3>Django</h3>
+        </header>
+        <div class="w3-container">
+          <p><b>Django</b> es un framework orientado al <b>desarrollo Web (Backend)</b> completo, seguro y profesional. Con la filosofia de <i>baterias incluidas</i>, entrega un entorno muy completo y estable para trabajar del lado del servidor</p>
+        </div>
+        <div class="w3-container"></div>
+      </section>
+      <section class="w3-card w3-margin" id="sql">
+        <header class="w3-container w3-yellow">
+          <h3>Bases de datos SQL</h3>
+        </header>
+        <div class="w3-container">
+          <p>Una <b>base de datos</b> es un contenedor de informacion, donde podemos guardar y almacenar datos referentes a un tema en especifico. Existen muchos sistemas manejadores de bases de datos, como por ejemplo <b>SQLite</b>, <b>PostgreSQL</b>, <b>MySQL</b>, <b>MariaDB</b>, entre otros muchos</p>
+        </div>
+        <div class="w3-container">
+          <a class="w3-button w3-hover-yellow" style="width: 100%" href="{{ url_for('pydocs', filename='sql') }}">Informacion</a>
+        </div>
+      </section>
+      <section class="w3-card w3-margin" id="nosql">
+        <header class="w3-container w3-purple">
+          <h3>Bases de datos NoSQL</h3>
+        </header>
+        <div class="w3-container">
+          <p>Una <b>base de datos</b> es un contenedor de informacion, donde podemos guardar y almacenar datos referentes a un tema en especifico. Algunos ejemplos famosos de este tipo de sistemas gestores bases de datos son <b>MongoDB</b>, <b>Redis</b>, <b>CouchDB</b>, etc</p>
+        </div>
+        <div class="w3-container">
+          <a class="w3-button w3-hover-purple" style="width: 100%" href="{{ url_for('pydocs', filename='nosql') }}">Informacion</a>
+        </div>
+      </section>
+    </article>
+
+    <div class="w3-container" id="web">
+      <div class="w3-bar">
+        <h2 class="w3-bar-item">Web</h2>
+        <button class="w3-bar-item w3-button" id="web-button" onclick="displayWebInfo();">Mostrar</button>
+      </div>
+      <article id="web-info" style="display: none;">
+        <section>
+          <p>La <b>tecnologia Web</b> es conocida por ser la <b>multiplataforma definitiva</b>. Con la <b>tecnologia Web</b> podemos desarrollar <b>aplicaciones Web</b> y <b>sitios Web</b> completos. Las tecnologias mas importantes de esta area son <b>HTML</b>, <b>CSS</b> y <b>JavaScript</b></p>
+        </section>
+        <section>
+          <h3>HTML</h3>
+          <p><b>H</b>yper<b>T</b>ext <b>M</b>arkup <b>L</b>anguage (<b>HTML</b>) es el lenguaje Web para definir la estructura de una pagina Web</p>
+          <span class="links">
+            <a class="w3-button" href="{{ url_for('webdocs', filename='html') }}">Informacion</a>
+          </span>
+        </section>
+        <section>
+          <h3>CSS</h3>
+          <p><b>C</b>ascading <b>S</b>tyle <b>S</b>heets (<b>CSS</b>) es un lenguaje Web que permite manejar la estetica de una pagina Web</p>
+          <span class="links">
+            <a class="w3-button" href="{{ url_for('webdocs', filename='css') }}">Informacion</a>
+          </span>
+        </section>
+        <section>
+          <h3>JavaScript</h3>
+          <p><b>JavaScript</b> es un lenguaje Web multiparadigma y de tipado debil que permite manejar el comportamiento de una pagina Web</p>
+          <span class="links">
+            <a class="w3-button" href="{{ url_for('webdocs', filename='js') }}">JavaScript</a>
+            <a class="w3-button" href="{{ url_for('webdocs', filename='coffee') }}">CoffeeScript</a>
+            <a class="w3-button" href="{{ url_for('webdocs', filename='ts') }}">TypeScript</a>
+          </span>
+        </section>
+        <section>
+          <h3>Node.js</h3>
+          <p>Se trata de un interprete multiplataforma basado en el motor <b>V8</b> de <b>Google</b> que permite ejecutar <b>JavaScript</b> fuera del navegador. Lo que permite trabajar con este lenguaje del <b>lado del servidor</b></p>
+          <span class="links">
+            <a class="w3-button" href="{{ url_for('webdocs', filename='nodejs') }}">Informacion</a>
+          </span>
+        </section>
+        <section>
+          <h3>Browser</h3>
+          <p>El entorno mas habitual de uso de la <b>tecnologia Web</b>. Donde <b>HTML</b>, <b>CSS</b> y <b>JavaScript</b> se unen y la magia ocurre dentro del <b>Browser</b> (navegador) del cliente</p>
+          <span class="links">
+            <a class="w3-button" href="{{ url_for('webdocs', filename='browser') }}">Informacion</a>
+          </span>
+        </section>
+        <section>
+          <h3>Libraries &amp; Frameworks</h3>
+          <p>Librerias y frameworks referentes al <b>desarrollo Web</b> y <b>desarrollo de Software general</b> tanto para el <b>Browser</b> (navegador) como para <b>Node.js</b></p>
+          <span class="links">
+            <a class="w3-button" href="{{ url_for('webdocs', filename='lib') }}">Informacion</a>
+          </span>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="w3-container w3-padding w3-teal" id="footer">
+    <div class="w3-col s12 l6 w3-center w3-padding" id="license">
+      <p>Este sitio fue escrito por <b>RukkaPlus</b> (Lucca Nahuel Arancibia). Este proyecto es <b>OSS</b> (<b>O</b>pen <b>S</b>ource <b>S</b>oftware) y esta sujeto a la licencia <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a></p>
+      <div>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" src="{{ url_for('static', filename='img/license.svg') }}"></a>
+      </div>
+    </div>
+    <div class="w3-row w3-col s12 l6 w3-padding w3-hide-small" id="footer-div">
+      <img class="w3-third" src="{{ url_for('static', filename='img/python.svg') }}" alt="python">
+      <img class="w3-third" src="{{ url_for('static', filename='img/software.svg') }}" alt="sofware">
+      <img class="w3-third" src="{{ url_for('static', filename='img/internet.svg') }}" alt="internet">
+    </div>
+  </footer>
+</body>
+</html>

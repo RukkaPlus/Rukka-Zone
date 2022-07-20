@@ -1,0 +1,10 @@
+:root {
+  --principal-color: #ff9800;
+  --principal-text-color: #000;
+}
+.example-cont {
+  margin: .4em 0;
+  padding: .4em;
+  border-radius: .2em;
+  background: rgba(0, 0, 0, .1);
+}

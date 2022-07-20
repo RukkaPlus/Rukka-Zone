@@ -1,0 +1,13 @@
+:root {
+  --principal-color: #9c27b0;
+  --principal-text-color: #fff;
+}
+button.str-tab, button.list-tab, button.set-tab, button.dict-tab {
+  border-bottom: none!important;
+}
+div.tabmanager-special {
+  margin-top: 1em;
+}
+div.tabmanager-special > section {
+  margin-top: 0;
+}

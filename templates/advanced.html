@@ -1,0 +1,549 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/python.svg') }}">
+{% endblock %}
+
+{% block title %}Python{% endblock %}
+
+{% block header %}
+<div>
+  <h1>Python</h1>
+  <p><b>Python</b> es un <b>lenguaje de programacion multiproposito</b> de <b>ultima generacion</b> desarrollado por <i>Guido van Rossum</i> como substituto de <i>ABC lang</i> en los anios 80. Se trata de un lenguaje de programacion <b>multiplataforma</b> e <b>interpretado</b> de <b>codigo abierto</b> <br> <b>Python</b> es sin dudas uno de <b>los mas famosos</b> lenguajes de programacion del mundo. Y sirve para practicamente cualquier cosa que puedas imaginarte. Ademas de ser un lenguaje de programacion bastante sencillo de aprender y utilizar</p>
+</div>
+<img src="{{ url_for('static', filename='img/python.svg') }}" alt="python">
+{% endblock %}
+
+{% block index %}
+<li><a href="#name">Asegurador <code>__name__</code></a></li>
+<li><a href="#objects">Todos son objetos!</a></li>
+<li><a href="#objects-0">Espacios globales y espacios locales</a></li>
+<li><a href="#threads">Multihilos</a></li>
+<li><a href="#generators">Funciones generadoras</a></li>
+<li><a href="#generators-0">Conversion a objetos iterables</a></li>
+<li><a href="#lambda">Funciones lambda</a></li>
+<li><a href="#decorators">Funciones decoradoras</a></li>
+<li><a href="#chaining">Operadores encadenados</a></li>
+<li><a href="#lists">Comprension de listas</a></li>
+<li><a href="#regexp">Expresiones regulares</a></li>
+<li><a href="#filter">Funcion <code>filter</code></a></li>
+<li><a href="#map">Funcion <code>map</code></a></li>
+<li><a href="#open">Manejo de archivos</a></li>
+{% endblock %}
+
+{% block main %}
+<article>
+  <section>
+    <h2 id="name">Asegurador <code>__name__</code></h2>
+    <p>Cuando ejecutamos un programa o script de <b>Python</b>, este interprete lee linea por linea ejecutando el codigo. Cuando un programa o script es ejecutado con <b>Python</b>, este primer programa de ejecucion recibe una variable llamada <code>__name__</code> con el valor <code>"__main__"</code>. Esto permite a <b>Python</b> diferenciar un programa o script de entre los diferentes modulos que puedan importar (por ejemplo, si en el primer programa (<code>"__main__"</code> se importa el modulo <code>foo</code>, en el script <code>foo</code>, <code>__name__</code> tendra como valor <code>"foo"</code>) <br> Cuando un modulo es importado desde un programa o script, <b>Python</b> no puede evitar ejecutar las instrucciones que se encuentran almacenadas en ese modulo antes de seguir con la ejecucion del programa o script que lo importo. Por lo que <b>Python</b> deja a nuestro alcance programar bloques de codigo que sean ejecutados solo si este programa no esta siendo integrado como un modulo, y si, es verificando si la variable <code>__name__</code> tiene como valor <code>"__main__"</code> (osea, si el programa o script es el primero en ser ejecutado)</p>
+    <pre><code class="language-python"># | hola.py |
+def imprimir_hola():
+  print("Hola!")
+
+if __name__ == "__main__":
+  imprimir_hola()</code></pre>
+    <pre><code class="language-python"># | main.py |
+import hola
+
+print("Aun no se ejecuto la funcion 'imprimir_hola'")
+hola.imprimir_hola()</code></pre>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <p>Si ejecutamos <code>main.py</code> obtendriamos lo siguiente</p>
+        <pre><code class="language-shell">&gt; py main.py 
+Aun no se ejecuto la funcion 'imprimir_hola'
+Hola!</code></pre>
+        <p>Pero si ejecutamos <code>hola.py</code>, <code>__name__</code> tendria como valor <code>"__main__"</code> y cumpliria la condicional impuesta. Lo que resultaria en lo siguiente</p>
+        <pre><code class="language-shell">&gt; py hola.py
+Hola!</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <p>Si ejecutamos <code>main.py</code> obtendriamos lo siguiente</p>
+        <pre><code class="language-sh">$ python3 main.py 
+Aun no se ejecuto la funcion 'imprimir_hola'
+Hola!</code></pre>
+        <p>Pero si ejecutamos <code>hola.py</code>, <code>__name__</code> tendria como valor <code>"__main__"</code> y cumpliria la condicional impuesta. Lo que resultaria en lo siguiente</p>
+        <pre><code class="language-sh">$ python3 hola.py
+Hola!</code></pre>
+      </section>
+    </div>
+  </section>
+  <section>
+    <h2 id="objects">Todos son objetos!</h2>
+    <p>En <b>Python</b> todos los datos son objetos. Incluidos los numeros enteros (<code>int</code>), los numeros flotantes (<code>float</code>), los Strings (<code>str</code>) e incluso las funciones (<code>function</code>) <br> Eso quiere decir que todos estos tipos de datos poseen sus propios metodos y atributos y que todos tienen un comportamiento con el entorno bastante similar entre si</p>
+    <pre><code class="language-python">isinstance(123, int) # -> True</code></pre>
+    <section>
+      <h3 id="objects-0">Espacios globales y espacios locales</h3>
+      <p>Todas los objetos que se almacenan en un bloque de codigo (por ejemplo, dentro de funciones) son <b>datos locales</b> (pueden ser referenciadas mediante una funcion llamada <code>locals()</code>). Mientras que todos los objetos que se almacenan fuera de los bloques de codigo son <code>datos globales</code> (pueden ser referenciadas mediante una funcion llamada <code>globals()</code>)</p>
+      <pre><code class="language-python">variable_externa = "Hola desde afuera :D"
+def funcion_ejemplo():
+  variable_interna = "Hola desde adentro :D"
+  print(globals()) # Retorna un diccionario con todas las variables y funciones globales
+  print(locals())  # Retorna un diccionario con todas las variables y funciones locales
+
+funcion_ejemplo()</code></pre>
+      <p>Todos los objetos locales pueden ser exportados como objetos globales al ser extraidos sus bloques de codigo</p>
+      <pre><code class="language-python">def funcion(): # Funcion normal
+  variable_interna = "Hello, world!"
+  def funcion_interna(): # Funcion anidada
+    return variable_interna
+  return funcion_interna # Retrona la funcion
+
+# Esto retornara 'funcion_interna', mas no la ejecucion de ella
+funcion()
+
+# Esto ejecutara la funcion interna de 'funcion'. Lo que retornara 'variable_interna'
+funcion()() # -> 'Hello, world!'
+
+# Esto guarda en una variable la funcion interna de 'funcion' y luego la ejecutamos guardando 'variable_interna'
+funcion_guardada = funcion()
+variable_guardada = funcion_guardada() # -> 'Hello, world!'
+
+# El guardado es una copia que puede ser accedida aunque no se encuentre la original
+del(funcion)
+funcion_guardada() # -> 'Hello, world!'
+variable_guardada  # -> 'Hello, world!'</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2 id="threads">Multihilos</h2>
+    <p>Llamamos mutihilos a <b>aquellos subprocesos que se ejecutan paralelamente un programa</b>, esto con la intencion de dividir el trabajo en otros subprocesos derivados pero siempre relacionados con un mismo proceso (comparten la misma memoria)</p>
+    <pre><code class="language-python">from threading import Thread
+
+def print_cube(num):
+  print("Cube: {}".format(num * num * num))
+
+def print_square(num):
+  print("Square: {}".format(num * num))
+
+# Instanciando un hilo
+t1 = Thread(target=print_square, args=(10,))
+t2 = Thread(target=print_cube, args=(10,))
+
+# Iniciando hilos
+t1.start()
+t2.start()
+
+# Esperando a que ambos hilos terminen su ejecucion
+t1.join()
+t2.join()
+
+print("Done!")</code></pre>
+    <p>Recordemos que los hilos, al compartir una misma refencia de memoria, pueden modificar las mismas variables del proceso que las ejecuto, y esto podria corrupcion entre datos. Ademas, los hilos, a diferencia de los multiprocesos, no pueden ser detenidos una vez son iniciados, por lo que usar multihilos puede no siempre ser una buena idea</p>
+  </section>
+  <section>
+    <h2 id="generators">Funciones generadoras</h2>
+    <p>Las <b>funciones generadoras</b> son funciones que van cediendo sobre la marcha los valores en tiempo de ejecucion. Estos retornan directamente un <b>objeto iterable</b></p>
+    <pre><code class="language-python">
+def funcion_generadora():
+  print("Iniciando carga...")
+  yield 20 # Aqui se detiene la iteracion
+           # y retorna un valor
+  print("Cargando archivos...")
+  yield 40
+
+  print('Carga completa!')
+  yield 60
+
+iterable = funcion_generadora()
+next(iterable) # -> 20
+next(iterable) # -> 40
+next(iterable) # -> 60
+
+for each in funcion_generadora():
+  print(each) # -> 20
+              # -> 40
+              # -> 60</code></pre>
+    <section>
+      <h3 id="generators-0">Conversion a objetos iterables</h3>
+      <p>Algunos tipos de datos y objetos pueden ser transformados en <b>objetos iterables</b> mediante la funcion <code>iter(data)</code></p>
+      <pre><code class="language-python">lista = [0, 1, 2, 3, 4]
+cadena = "Python"
+
+lista_iterable = iter(lista)
+cadena_iterable = iter(cadena)
+
+next(lista_iterable)  # -> 1
+next(cadena_iterable) # -> 'P'</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2 id="lambda">Funciones lambda</h2>
+    <p>Las <b>funciones lambda</b> son funciones <b>anonimas</b> (sin nombre, por defecto) escritos en una sola expresion. Esto con la intencion de ahorrar codigo</p>
+    <pre><code class="language-python"># Funciones normales:
+def doblar_normal(num):
+	resultado = num * 2
+	return resultado
+def impar_normal(num):
+  resultado = (num % 2) != 0
+  return resultado
+def invertir_normal(string):
+  resultado = string[::-1]
+  return resultado
+
+# Funciones lambda:
+doblar_lambda = lambda num: num * 2
+impar_lambda = lambda num: num % 2 != 0
+invertir_lambda = lambda string: string[::-1]</code></pre>
+  </section>
+  <section>
+    <h2 id="decorators">Funciones decoradoras</h2>
+    <p>Las funciones decoradoras son funciones que envuelven la ejecucion de otra funcion para extender su funcionalidad</p>
+    <pre><code class="language-python"># Definiendo funciones decoradoras
+def funcion_decoradora(funcion):
+  def decorar():
+    print("Se ejecutara la funcion: " + funcion.__name__)
+    funcion()
+    print("Ha terminado la ejecucion de: " + funcion.__name__)
+    return decorar
+
+def funcion_decoradora_args(funcion):
+  def decorar(*args, **kwargs):
+    print("Se ejecutara la funcion: " + funcion.__name__)
+    funcion(*args, **kwargs)
+    print("Ha terminado la ejecucion de: " + funcion.__name__)
+    return decorar
+
+# Decorando funciones
+@funcion_decoradora
+def fun():
+  print("Hello, world!")
+
+@funcion_decoradora_args
+def fun_args(param):
+  print(f"Hello, {param}!")
+
+# Ejecutando funciones
+fun() # -> Se ejecutara la funcion: fun\nHello, world!\nHa terminado la ejecucion de: fun
+fun_args("RukkaPlus") # -> Se ejecutara la funcion: fun\nHello, RukkaPlus!\nHa terminado la ejecucion de: fun</code></pre>
+  </section>
+  <section>
+    <h2 id="chaining">Operadores encadenados</h2>
+    <p>Los operadores encadenados son operadores logicos que permiten el uso de varios operadores relacionados a la vez</p>
+    <pre><code class="language-python">1 < 2 < 3   # -> True
+1 < 2 > 3   # -> False
+1 == 1 != 2 # -> True
+1 == 1 != 2 # -> True</code></pre>
+  </section>
+  <section>
+    <h2 id="lists">Comprension de listas</h2>
+    <p>La comprension de listas son algoritmos que nos permite crear listas avanzadas de forma comprimida, generalmente, en una sola linea de codigo</p>
+    <pre><code class="language-python"># [ Almacenar los caracteres de una palabra ]
+# Algoritmo normal
+lista = []
+for letra in "Python":
+  lista.append(letra)
+print(lista) # -> ['P', 'y', 't', 'h', 'o', 'n']
+
+# Algoritmo comprimido
+lista = [letra for letra in "Python"]
+print(lista) # -> ['P', 'y', 't', 'h', 'o', 'n']
+
+# [ Almacenar los primeros 10 numeros al cuadrado ]
+# Algoritmo normal
+lista = []
+for numero in range(1,11):
+	lista.append(numero ** 2)
+print(lista) # -> [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# Algoritmo comprimido
+lista = [numero ** 2 for numero in range(1, 11)]
+print(lista) # -> [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# [ Almacenar los primeros 5 numeros pares ]
+# Algoritmo normal
+lista = []
+for numero in range(1, 11):
+	if numero % 2 == 0:
+		lista.append(numero)
+print(lista) # -> [2, 4, 6, 8, 10]
+
+# Algoritmo comprimido
+lista = [numero for numero in range(1,11) if numero % 2 == 0]
+print(lista) # -> [2, 4, 6, 8, 10]
+
+# [ Almacenar los numeros pares a partir de otra lista creada por las
+# potencias de 2 de los primeros 10 numeros ]
+# Algoritmo normal
+lista_0 = []
+for numero in range(1, 11):
+	lista_0.append(numero ** 2)
+lista_1 = []
+for numero in lista1:
+	if numero % 2 == 0:
+		lista_1.append(numero)
+print(lista_1) # -> [4, 16, 36, 64, 100]
+
+# Algoritmo comprimido
+lista = [numero for numero in [numero ** 2 for numero in range(1, 11)] if numero % 2 == 0]
+print(lista) # -> [4, 16, 36, 64, 100]</code></pre>
+  </section>
+  <section>
+    <h2 id="regexp">Expresiones regulares</h2>
+    <p>Uno de los problemas mas comunes con que nos solemos encontrar al desarrollar cualquier programa informatico, es el de procesamiento de texto. Las operaciones de validacion, busqueda, extraccion y sustitucion de texto ahora son tareas mucho mas sencillas para las computadoras gracias a las expresiones regulares. <br> Las expresiones regulares (regex) son unas secuencias de caracteres que forma un patron de busqueda, las cuales son formalizadas por medio de una sintaxis especifica. Los patrones se interpretan como un conjunto de instrucciones, que luego se ejecutan sobre un texto de entrada para producir un subconjunto o una version modificada del texto original</p>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Hay gente que cuando se enfrenta a un problema, piensa: "Ya se, usare expresiones regulares", Ahora tiene dos problemas. <i>- Jamie Zawonski</i></p>
+    </div>
+    <pre><code class="language-python"># Para usar expresiones regulares en Python
+import re # Importamos el modulo correspondiente
+
+# Para buscar un patron en una cadena
+texto = "En esta cadena se encuentra una palabra magica"
+palabra = re.search("palabra magica", texto) # -> Objeto 'Match'
+if palabra is not None:
+  print("Se ha encontrado la palabra")
+
+# Para revelar la posicion de inicio o de fin de la coincidencia
+palabra.start() # -> 32
+palabra.end()   # -> 46
+palabra.span()  # -> (32, 46)
+
+# Para revelar el string completo de la operacion
+palabra.string # -> 'En esta cadena se encuentra una palabra magica'
+
+# Para buscar un patron de inicio en una cadena
+texto = "Hola mundo"
+re.match("Hola", texto) # -> Objeto 'Match'
+
+# Para dividir una cadena a partir de un patron
+texto = "Vamos a dividir esta cadena"
+re.split(' ', texto) # -> ['Vamos', 'a', 'dividir', 'esta', 'cadena']
+
+# Para sustituir todas las coincidencias de una cadena a partir de un patron
+texto = "Hola companiero. Es bueno saber que mi companiero esta bien. Te sientes bien, companiero?"
+re.sub("companiero", "amigo", texto) # -> 'Hola amigo. Es bueno saber que mi amigo esta bien. Te sientes bien, amigo?'
+
+# Para revelar todas las coincidencias de una cadena
+texto = "Hola Adios Hola Hola"
+re.findall("Hola", texto) # -> ['Hola', 'Hola', 'Hola']
+
+# Para revelar todas las coincidencias de una cadena con alternativas
+texto = "Hola Adios Hello Bye"
+re.findall("Hola|Hello", texto) # -> ['Hola', 'Hello']
+
+# Para revelar los patrones repetidos de una cadena
+texto = "Hola Hla Hooola Hooooola"
+patrones = ['Hola', 'Hla', 'Hooola']
+for patron in patrones:
+    re.findall(patron, texto) # -> ['Hola']
+                             # -> ['Hla']
+                             # -> ['Hooola']
+
+# Para revelar los patrones con meta-caracter repetidos de una cadena
+texto = "Hola Hla Hooola Hooooola"
+
+# Ninguna o mas repeticiones de un caracter a su izquierda
+re.findall("Ho*", texto) # -> ['Ho', 'H', 'Hooo', 'Hooooo']
+
+# Ninguna o mas repeticiones de un caracter a su izquierda junto a 'la'
+re.findall("Ho*la", texto) # -> ['Hola', 'Hla', 'Hooola', 'Hooooola']
+re.findall("Hu*la", texto) # -> ['Hla']
+
+# Una o mas repeticiones de un caracter a su izquierda
+re.findall("Ho+", texto) # -> ['Ho', 'Hooo', 'Hooooo']
+
+# Una o ninguna repeticion de un caracter a su izquierda
+re.findall("Ho?", texto) # -> ['Ho', 'H', 'Ho', 'Ho']
+
+# {NUMERO} de repeticion/es explcitas de un caracter a su izquierda
+re.findall("Ho{1}la", texto) # -> ['Hola']
+
+# {RANGOinicio, RANGOfin} de repeticiones explicitas de un caracter a su izquierda
+re.findall("Ho{0,1}la", texto) # -> ['Hla', 'Hola']
+
+# Para trabajar con la busqueda en grupo
+texto = "Hala Hela Hila Hola Hula"
+patrones = ["H[ou]la"]
+for patron in patrones:
+  re.findall(patron, texto) # -> ['Hola', 'Hula']
+
+# Para trabajar con la exclusion en grupo
+texto = "Hala Hela Hila Hola Hula"
+patrones = ["H[^ou]la"]
+for patron in patrones:
+  re.findall(patron, texto) # -> ['Hala', 'Hela', 'Hila']
+
+# Para trabajar con los rangos en grupo
+texto = "Hala Hela Hila Hola Hula"
+patrones = ["H[a-z]la"] # [A-Z] = Cualquier letra mayus de la A - Z
+                        # [a-z] = Cualquier letra minus de la a - z
+                        # [A-Za-z] = Cualquier letra mayus o minus de la a - Z
+                        # [0-9] = Cualquier numero del 0 - 9
+                        # [a-zA-Z0-9] = Cualquier caracter alfanumerico del 0 - Z
+for patron in patrones:
+  re.findall(patron,texto) # -> ['Hala', 'Hela', 'Hila']
+
+# Para trabajar con simbolos escapados
+texto = "Hala H0la Hila Hola Hula"
+patrones = [r"H\dla"] # \d = Caracter numerico
+                      # \D = Caracter no numerico
+                      # \s = Caracter con espacio en blanco
+                      # \S = Caracter sin espacion en blanco
+                      # \w = Caracter alfanumerico
+                      # \W = Caracter no alfanumerico
+for patron in patrones:
+  print(re.findall(patron,texto)) # -> ['H0la]</code></pre>
+  </section>
+  <section>
+    <h2 id="filter">Funcion <code>filter</code></h2>
+    <p>La funcion funcion filter es una funcion que permite filtrar datos de un algoritmo a partir de una expresion</p>
+    <pre><code class="language-python">numeros = [2, 5, 10, 23, 50, 33]
+# Queremos hallar los numeros multiples de 5
+def multiple_de_5(numero):
+  return numero % 5 == 0
+multiplos_5 = filter(multiple_de_5, numeros) # Retorna un objeto de tipo 'filter'. Son iterables
+multiplos_5_lista = list(multiplos_5) # Casting a lista
+
+# Ejemplo con objetos
+class Persona:
+  def __init__(self, nombre, edad):
+    self.nombre = nombre
+    self.edad = edad
+  def __str__(self):
+    return "{} de {} anios".format(self.nombre, self.edad)
+personas = [
+  Persona("Juan", 35),
+  Persona("Marta", 16),
+  Persona("Manuel", 78),
+  Persona("Eduardo", 12)
+]
+menores_edad = filter(lambda persona: persona.edad < 18, personas)
+mayores_edad = filter(lambda persona: persona.edad >= 18, personas)
+
+print("Menores de edad:")
+for menor in menores_edad:
+  print("\t", menor)
+
+print("Mayores de edad:")
+for mayor in mayores_edad:
+  print("\t", mayor)</code></pre>
+  </section>
+  <section>
+    <h2 id="map">Funcion <code>map</code></h2>
+    <p>La funcion map es una funcion que permite aplicar un algoritmo sobre todos los datos de un determinado elemento</p>
+    <pre><code class="language-python"># Ejemplo con lista
+numeros = [2, 5, 10, 23, 50, 33]
+def doblar(numero):
+  return numero * 2
+numeros_doblados = map(doblar, numeros) # Retorna un objeto de tipo 'map'. Son iterables
+numeros_doblados_lista = list(numeros_doblados) # Casting a lista
+
+# Ejemplo con tres listas
+numeros_1 = [1 ,2 ,3 ,4 ,5]
+numeros_2 = [6 ,7 ,8 ,9 ,10]
+numeros_3 = [11, 12, 13, 14, 15]
+numeros_entremultiplicados = list(map(lambda a, b, c: a * b * c, numeros_1, numeros_2, numeros_3))
+# Esto se aplicara siempre que tengan la misma longitud, tipo y sean compatibles
+
+# Ejemplo con objetos
+class Persona:
+  def __init__(self, nombre, edad):
+    self.nombre = nombre
+    self.edad = edad
+  def __str__(self):
+    return "{} de {} anios".format(self.nombre, self.edad)
+personas = [
+  Persona("Juan", 35),
+  Persona("Marta", 16),
+  Persona("Manuel", 78),
+  Persona("Eduardo", 12)
+]
+
+# Esto creara objetos nuevos con 1 anio mas de edads
+personas_con_un_anio_mas = list(map(lambda persona: Persona(persona.nombre, persona.edad + 1), personas))</code></pre>
+  </section>
+  <section>
+    <h2 id="open">Manejo de archivos</h2>
+    <p>Los archivos son conjuntos de bits almacenados en un dispositivo de memoria persistente, identificado con un nombre, direccion y extension <br> Los archivos permiten cuatro operaciones determinadas</p>
+    <ul>
+      <li>Creacion: Proceso de creacion</li>
+      <li>Apertura: Proceso de apertura</li>
+      <li>Cierre: Proceso de cierre</li>
+      <li>Extension: Proceso de escritura sobre el archivo</li>
+    </ul>
+    <pre><code class="language-python">from io import open # Esto generalmente no es necesario
+texto = "Una linea con texto\nOtra linea con texto"
+
+# [ Escritura ]
+# Ruta donde crearemos el archivo, 'w' indica escritura (puntero al inicio)
+archivo = open('archivo.txt', 'w')
+
+# Escribimos el texto
+archivo.write(texto)
+
+# Cerramos el archivo (guarda los cambios)
+archivo.close()
+
+# [ Lectura ]
+# Ruta donde leeremos el archivo, 'r' indica lectura
+# archivo = open('archivo.txt', 'r')
+archivo = open('archivo.txt') # Por defecto ya es 'r'
+
+# Lectura completa
+texto = archivo.read()
+# Podemos extraer una lista de todas las lineas del archivo
+# de con el metodo 'readlines()' o de la siguiente forma:
+# | with open("archivo.txt") as archivo:
+# |   for linea in archivo:
+# |     print(linea)
+
+# Cerramos el archivo
+archivo.close()
+
+print(texto)
+
+# [ Extension ]
+# Ruta donde leeremos el archivo, 'a' indica extension (puntero al final)
+archivo = open('archivo.txt', 'a') # La variante 'a+' permite crear el archivo si no existe
+
+# Escribimos el texto
+archivo.write('\nOtra linea mas abajo del todo')
+
+# Cerramos el archivo (guarda los cambios)
+archivo.close()
+
+# [ Manejo del puntero ]
+archivo = open('archivo.txt')
+archivo.seek(0)  # Puntero al principio
+archivo.read(10) # Leemos 10 caracteres
+
+fichero.seek(0)
+# Leemos la primera linea y situamos el puntero al principio de la segunda
+archivo.seek(len(archivo.readline()))
+# Leemos todo lo que queda del puntero hasta el final
+archivo.read()
+
+# Cerramos el archivo
+archivo.close()
+
+# [ Lectura + Escritura ]
+# Nota: Se puede abrir un fichero en modo lectura con escritura, pero este
+# debe existir previamente. Ademas por defecto el puntero estara al principio
+# y si escribimos algo sobreescribiremos el contenido actual, asi que prestad
+# atencion a los saltos de linea y caracteres especiales
+
+# Creamos un fichero de prueba con 4 líneas
+archivo = open('archivo_.txt', 'w')
+texto   = "Linea 1\nLinea 2\nLinea 3\nLinea 4"
+archivo.write(texto)
+archivo.close()
+
+# Lo abrimos en lectura con escritura y escribimos algo
+archivo = open('fichero2.txt', 'r+')
+archivo.write("0123456")
+
+# Volvemos a poner el puntero al inicio y leemos hasta el final
+archivo.seek(0)
+texto = archivo.read()
+
+# Cerramos el archivo (guarda los cambios)
+archivo.close()
+
+print(texto)</code></pre>
+  </section>
+</article>
+{% endblock %}

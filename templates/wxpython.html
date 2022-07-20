@@ -1,0 +1,823 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/gui.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-wxpython.css') }}">
+{% endblock %}
+
+{% block title %}wxPython{% endblock %}
+
+{% block header %}
+<div>
+  <h1>wxPython</h1>
+  <p><b>wxPython</b> es una libreria popular y muy completa que permite el desarrollo de interfaces graficas de usuario (<b>GUI</b>) nativas de escritorio (<b>Windows</b>, <b>Linux</b> y <b>MacOS</b>). Tiene una tonelada de widgets y es muy utilizado profesionalmente <br> Tambien nos da la posibilidad de usar herramientas de cerrado de codigo como <b>pyinstaller</b>, permitiendo su comercializacion a codigo cerrado</p>
+</div>
+<img src="{{ url_for('static', filename='img/gui.svg') }}" alt="wxpython">
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block main %}
+<article>
+  <section>
+    <h2>Instalacion</h2>
+    <p><b>wxPython</b> es una libreria bastante popular que viene en diferentes distribuciones. Para instalarlo en <b>Windows</b> o <b>MacOS</b> podemos ejecutar lo siguiente en una terminal o linea de comandos</p>
+    <div class="w3-container tabmanager">
+      <div class="w3-bar">
+        <button class="w3-bar-item w3-button msdos-tab">MSDOS</button>
+        <button class="w3-bar-item w3-button unix-tab">UNIX</button>
+      </div>
+      <section class="w3-border w3-panel msdos-tabpanel">
+        <pre><code class="language-shell">&gt; py -m pip install -U wxPython</code></pre>
+      </section>
+      <section class="w3-border w3-panel unix-tabpanel">
+        <pre><code class="language-sh">$ python3 -m pip install -U wxPython</code></pre>
+      </section>
+    </div>
+    <p>Sin embargo, en Linux, al ser tan diverso y tan amplio, puede ser un poco mas complicado instalarlo.</p>
+    <ol>
+      <li>Primero, debemos escoger un <b>wheels</b> compatible con nuestra distribucion, que podemos encontrar <a href="https://extras.wxpython.org/wxPython4/extras/linux/">en este enlace</a>. Si no encontramos uno disponible, entonces tendras que hacer el <b>wheels</b> por ti mismo</li>
+      <li>Este archivo <b>wheels</b> puede ser <b>GTK2</b> o <b>GTK3</b>, dependiendo de cual sea requerido</li>
+      <li>Podemos instalarlo directamente con <code>pip</code> con el siguiente comando, reemplazando el enlace ingresado con el enlace a nuestro archivo <b>wheels</b> elegido <pre><code class="language-sh">$ pip install -U \
+  -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 \
+  wxPython</code></pre></li>
+      <li>Si no ha encontrado un wheel correspondiente, tendremos que intentar construir el codigo fuente por nosotros mismos. el siguiente <a href="https://www.wxpython.org/blog/2017-08-17-builds-for-linux-with-pip/index.html">blog</a></li>
+    </ol>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: Tambien podemos instalar <b>wxPython</b> desde otros manejadores de paquetes como <b>conda</b></p>
+    </div>
+  </section>
+  <section>
+    <h2>Hello, world!</h2>
+    <p>El programa <b>Hello, world!</b> que ofrece <b>wxPython</b> facilita la comprension de la utilizacion de esta fabulosa libreria</p>
+    <pre><code class="language-python"># Primero lo primero. Importamos la libreria 'wx'
+import wx
+
+# Ahora creamos un marco
+class HelloFrame(wx.Frame): # herencia de 'wx.Frame'
+
+  # Metodo constructor
+  def __init__(self, *args, **kw):
+    # Metodo constructor (superclase)
+    super(HelloFrame, self).__init__(*args, **kw)
+
+    # Creamos un panel dentro del marco
+    pnl = wx.Panel(self)
+
+    # Ponemos un texto estatico (y lo hacemos negrita)
+    st = wx.StaticText(pnl, label="Hello, world!")
+    font = st.GetFont()
+    font.PointSize += 10
+    font = font.Bold()
+    st.SetFont(font)
+
+    # Creamos un 'BoxSizer' para manejar el layout de los widgets
+    sizer = wx.BoxSizer(wx.VERTICAL)
+    sizer.Add(st, wx.SizerFlags().Border(wx.TOP|wx.LEFT, 25))
+    pnl.SetSizer(sizer)
+
+    # Creamos un MenuBar
+    self.makeMenuBar()
+
+    # Y un StatusBar
+    self.CreateStatusBar()
+    self.SetStatusText("Welcome to wxPython!")
+
+  def makeMenuBar(self):
+    """ 
+    Un MenuBar esta compuesto de submenues, que estan compuestos de menuitems.
+    Este mentodo construye un set de menues y enlaza sus funcionalidades cuando
+    el menuitem sea seleccionado.
+    """
+
+    # Hacer un menu de archivos con los menuitems 'Hello' y 'Exit'
+    fileMenu = wx.Menu()
+    # El syntax "\t..." define un atajo de aceleracion cuando son llamados
+    # por el mismo evento
+    helloItem = fileMenu.Append(-1, "&Hello...\tCtrl-H",
+      "Help string shown in status bar for this menu item")
+    fileMenu.AppendSeparator()
+    # Cuando usamos un 'stock ID' no necesitamos especificar
+    # las etiquetas de los menuitems
+    exitItem = fileMenu.Append(wx.ID_EXIT)
+
+    # Ahora un menuitem de ayuda
+    helpMenu = wx.Menu()
+    aboutItem = helpMenu.Append(wx.ID_ABOUT)
+
+    # Creamos un MenuBar y agregamos los dos menuitems creados.
+    # La '&' define que la siguiente letra es el 'mnemonic' del
+    # menuitem. En las plataformas que soportan estas letras esta
+    # subrayada y puede ser ejecutada desde el teclado
+    menuBar = wx.MenuBar()
+    menuBar.Append(fileMenu, "&File")
+    menuBar.Append(helpMenu, "&Help")
+
+    # Agregamos el MenuBar al marco
+    self.SetMenuBar(menuBar)
+
+    # Finalmente asociamos las funciones manejadoras con el evento
+    # 'EVT_MENU' por cada menuitem. Esto significa que cuando este
+    # menuitem sea activado, su funcion manejadora asociada sera
+    # ejecutada
+    self.Bind(wx.EVT_MENU, self.OnHello, helloItem)
+    self.Bind(wx.EVT_MENU, self.OnExit,  exitItem)
+    self.Bind(wx.EVT_MENU, self.OnAbout, aboutItem)
+
+  def OnExit(self, event):
+    # Cierra el marco. Esto terminaria con la aplicacion
+    # si ya no hay mas instancias activas
+    self.Close(True)
+
+  def OnHello(self, event):
+    # Decirle 'Hello' al usuario desde un popup
+    wx.MessageBox("Hello again from wxPython")
+
+  def OnAbout(self, event):
+    # Desplegar un dialogo de 'about'
+    wx.MessageBox("This is a wxPython Hello World sample",
+      "About Hello World",
+      wx.OK|wx.ICON_INFORMATION)
+
+
+if __name__ == '__main__':
+  # Cuando el modulo sea ejecutado (no importado), ejecuta
+  # el marco y lo muestra con el MainLoop
+
+  # Ahora creamos un objeto de aplicacion
+  app = wx.App()
+
+  # Ahora mostramos nuestro marco creado
+  frm = HelloFrame(None, title="Hello, world!", id=wx.ID_ANY)
+  frm.Show()
+
+  # Ahora empezamos el MainLoop()
+  app.MainLoop()</code></pre>
+  <ol>
+    <li><code>app = wx.App()</code> : Toda aplicacion de <b>wxPython</b> comienza con una instancia de <code>wx.App</code>. Para aplicaciones mas complejas, puede que debas extender la clase <b>wx.App</b></li>
+    <li><code>frm = wx.Frame(None, title="Hello, world!")</code> : El objeto <code>wx.Frame</code> es una ventana de alto nivel. Su sintaxis es <code>wx.Frame(parent, id, title)</code>. La mayoria de constructores siguen ese molde (un objeto padre seguido de un id), con <code>wx.ID_ANY</code> podemos tomar un id aleatorio. En este ejemplo usamos <code>None</code> para indicar que no tendra un padre (como casi todos en latinoamerica jajaja)</li>
+    <li><code>frm.Show(True)</code> : Un metodo que hace del marco (objeto frame) visible una vez la aplicacion sea iniciada</li>
+    <li><code>app.MainLoop()</code> : Finalmente iniciamos la aplicacion con un <code>MainLoop()</code></li>
+  </ol>
+  </section>
+  <section>
+    <h2>Introduccion</h2>
+    <div class="w3-panel note">
+      <p><b>Nota</b>: A partir de esta seccion, la gran mayoria de informacion (si no toda) de este documento esta basado o es una traduccion del manual hecho por <b>ZetCode</b> que puedes encontrar <a href="https://www.zetcode.com/">en este enlace</a></p>
+    </div>
+    <p>Tenemos algunos conceptos importantes que merecen ser tocados para entender correctamente el funcionamiento de <b>wxPython</b></p>
+    <section>
+      <h3>Modulos</h3>
+      <p><b>wxPython</b> esta compuesto de 5 modulos basicos</p>
+      <ol>
+        <li><b>Controls</b> : Provee los widgets mas comunes encontradas en aplicaciones graficas, como botones, toolbars, etc</li>
+        <li><b>Core</b> : Provee las clases elementarias que son usadas en desarrollo. Estas clases incluyen la clase <code>Object</code>, que es madre de todas las clases; <code>Sizers</code>, que son usadas para widgets de layout; <code>Events</code>, entre otras clases basicas de geometria como <code>Point</code> o <code>Rectangle</code></li>
+        <li><b>GDI</b> : Es un set de clases usadas para dibujar los widgets. Este modulo contiene clases para la manipulacion de los <code>Fonts</code>, <code>Colours</code>, <code>Brushes</code>, <code>Pens</code> o <code>Images</code></li>
+        <li><b>Misc</b> : Contiene varias clases misceleanas. Algunas, por ejemplo, son usadas para ingreso de datos, configuraciones de aplicacion, configuraciones del sistema, trabajar con un display o joystick, etc</li>
+        <li><b>Windows</b> : Consiste en varios formatos de ventana como un <code>Frame</code>, <code>Dialog</code>, <code>Panel</code>, <code>Scrolled</code>, entre otros</li>
+      </ol>
+    </section>
+    <section>
+      <h3>Widgets base</h3>
+      <p>Estos widgets proveen funcionalidad basica a sus widgets derivados. A estos se les llama ancestros. Y usualmente no son utilizados directamente</p>
+      <h4>Ejemplos de Widgets base</h4>
+      <ul>
+        <li>wx.Window</li>
+        <li>wx.Control</li>
+        <li>wx.ControlWithItem</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Widgets de alto nivel</h3>
+      <p>Widgets que existen independientemente uno de los otros</p>
+      <h4>Ejemplos de Widgets de alto nivel</h4>
+      <ul>
+        <li>wx.PopupWindow</li>
+        <li>wx.ScrolledWindow</li>
+        <li>wx.Frame</li>
+        <li>wx.MDIParentFrame</li>
+        <li>wx.MDIChildFrame</li>
+        <li>wx.Dialog</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Widgets contenedores</h3>
+      <p>Contenedores que pueden contener otros widgets</p>
+      <h4>Ejemplos de Widgets contenedores</h4>
+      <ul>
+        <li>wx.ScrolledWindow</li>
+        <li>wx.Panel</li>
+        <li>wx.SplitterWindow</li>
+        <li>wx.Notebook</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Widgets dinamicos</h3>
+      <p>Windgets que pueden ser directamente alterados por el usuario</p>
+      <h4>Ejemplos de Widgets dinamicos</h4>
+      <ul>
+        <li>wx.ToggleButton</li>
+        <li>wx.CheckBox</li>
+        <li>wx.TextCtrl</li>
+        <li>wx.SpinCtrl</li>
+        <li>wx.ComboBox</li>
+        <li>wx.BitmapButton</li>
+        <li>wx.Slider</li>
+        <li>wx.Choice</li>
+        <li>wx.RadioButton</li>
+        <li>wx.Button</li>
+        <li>wx.ScrollBar</li>
+        <li>wx.Grid</li>
+        <li>wx.RadioBox</li>
+        <li>wx.SpinButton</li>
+        <li>wx.ListBox</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Widgets staticos</h3>
+      <p>Widgets que despliegan informacion. Estos no pueden ser directamente alterados por el usuario</p>
+      <h4>Ejemplos de Widgets staticos</h4>
+      <ul>
+        <li>wx.StaticBitmap</li>
+        <li>wx.StaticBox</li>
+        <li>wx.Gauge</li>
+        <li>wx.StaticText</li>
+        <li>wx.StaticLine</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Otros widgets</h3>
+      <p>Esstos widgets implementan statusbar, menubar y toolbar</p>
+      <h4>Ejemplos de Widgets base</h4>
+      <ul>
+        <li>wx.ToolBar</li>
+        <li>wx.MenuBar</li>
+        <li>wx.StatusBar</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Eventos</h2>
+      <p>Toda ventana puede reaccionar a eventos una vez la aplicacion esta en marcha (con un MainLoop ejecutado). Por ejemplo, al hacer click a un boton estamos mandando un evento <code>wx.EVT_BUTTON</code></p>
+    </section>
+  </section>
+  <section>
+    <h2>Constantes</h2>
+    <p>Durante la instanciacion de un widget podemos hacer uso de algunas constantes para personalizar aun mas el <b>disenio o comportamiento de dicho widget</b></p>
+    <pre><code class="language-python">import wx
+
+app = wx.App()
+frame = wx.Frame(None, style=wx.MAXIMIZE_BOX | wx.CLOSE_BOX)
+frame.Show(True)
+app.MainLoop()</code></pre>
+    <p>Esto nos dara una ventana con un disenio muy raro en realidad. Pero es perfecto un ejemplo de que en <code>wx.Frame</code>, asi como en la gran mayoria de widgets, podemos hacer uso de constantes <br> Para ver todas las constantes disponibles en <b>wxPython</b> podemos ver <a href="https://docs.wxwidgets.org/2.8.12/wx_constants.html#constants">la siguiente referencia</a></p>
+  </section>
+  <section>
+    <h2>wx.Frame</h2>
+    <p>Un objeto <code>wx.Frame</code> representa a una ventana de alto nivel; un <b>widget contenedor</b>. Dentro de un objeto <code>Frame</code> podemos introducir otros widgets <br> Para instanciar un objeto de <code>wx.Frame</code> tenemos el siguiente syntax <code>wx.Frame(parent, id, title)</code>, donde <code>parent</code> referencia a un objeto padre, <code>id</code> que referencia a una id que podemos definir a partir de constantes (como <code>wx.ID_ANY</code>) , y <code>title</code> que nos permite introducir un nombre a nuestra ventana <br> El metodo <code>Show</code> nos permite mostrar u ocultar la ventana segun le pasemos como parametro <code>True</code> o <code>False</code> respectivamente</p>
+    <pre><code class="language-python">import wx
+
+# Instancia del objeto 'wx.App'
+app = wx.App()
+
+# Instancia del objeto 'wx.Frame'
+frm = wx.Frame(None, id=wx.ID_ANY, title="Hello, World")
+# En este caso, 'wx.Frame' no tendra ningun otro padre
+
+# Mostramos el 'wx.Frame'
+frm.Show()
+
+# Empezamos el 'MainLoop'
+app.MainLoop()</code></pre>
+    <p>Obviamente, esta no es la manera optima de trabajar con <b>wxPython</b>. Por lo general, creamos una clase que herede de la clase <code>wx.Frame</code>, y en el metodo constructor, definimos todos los widgets que seran incluidos dentro del <code>wx.Frame</code></p>
+    <pre><code class="language-python">import wx
+
+class MyApp(wx.Frame):
+  # Metodo constructor
+  def __init__(self, *args, **kw):
+    super(MyApp, self).__init__(*args, **kw)
+
+if __name__ == "__main__":
+  app = wx.App() # Instanciamos la aplicacion
+  frm = MyApp(None, id=wx.ID_ANY, title="Mi aplicacion")
+  frm.Centre()   # Centramos el Frame
+  frm.Show()     # Mostramos el Frame
+  app.MainLoop() # Iniciamos la aplicacion</code></pre>
+    <section>
+      <h2>Tamanio y posicion</h2>
+      <p>Podemos definir la posicion y el tamanio de nuestro objeto <code>wx.Frame</code> mediante sus respectivos metodos o mediante el metodo constructor de este objeto</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  __init__(self, parent, title):
+    super(Example, self).__init__(parent, title=title,
+      size=(350, 250))
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Sizing")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+      <p>Otros metodos similares que los <code>wx.Frame</code> tienen son los siguientes</p>
+      <ul>
+        <li><code>Move(point)</code> : Mueve una ventana a una posicion</li>
+        <li><code>MoveXY(x, y)</code> : Mueve una ventana a una posicion</li>
+        <li><code>SetPosition(point)</code> : Define la posicion de una ventana</li>
+        <li><code>SetDimensions(x, y, width, height, sizeFlags)</code> : Define la posicion y el tamanio de una ventana</li>
+        <li><code>SetTitle(title)</code> : Define el titulo de la ventana</li>
+        <li><code>Maximize()</code> : Maximiza el tamanio de la ventana</li>
+        <li><code>Centre()</code> : Centra la posicion de la ventana</li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <h2>Menus y Toolbars</h2>
+    <p>Una parte comun de una aplicacion GUI es el <b>Menubar</b>. Un <b>Menubar</b> consiste de objetos llamados <b>menu</b>. Menues de alto nivel tienen sus etiquetas en el menubar. Los menues tienen <b>menuitems</b>. Los menuitems son comandos que ejecutan una cierta accion en la aplicacion. Menues pueden tener <b>submenues</b>, que tienen sus propios menuitems o submenues. Las siguientes tres clases son usadas para desarrollar menues: <code>wx.MenuBar</code>, <code>wx.Menu</code> y <code>wx.MenuItem</code></p>
+    <section>
+      <h3>Simple menu</h3>
+      <p>El siguiente ejemplo dibuja un menubar con un menu de archivos. Este menu tendra solo un menuitem. Al seleccionar este menuitem, la aplicacion saldra</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+
+    # Creamos el objeto 'wx.MenuBar'
+    menubar  = wx.MenuBar()
+
+    # Creamos el objeto 'wx.Menu'
+    filemenu = wx.Menu()
+
+    # Agregamos un 'wx.MenuItem'
+    fileitem = filemenu.Append(wx.ID_EXIT, "Exit", "Exit application")
+    """
+    Este 'wx.MenuItem' tendra como 'ID' el valor de 'wx.ID_EXIT', que
+    definira por defecto un atajo por teclado (Ctrl + Q) y lo configura
+    para ser un 'wx.MenuItem' de salida. Es recomendado usar 'IDs' si
+    es posible. Aunque tambien podemos usar 'wx.ID_ANY'
+    """
+
+    # Agregamos 'filemenu' como '&File' al 'menubar'
+    menubar.Append(filemenu, "&File")
+    """
+    El caracter '&' crea un acelerador. Que permite establecer
+    configuraciones predefinidas por wxPython para algunos menues. Por
+    ejemplo, hay otro acelerador llamado '&Exit'
+    """
+
+    # Definimos 'menubar' como barra de menu de la ventana
+    self.SetMenuBar(menubar)
+
+    # Definimos una funcion al evento 'wx.EVT_MENU' de 'fileitem'
+    self.Bind(wx.EVT_MENU, self.OnExit, fileitem)
+
+  # Metodo para 'fileitem'
+  def OnExit(self, evt):
+    self.Close()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+      <p>El siguiente ejemplo es precisamente el mismo al anterior (respecto a los menubar). Pero en este vamos a definir un menuitem desde 0</p>
+      <pre><code class="language-python">import wx
+
+# Definiendo el 'ID' del menuitem
+APP_EXIT = 1
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+
+    menubar  = wx.MenuBar()
+    filemenu = wx.Menu()
+    fileitem = wx.MenuItem(filemenu, APP_EXIT, "&Exit\tCtrl+Q")
+    """
+    En este caso, '\t' indica el hotkey que activara este
+    'wx.MenuItem' que acabamos de definir
+    """
+
+    # Le ponemos un nuevo Bitmap (icono)
+    fileitem.SetBitmap(wx.Bitmap('exit.png'))
+    filemenu.Append(fileitem)
+
+    menubar.Append(filemenu, "&File")
+    self.SetMenuBar(menubar)
+    self.Bind(wx.EVT_MENU, self.OnExit, id=APP_EXIT)
+
+  # Metodo para 'fileitem'
+  def OnExit(self, evt):
+    self.Close()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>Separadores y submenues</h3>
+      <p>Podemos agregar separadores o submenues entre las opciones de un menu como en el siguiente ejemplo</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    menubar  = wx.MenuBar()
+    filemenu = wx.Menu()
+    filemenu.Append(wx.ID_NEW, "&New")
+    filemenu.Append(wx.ID_OPEN, "&Open")
+    filemenu.Append(wx.ID_SAVE, "&Save")
+
+    # Agregamos un separador
+    filemenu.AppendSeparator()
+
+    # Agregamos un submenu
+    imp = wx.Menu()
+    imp.Append(wx.ID_ANY, "Import newsfeed list...")
+    imp.Append(wx.ID_ANY, "Import bookmarks...")
+    imp.Append(wx.ID_ANY, "Import mail...")
+    filemenu.Append(wx.ID_ANY, "&Import", imp)
+
+    fileitem = filemenu.Append(wx.ID_EXIT, "Exit", "Exit application")
+    menubar.Append(filemenu, "&File")
+    self.SetMenuBar(menubar)
+
+    self.Bind(wx.EVT_MENU, self.OnExit, fileitem)
+
+  def OnExit(self, evt):
+    self.Close()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>      
+    </section>
+    <section>
+      <h3>Check menu item</h3>
+      <p>Tenemos tres tipos de menuitems</p>
+      <ul>
+        <li>normal item</li>
+        <li>check item</li>
+        <li>radio item</li>
+      </ul>
+      <p>Un check menu item es visualmente representado por un <b>tick</b> en el menu</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    menubar  = wx.MenuBar()
+    viewmenu = wx.Menu()
+    self.st  = wx.StaticText(self, label="Hello, world!")
+
+    # Agregando checkitems
+    self.show_text = viewmenu.Append(wx.ID_ANY, "Show text",
+      "Show text", kind=wx.ITEM_CHECK) # Por defecto, 'kind=wx.ITEM_NORMAL'
+
+    # Activando checkitems
+    viewmenu.Check(self.show_text.GetId(), True)
+
+    menubar.Append(viewmenu, "&View")
+    self.SetMenuBar(menubar)
+
+    self.Bind(wx.EVT_MENU, self.Toggle_text, self.show_text)
+
+  def Toggle_text(self, evt):
+    if self.show_text.IsChecked():
+      self.st.Show()
+    else:
+      self.st.Hide()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>      
+    </section>
+    <section>
+      <h3>Context menu</h3>
+      <p>El <i>context menu</i> es la lista de comandos que aparecen bajo algun contexto. Por ejemplo, en el navegador <b>Firefox</b>, al dar click derecho a una pagina web, tenemos un <i>context menu</i>. Desde ahi podemos recargar la pagina, retroceder o ver la fuente de la pagina</p>
+      <pre><code class="language-python">import wx
+
+APP_MIN = 1
+APP_CLO = 2
+class MyContextMenu(wx.Menu):
+  def __init__(self, parent):
+    super(MyContextMenu, self).__init__()
+    self.parent = parent
+    mmi = wx.MenuItem(self, APP_MIN, "Minimize")
+    cmi = wx.MenuItem(self, APP_CLO, "Close")
+    self.Append(mmi)
+    self.Append(cmi)
+    self.Bind(wx.EVT_MENU, self.OnMinimize, mmi)
+    self.Bind(wx.EVT_MENU, self.OnClose, cmi)
+
+  def OnMinimize(self, evt):
+    self.parent.Iconize()
+  def OnClose(self, evt):
+    self.parent.Close()
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+
+  def OnRightDown(self, evt):
+    self.PopupMenu(MyContextMenu(self), evt.GetPosition())
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>Simple Toolbar</h3>
+      <p>Los menubar agrupan todos los comandos que podamos usar en nuestra aplicacion. Pero los Toolbar ofrecen un acceso rapido a la mayoria de comandos mas frecuentemente usados. Para crearlos, podemos usar el metodo <code>CreateToolBar</code> del <code>wx.Frame</code></p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+
+    # Creando un toolbar
+    toolbar = self.CreateToolBar()
+    qtool   = toolbar.AddTool(wx.ID_ANY, "Quit", wx.Bitmap("texit.png"))
+    toolbar.Realize()
+
+    self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
+
+  def OnQuit(self, evt):
+    self.Close()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>Mas de un Toolbar</h3>
+      <p>Podemos crear mas de un Toolbar con <b>wxPython</b> como en el siguiente ejemplo</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    vbox = wx.BoxSizer(wx.VERTICAL)
+
+    toolbar_0 = wx.ToolBar(self)
+    toolbar_0.AddTool(wx.ID_ANY, "", wx.Bitmap("example.png"))
+    toolbar_0.AddTool(wx.ID_ANY, "", wx.Bitmap("example.png"))
+    toolbar_0.AddTool(wx.ID_ANY, "", wx.Bitmap("example.png"))
+    toolbar_0.Realize()
+
+    toolbar_1 = wx.ToolBar(self)
+    qtool = toolbar_1.AddTool(wx.ID_EXIT, "", wx.Bitmap("texit.png"))
+    toolbar_1.Realize()
+
+    vbox.Add(toolbar_0, 0, wx.EXPAND)
+    vbox.Add(toolbar_1, 0, wx.EXPAND)
+
+    self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
+
+    self.SetSizer(vbox)
+
+  def OnQuit(self, evt):
+    self.Close()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>Enable y Disable</h3>
+      <p>Podemos agregar botones activados y desactivados a un Toolbar. Ademas, tambien agregaremos separadores a nuestro Toolbar de ejemplo</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    self.toolbar = self.CreateToolBar()
+    tundo = sef.toolbar.AddTool(wx.ID_UNDO, "", wx.Bitmap("tundo.png"))
+    tredo = sef.toolbar.AddTool(wx.ID_REDO, "", wx.Bitmap("tredo.png"))
+
+    # Desactivamos el boton
+    self.toolbar.EnableTool(wx.ID_REDO, False)
+
+    # Agregamos un separador
+    self.toolbar.AddSeparator()
+
+    texit = self.toolbar.AddTool(wx.ID_EXIT, "", wx.Bitmap("texit.png"))
+    self.toolbar.Realize()
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+  </section>
+  <section>
+    <h2>Layout</h2>
+    <p>Una ventana grafica, por lo general, cuenta con varios <i>widget</i> (como botones, checkboxes, etc). Pero estos widgets deben ser colocados en un contenedor, y es a estos contenedores a los que se les llama <b>Layout</b>, esto permite que los widgets sean posicionados ordenadamente. Aunque tambien podemos posicionarlo absolutamente</p>
+    <section>
+      <h3>Posicionamiento absoluto</h3>
+      <p>Este tipo de posicionado trata del posicionamiento manual de cada <i>widget</i>. Esto conlleva a una gran serie de desventajas, por ejemplo, los <i>widgets</i> <b>no cambian su posicion cuando las dimensiones de la ventana son alteradas</b></p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    self.panel = wx.Panel(self)
+    self.panel.SetBackgroundColour("gray")
+
+    self.london = wx.StaticBitmap(self.panel, wx.ID_ANY,
+      wx.Bitmap("london.jpg", wx.BITMAP_TYPE_ANY))
+    self.china = wx.StaticBitmap(self.panel, wx.ID_ANY,
+      wx.Bitmap("china.jpg", wx.BITMAP_TYPE_ANY))
+    self.paris = wx.StaticBitmap(self.panel, wx.ID_ANY,
+      wx.Bitmap("paris.jpg", wx.BITMAP_TYPE_ANY))
+
+    self.london.SetPosition((20, 20))
+    self.china.SetPosition((40, 160))
+    self.paris.SetPosition((170, 50))
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>BoxSizer</h3>
+      <p>Se trata de un <i>layout</i> sencillo de usar. Podemos apilar <i>widget</i> tanto <b>vertical</b> (<code>wx.VERTICAL</code>) como <b>horizontalmente</b> (<code>wx.HORIZONTAL</code>) <br> Para agregar <i>widgets</i> a este <i>layout</i>, usamos el metodo <code>Add</code></p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    self.panel = wx.Panel(self)
+    self.panel.SetBackgroundColour("gray")
+
+    # Creando el elemento
+    self.midPan = wx.Panel(self.panel)
+    self.midPan.SetBackgroundColour("red")
+
+    # Agregando el elemento
+    self.vbox = wx.BoxSizer(wx.VERTICAL)
+    self.vbox.Add(self.midPan, wx.ID_ANY, wx.EXPAND | wx.LEFT | wx.RIGHT, 20)
+    self.panel.SetSizer(self.vbox)
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>GridSizer</h3>
+      <p>Se trata otro <i>layout</i> sencillo de usar. Nos permite colocar <i>widgets</i> dentro de grillas (celdas) que podemos declarar. Cada celda tiene el mismo tamanio que nosotros definamos</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    menubar  = wx.MenuBar()
+    fileMenu = wx.Menu()
+    menubar.Append(fileMenu, '&File')
+    self.SetMenuBar(menubar)
+
+    vbox = wx.BoxSizer(wx.VERTICAL)
+    self.display = wx.TextCtrl(self, style=wx.TE_RIGHT)
+    vbox.Add(self.display, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
+    gs = wx.GridSizer(5, 4, 5, 5)
+
+    gs.AddMany([(wx.Button(self, label='Cls'), 0, wx.EXPAND),
+      (wx.Button(self, label='Bck'), 0, wx.EXPAND),
+      (wx.StaticText(self), wx.EXPAND),
+      (wx.Button(self, label='Close'), 0, wx.EXPAND),
+      (wx.Button(self, label='7'), 0, wx.EXPAND),
+      (wx.Button(self, label='8'), 0, wx.EXPAND),
+      (wx.Button(self, label='9'), 0, wx.EXPAND),
+      (wx.Button(self, label='/'), 0, wx.EXPAND),
+      (wx.Button(self, label='4'), 0, wx.EXPAND),
+      (wx.Button(self, label='5'), 0, wx.EXPAND),
+      (wx.Button(self, label='6'), 0, wx.EXPAND),
+      (wx.Button(self, label='*'), 0, wx.EXPAND),
+      (wx.Button(self, label='1'), 0, wx.EXPAND),
+      (wx.Button(self, label='2'), 0, wx.EXPAND),
+      (wx.Button(self, label='3'), 0, wx.EXPAND),
+      (wx.Button(self, label='-'), 0, wx.EXPAND),
+      (wx.Button(self, label='0'), 0, wx.EXPAND),
+      (wx.Button(self, label='.'), 0, wx.EXPAND),
+      (wx.Button(self, label='='), 0, wx.EXPAND),
+      (wx.Button(self, label='+'), 0, wx.EXPAND) ])
+
+    vbox.Add(gs, proportion=1, flag=wx.EXPAND)
+    self.SetSizer(vbox)
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+    <section>
+      <h3>FlexGridSizer</h3>
+      <p>Es parecido a <b>GridSizer</b>. Sin embargo, este le agrega flexibilidad, y no necesariamente las celdas deben tener la misma altura y longitud</p>
+      <pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+    panel = wx.Panel(self)
+    hbox  = wx.BoxSizer(wx.HORIZONTAL)
+    fgs   = wx.FlexGridSizer(3, 2, 9, 25)
+
+    title = wx.StaticText(panel, label="Title")
+    author = wx.StaticText(panel, label="Author")
+    review = wx.StaticText(panel, label="Review")
+
+    tc1 = wx.TextCtrl(panel)
+    tc2 = wx.TextCtrl(panel)
+    tc3 = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+
+    fgs.AddMany([(title), (tc1, 1, wx.EXPAND), (author),
+      (tc2, 1, wx.EXPAND), (review, 1, wx.EXPAND), (tc3, 1, wx.EXPAND)])
+
+    fgs.AddGrowableRow(2, 1)
+    fgs.AddGrowableCol(1, 1)
+
+    hbox.Add(fgs, proportion=1, flag=wx.ALL | wx.EXPAND, border=15)
+    panel.SetSizer(hbox)
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>
+    </section>
+  </section>
+  
+</article>
+{% endblock %}
+<pre><code class="language-python"></code></pre>
+<pre><code class="language-python">import wx
+
+class Example(wx.Frame):
+  def __init__(self, *args, **kwargs):
+    super(Example, self).__init__(*args, **kwargs)
+
+def main():
+  app = wx.App()
+  ex  = Example(None, title="Menubar and Toolbar")
+  ex.Show()
+  app.MainLoop()
+
+if __name__ == "__main__":
+  main()</code></pre>

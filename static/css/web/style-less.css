@@ -1,0 +1,28 @@
+#element-0 {
+  color: #f00;
+}
+#element-0:hover {
+  color: #00f;
+}
+#element-1 {
+  background-color: #fff;
+  color: #000;
+}
+#element-2 {
+  background-color: #000;
+  color: #fff;
+}
+#element-3 {
+  border-top: dotted 1px black;
+  border-bottom: solid 2px black;
+  color: red;
+}
+#element-4 {
+  color: black;
+}
+#element-4 .logo {
+  width: 300px;
+}
+#element-4 .navigation {
+  font-size: 12px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/prism.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/w3.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-docs.css') }}">
+  <script src="{{ url_for('static', filename='js/lib/prism.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/lib/jquery-3.6.0.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script-docs.js') }}"></script>
+  {% block head %}
+  {% endblock %}
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <noscript>
+    <div id="noscript-div">
+      <span>JavaScript esta deshabilitado!</span> Puede que la pagina funcione de manera indeseada
+    </div>
+  </noscript>
+
+  <aside class="w3-container w3-sidebar" id="aside">
+    <div>
+      <button class="w3-button aside-btn">Close</button>
+    </div>
+    <div class="w3-container">
+      <h2>Index</h2>
+    </div>
+    <div class="w3-container">
+      <ul class="w3-ul">
+        {% block index %}
+        {% endblock %}
+      </ul>
+    </div>
+  </aside>
+
+  <header class="w3-container" id="header">
+    <div>
+      <button class="w3-button aside-btn">&#9776;</button>
+    </div>
+    <div>
+      {% block header %}
+      {% endblock %}
+    </div>
+  </header>
+
+  <main class="w3-container" id="main">
+    <article>
+      {% block main %}
+      {% endblock %}
+    </article>
+  </main>
+
+  <footer class="w3-container" id="footer">
+    <div class="w3-container w3-center">
+      <p>Este sitio fue escrito por <b>RukkaPlus</b> (Lucca Nahuel Arancibia). Este proyecto es <b>OSS</b> (<b>O</b>pen <b>S</b>ource <b>S</b>oftware) y esta sujeto a la licencia <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a></p>
+      <div class="w3-padding">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" src="{{ url_for('static', filename='img/license.svg') }}"></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

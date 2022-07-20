@@ -1,0 +1,352 @@
+{% extends 'docs-layout.html' %}
+
+{% block head %}
+<link rel="icon" href="{{ url_for('static', filename='img/ts.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/style-ts.css') }}">
+<script src="{{ url_for('static', filename='js/lib/typescript-services.js') }}"></script>
+<script src="{{ url_for('static', filename='js/web/script-ts.js') }}"></script>
+{% endblock %}
+
+{% block title %}TypeScript{% endblock %}
+
+{% block header %}
+<div >
+  <h1>TypeScript</h1>
+  <p><b>TypeScript</b> es un lenguaje basado en <b>JavaScript</b> que agrega <b>tipado estatico</b>, lo que amerita a una reduccion exponencial de errores en tiempo de ejecucion <br> <b>TypeScript</b> se transpila linea por linea a <b>JavaScript</b>, y no es tan diferente a el</p>
+</div>
+<img src="{{ url_for('static', filename='img/ts.svg') }}" alt="ts">
+{% endblock %}
+
+{% block index %}
+<li><a href="#changes">Caracteristicas</a></li>
+<li><a href="#environment">Entorno</a></li>
+<li><a href="#environment-0">TypeScript en el navegador</a></li>
+<li><a href="#environment-1">TypeScript en Node.js</a></li>
+<li><a href="#environment-2">La herramienta <code>tsc</code></a></li>
+<li><a href="#intro">Introduccion</a></li>
+<li><a href="#intro-0">Tipado estatico</a></li>
+<li><a href="#datatype">Tipos de datos</a></li>
+<li><a href="#datatype-0">Datos simples</a></li>
+<li><a href="#datatype-1">Datos especiales</a></li>
+<li><a href="#datatype-2">Arrays</a></li>
+<li><a href="#datatype-2-0">Readonly</a></li>
+<li><a href="#datatype-3">Tuples</a></li>
+<li><a href="#datatype-4">Objects</a></li>
+<li><a href="#datatype-4-0">Interfaces</a></li>
+<li><a href="#datatype-5">Funciones</a></li>
+<li><a href="#union">Union de tipos</a></li>
+<li><a href="#alias">Aliases</a></li>
+<li><a href="#casting">Casting</a></li>
+<li><a href="#oop">Clases y Objetos</a></li>
+<li><a href="#enum">Enumeraciones</a></li>
+{% endblock %}
+
+{% block main %}
+<section>
+  <h2 id="changes">Caracteristicas</h2>
+  <p><b>TypeScript</b> es <b>JavaScript</b> pero con tipado estatico, por lo que no varia. Mejor, nos centraremos en las caracteristicas que <b>TypeScript</b> agrega a <b>JavaScript</b></p>
+  <ul>
+    <li><b>Tipado estatico</b>. Esto significa que los errores en tiempo de ejecucion se reducen considerablemente</li>
+    <li><b>Interfaces y Aliases</b>. Para eliminar la redundancia de codigo considerablemente</li>
+    <li><b>Estructuras de enumeraciones</b>, lo que nos permite declarar varias constantes enumeradas</li>
+    <li><b>Muchas otras cosas! TypeScript</b> es muy grande, porque al fin y al cabo, es otro lenguaje de programacion</li>
+  </ul>
+  <pre><code class="language-ts" id="input-0">let variable1: number = 12;
+let variable2: string = 'RukkaPlus';
+
+function toCube(num: number): number {
+  /* Esta funcion toma un numero y retorna
+   * el cuadrado del mismo.
+   */
+  let result = num ** 3;
+  return result;
+}
+
+// Uso de las variables previamente definidas
+console.log(`Hello! I'm ${variable2}, and I have ${toCube(variable1)} grains of coffee`);</code></pre>
+  <button class="w3-button" onclick="execute('input-0', 'output-0');">Ejecutar</button>
+  <div class="output-cont" id="output-0"></div>
+</section>
+<section>
+  <h2 id="environment">Entorno</h2>
+  <p>A diferencia de <b>JavaScript</b>, el navegador no soporta de forma nativa el codigo de <b>TypeScript</b>, y <b>Node.js</b> necesita instalar un modulo para igualmente ejecutarlo</p>
+  <section>
+    <h3 id="environment-0">TypeScript en el navegador</h3>
+    <p>Para ejecutar <b>TypeScript</b> en el navegador, como sabemos, necesitamos que ese codigo sea <b>transpilado</b> a <b>JavaScript</b>. Para nuestra suerte, tenemos en <b>Github</b> un repositorio muy bonito con un script muy sencillo que podemos importar en un archivo <b>HTML</b> y luego escribir codigo de <b>TypeScript</b> en las etiquetas <code>script</code> con el atributo <code>type="text/typescript"</code></p>
+    <pre><code class="language-html">&lt!DOCTYPE html&gt
+&lthtml&gt
+&lthead&gt
+  &lt!-- Importando mediante una CDN --&gt
+  &ltscript src="https://rawgit.com/Microsoft/TypeScript/master/lib/typescriptServices.js"&gt&lt/script&gt
+  &ltscript src="https://rawgit.com/basarat/typescript-script/master/transpiler.js"&gt&lt/script&gt
+  &lt!-- Tambien puede ser importado localmente
+  &ltscript src="typescriptServices.js"&gt&lt/script&gt
+  &ltscript src="transpiler.js"&gt&lt/script&gt--&gt
+&lt/head&gt
+&ltbody&gt
+  &ltscript type="text/typescript"&gt
+    document.write("Hello, world!")
+  &lt/script&gt
+&lt/body&gt
+&lt/html&gt</code></pre>
+    <p>No creo que esto sea recomendado para un trabajo serio. Ademas, para importar programas mediante el atributo <code>src</code>, es necesario estar en un protocolo <b>HTTP</b></p>
+  </section>
+  <section>
+    <h3 id="environment-1">TypeScript en Node.js</h3>
+    <p>Para instalarlo en <b>Node.js</b> podemos instalar su modulo mediante <b>NPM</b></p>
+    <pre><code class="language-sh"># Instalando en un proyecto
+npm install --save-dev typescript
+
+# Instalando en el sistema
+npm install -g typescript</code></pre>
+  </section>
+  <section>
+    <h3 id="environment-2">La herramienta <code>tsc</code></h3>
+    <p>Es una herramienta <b>CLI</b> que se instala en el sistema y permite interpretar codigo de <b>TypeScript</b> entre otras utilidades como transpilarlo directamente a <b>JavaScript</b></p>
+    <pre><code class="language-sh"># Transpilar programa de TypeScript a JavaScript
+tsc direccion/del/programa.ts</code></pre>
+  </section>
+</section>
+<section>
+  <h2 id="intro">Introduccion</h2>
+  <p>Para entender <b>TypeScript</b> es como requisito obvio entender el uso de <b>JavaScript</b>. Ya que como repetimos mil veces, <b>TypeScript</b> es <b>JavaScript</b> con <b>tipado estatico</b></p>
+  <section>
+    <h3 id="intro-0">Tipado estatico</h3>
+    <p>Llamamos tipado estatico a la caracteristica que poseen algunos lenguajes como <b>C / C++</b>, <b>Java</b> y en este caso <b>TypeScript</b>. Dicha caracteristica trata de la <b>estaticidad de datos</b> que pueden poseer tanto variables (y constantes) como funciones. O en terminos mas sencillos, <b>las variables siempre conservan su tipo de dato y las funciones siempre retornan un tipo de dato</b></p>
+    <pre><code class="language-ts">let nombre: string;   // "nombre" siempre almacenara "string"s
+
+nombre = 'RukkaPlus'; // OK
+nombre = 123;         // ERROR</code></pre>
+  </section>
+</section>
+<section>
+  <h2 id="datatype">Tipos de datos</h2>
+  <p>Segun <b>TypeScript</b>, tenemos dos clasificaciones de tipos de datos: <b>los datos simples</b> y <b>los datos especiales</b></p>
+  <section>
+    <h3 id="datatype-0">Datos simples</h3>
+    <p>Son los datos de <b>JavaScript</b> de toda la vida. Pueden ser <code>string</code>, <code>number</code>, <code>boolean</code></p>
+    <pre><code class="language-ts">// Asignacion explicita
+let texto: string   = 'Hello, world!',
+    numero: number  = 12345,
+    logica: boolean = true;
+
+// Asignacion implicita
+let texto_  = 'Hello, world!',
+    numero_ = 12345,
+    logica_ = true;
+
+/* Podemos cambiar el valor de una variable siempre
+ * y cuando el nuevo valor sea del mismo tipo de dato
+ */
+texto  = 'Bye, world!'; texto_  = 'Bye, world!'; // OK
+numero = 54.321;        numero_ = 54.321;        // OK
+logica = false;         logica_ = false;         // OK
+
+/* Si intentamos cambiar el valor de una variable (sea
+ * implicita o explicita) y los tipos de datos no concuerdan
+ * esto dara un error
+ */
+texto  = 25.809;        texto_  = 25.809;        // ERROR
+numero = true && false; numero_ = true && false; // ERROR
+logica = 'FOO BAR';     logica_ = 'FOO BAR';     // ERROR</code></pre>
+    <section>
+      <h3 id="datatype-1">Datos especiales</h3>
+      <p><b>TypeScript</b> nos otorga los datos especiales como alternativa a los datos simples para ocasiones especiales. Estos datos son <code>any</code>, </p>
+      <pre><code class="language-ts">// La asignacion siempre es explicita
+let cualquier: any,
+    desconocido: unknown,
+    nunca: never;
+/*  nulos: null = null,
+ *  indefinidos: undefined = undefined;
+ */
+
+/* "any" : Es usado para deshabilitar la revision
+ * de tipado. No es recomendable su uso
+ */
+cualquier = 'Hello, world!'; // OK
+cualquier = 15.953802;       // OK
+cualquier = true;            // OK
+
+/* "unknown" : Es parecido a "any", pero no permite
+ * su interaccion en expresiones. Por lo que es seguro
+ * de utilizar
+ */
+desconocido = 'Hello, world!'; // OK
+desconocido = 15.953802;       // OK
+desconocido = true;            // OK
+
+/* "never" : Es usado para que jamas permita almacenar
+ * valores dentro
+ */
+nunca = 'Hello, world!'; // ERROR
+nunca = 15.953802;       // ERROR
+nunca = true;            // ERROR</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="datatype-2">Arrays</h3>
+    <p><b>TypeScript</b> tiene un syntax especifico para <b>Arrays</b>, y este syntax es un <i>CLike</i></p>
+    <pre><code class="language-ts">let textos: string[] = [
+  "RukkaPlus", "NarumiMomose",
+  "RuRu",      "Doxter"
+],
+    numeros: number[] = [
+  0, 1, 2,
+  3, 4, 5
+],
+    logicas: boolean[] = [
+  true, false, true,
+  false, true, false
+];
+
+textos.push(20);        // ERROR
+numeros.push(true);     // ERROR
+logicas.push('Carlos'); // ERROR</code></pre>
+    <section>
+      <h4 id="datatype-2-0">Readonly</h4>
+      <p>Podemos definir Arrays en <code>readonly</code> para que sus datos no puedan ser alterados</p>
+      <pre><code class="language-ts">let myarr: readonly number[] = [
+  0, 1, 2,
+  3, 4, 5
+];
+myarr.push(123); // ERROR</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="datatype-3">Tuples</h3>
+    <p><b>TypeScript</b> tambien introduce a las <b>tuplas</b>, que son <b>Arrays de una longitud predefinida</b> y que puede almacenar a <b>mas de un tipo de dato</b></p>
+    <pre><code class="language-ts">let mytuple: [string, number, boolean] = [
+  'John Doe', 123, true
+];
+mytuple = ['Mariah Morrison', 321, false];</code></pre>
+    <p>Las tuplas tambien pueden ser <code>readonly</code></p>
+  </section>
+  <section>
+    <h3 id="datatype-4">Objects</h3>
+    <p>Podemos declarar y trabajar con <b>Objects</b> en <b>TypeScript</b> de diferentes maneras. Podemos usar <b>interfaces</b> o trabajar sin ellas <b>en crudo</b></p>
+    <pre><code class="language-ts">// Objetos standard
+let myobj: { type: string, mileage: number } = {
+  type: 'Toyota',
+  mileage: 123
+};
+
+// Objetos con parametros opcionales
+let myobj_: { type: string, mileage?: number } = {
+  type: 'Toyota'
+};</code></pre>
+    <section>
+      <h4 id="datatype-4-0">Interfaces</h4>
+      <p>Las <b>interfaces</b> son estructuras que pueden ser implementadas en objetos</p>
+      <pre><code class="language-ts">interface Rectangle {
+  height: number,
+  width: number
+}
+
+let rect0: Rectangle = {
+  height: 20,
+  width: 10
+};</code></pre>
+    </section>
+  </section>
+  <section>
+    <h3 id="datatype-5">Funciones</h3>
+    <p><b>TypeScript</b> tambien tiene un syntax especifico para funciones, que nos permite definir el tipo de dato que una funcion retornara. Su tipo de retorno puede ser de cualquiera de los tipos de datos estudiados, ademas de <code>void</code> (que indica que no habra retorno en la funcion)</p>
+    <pre><code class="language-ts">function myfun(): number {
+  // Una funcion que retorna un numero
+  return 1 + 1;
+}
+function myfun_(num0: number, num1: number): number {
+  /* Una funcion que recibe dos parametros (de tipo
+   * number). Retorna un numero
+   */
+  return num0 + num1;
+}
+function myfun__(num0: number, num1?: number): number {
+  /* Una funcion que recibe dos parametros (de tipo
+   * number) (uno de los parametros es opcional).
+   * Retorna un numero
+   */
+  return num0 + (num1 || 0);
+}
+function myfun___(num0: number, ...nums: number[]): number {
+  /* Una funcion que recibe al menos un parametro
+   * (de tipo number) (tambien un "rest" de tipo number).
+   * Retorna un numero
+   */
+  let result = num0;
+  for (let num1 of nums)
+    result += num1;
+  return result;
+}
+
+myfun();
+myfun_(1, 1);
+myfun__(1);
+myfun___(1, 1, 1, 1, 1, 1);</code></pre>
+  </section>
+</section>
+<section>
+  <h2 id="union">Union de tipos</h2>
+  <p>Podemos realizar una union de tipos para declarar una variable compatible con <b>mas de un solo tipo de dato</b></p>
+  <pre><code class="language-ts">let code: string | number;
+code = 123;   // OK
+code = '123'; // OK
+code = true;  // ERROR</code></pre>
+</section>
+<section>
+  <h2 id="alias">Aliases</h2>
+  <p>Los <b>alias</b> son referencias a tipos de datos. Parecido a las <b>interfaces</b>, pero pueden referenciar a todo tipo de datos, tanto <b>simples</b> como <b>complejos</b></p>
+  <pre><code class="language-ts">type CarYear  = number;
+type CarType  = string;
+type CarModel = string;
+type Car = {
+  year:  CarYear,
+  type:  CarType,
+  model: CarModel
+};
+
+const mycarY: CarYear  = 2001,
+      mycarT: CarType  = "Toyota",
+      mycarM: CarModel = "Corolla",
+      mycar: Car = {
+  year:  carYear,
+  type:  carType,
+  model: carModel
+};</code></pre>
+</section>
+<section>
+  <h2 id="casting">Casting</h2>
+  <p>Llamamos <b>casting</b> a la conversion (o simulacion, en este caso) de un tipo de dato distinto al original. En <b>TypeScript</b> podemos lograr esto usando el keyword <code>as</code> o <code>&lt;TYPE&gt;</code></p>
+  <pre><code class="language-ts">let mynum: unknown = 123;
+console.log(mynum as string);
+console.log(&lt;string&gt;mynum);</code></pre>
+</section>
+<section>
+  <h2 id="oop">Clases y Objetos</h2>
+  <p>Obviamente, <b>TypeScript</b> tambien nos permite hacer uso de <b>Programacion Orientada a Objetos</b> dentro de nuestros programas. Ademas, agrega la posibilidad de usar <b>modificadores de acceso</b> como <code>public</code> (default), <code>protected</code> y <code>private</code></p>
+  <pre><code class="language-ts">class Person {
+  name: string;
+  private language: string;
+
+  constructor(name: string, lang: string) {
+    this.name     = name;
+    this.language = lang;
+  }
+  get getLang() {
+    return this.language;
+  }
+}
+
+const person  = new Person('Jane', 'TypeScript'),
+      pername = person.name,
+      perlang = person.getLang;
+console.log(`[ Person ]\nname : ${pername}\nlanguage : ${perlang}`);</code></pre>
+</section>
+<section>
+  <h2 id="enum">Enumeraciones</h2>
+  <p>Un <code>enum</code> es una lista de constantes numericas</p>
+  <pre><code class="language-ts">enum CardinalDirections { North, East, South, West };
+
+console.log(CardinalDirections.North); // -> 0</code></pre>
+</section>
+{% endblock %}
